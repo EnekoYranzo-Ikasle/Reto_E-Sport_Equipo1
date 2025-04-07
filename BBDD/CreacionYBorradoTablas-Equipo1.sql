@@ -52,11 +52,14 @@ CREATE TABLE enfrentamientos (
         CONSTRAINT enfre_cod_pk PRIMARY KEY,
     nombre VARCHAR2(50) NOT NULL,
     fechaFundacion DATE NOT NULL,
-    CONSTRAINT enfre_equipo1_fk FOREIGN KEY (cod_enfre) -- Equipo 1
+    equipo1 NUMBER(4) NOT NULL,
+    equipo2 NUMBER(4) NOT NULL,
+    ganador NUMBER(4) NOT NULL,
+    CONSTRAINT enfre_equipo1_fk FOREIGN KEY (equipo1) -- Equipo 1
         REFERENCES equipos(cod_equipo),
-    CONSTRAINT enfre_equipo2_fk FOREIGN KEY (cod_enfre) -- Equipo 2
+    CONSTRAINT enfre_equipo2_fk FOREIGN KEY (equipo2) -- Equipo 2
         REFERENCES equipos(cod_equipo),
-    CONSTRAINT enfre_ganador_fk FOREIGN KEY (cod_enfre) -- Ganador
+    CONSTRAINT enfre_ganador_fk FOREIGN KEY (ganador) -- Ganador
         REFERENCES equipos(cod_equipo),
     CONSTRAINT enfre_codJor_fk FOREIGN KEY (cod_enfre) -- Jornada
         REFERENCES jornadas(cod_jornada)
