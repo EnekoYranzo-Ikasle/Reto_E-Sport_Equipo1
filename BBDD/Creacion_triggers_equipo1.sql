@@ -13,4 +13,39 @@ v_mensaje:= 'Error desconcido ' || to_char(SQLCODE) ||  SQLERRM;
 RAISE_APPLICATION_ERROR(-20099, v_mensaje);
 
 END trg_valida_ganador_Equipo01;
+
+/*NO MÁS DE 6 JUGADORES*/
+CREATE OR REPLACE TRIGGER max_jugadores_equipo
+BEFORE INSERT ON JUGADORES
+FOR EACH ROW
+
+DECLARE
+    total_jugadores NUMBER;
+    v_error VARCHAR2(250);
+    v_exceso_jugadores EXCEPTION;
+    
+    
+BEGIN
+    SELECT COUNT(*) INTO total_jugadores
+    FROM JUGADORES
+    WHERE cod_equipo = :NEW.cod_equipo;
+    
+    IF total_jugadores >= 6 THEN
+        RAISE v_exceso_jugadores;
+    END IF;
+    
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20020, 'Error: no se encontraron datos.');
+
+    WHEN TOO_MANY_ROWS THEN
+        RAISE_APPLICATION_ERROR(-20030, 'Error inesperado.');
+        
+    WHEN v_exceso_jugadores THEN
+        RAISE_APPLICATION_ERROR(-20002, 'No se pueden registrar más de seis jugadores por equipo.');
+
+    WHEN OTHERS THEN
+        v_error_msg := 'Error Oracle: ' || TO_CHAR(SQLCODE) || ', ' || SQLERRM;
+        RAISE_APPLICATION_ERROR(-20000, v_error);
+END;  
 /
