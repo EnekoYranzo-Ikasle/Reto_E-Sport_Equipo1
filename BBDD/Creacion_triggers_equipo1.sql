@@ -47,5 +47,28 @@ EXCEPTION
     WHEN OTHERS THEN
         v_error_msg := 'Error Oracle: ' || TO_CHAR(SQLCODE) || ', ' || SQLERRM;
         RAISE_APPLICATION_ERROR(-20000, v_error);
-END;  
-/
+END max_jugadores_equipo;  
+
+
+/*SALARIO MINIMO SMI*/
+CREATE OR REPLACE TRIGGER salario_minimo
+BEFORE INSERT ON jugadores
+FOR EACH ROW
+
+BEGIN
+
+IF (sueldo < 1184)THEN
+raise_application_error(-20000, 'El salario no puede ser menor del SMI');
+END IF;
+
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+NULL;
+
+WHEN TOO_MANY_ROWS THEN
+raise_application_error(-20500,'No se puede insertar el salario.');
+
+WHEN OTHERS THEN
+raise_application_error(-20100,'Error desconocido.');
+
+END salario_minimo;
