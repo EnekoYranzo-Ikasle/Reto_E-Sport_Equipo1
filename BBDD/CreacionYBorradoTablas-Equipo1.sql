@@ -43,7 +43,8 @@ CREATE TABLE jugadores (
     rol VARCHAR2(20) CHECK(rol IN('duelista', 'iniciador', 'centinela', 
         'controlador')) NOT NULL,
     sueldo NUMBER(7, 2) NOT NULL,
-    CONSTRAINT jug_codEqui_fk FOREIGN KEY (cod_jugador) -- Equipo
+    cod_equipo NUMBER(4) NOT NULL,
+    CONSTRAINT jug_codEqui_fk FOREIGN KEY (cod_equipo) -- Equipo
         REFERENCES equipos(cod_equipo)
 );
 
