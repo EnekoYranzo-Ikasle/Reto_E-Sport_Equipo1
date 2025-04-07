@@ -1,5 +1,6 @@
 import Controlador.*;
 import Modelo.*;
+import Util.Conexion;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -29,6 +30,7 @@ public class Main {
     }
 
     public static void crearObjetos() {
+        Conexion con = new Conexion();
         equipoDAO = new EquipoDAO();
         equipoController = new EquipoController(equipoDAO);
 
