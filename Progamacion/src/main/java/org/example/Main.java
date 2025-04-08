@@ -6,6 +6,8 @@ import org.example.Controlador.*;
 import org.example.Modelo.*;
 import org.example.Util.ConexionDB;
 
+import java.sql.Connection;
+
 public class Main {
     private static JugadorController jugadorController;
     private static EquipoController equipoController;
@@ -31,7 +33,8 @@ public class Main {
     }
 
     private static void crearObjetos() {
-        ConexionDB conn = new ConexionDB();
+        ConexionDB.connect();
+        Connection conn = ConexionDB.getConnection();
         equipoDAO = new EquipoDAO(conn);
         equipoController = new EquipoController(equipoDAO);
 
