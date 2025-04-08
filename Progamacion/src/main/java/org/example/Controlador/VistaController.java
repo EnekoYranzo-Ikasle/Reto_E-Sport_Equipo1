@@ -1,5 +1,6 @@
 package org.example.Controlador;
 
+import org.example.Modelo.Persona;
 import org.example.Vista.Login;
 
 import java.sql.SQLException;
@@ -14,8 +15,8 @@ public class VistaController {
         login.setVisible(true);
     }
 
-    public boolean iniciarSesion(String email, String pass) throws SQLException {
-        return modeloController.iniciarSesion(email, pass);
+    public Persona getPersona(String email) throws SQLException {
+        return modeloController.getPersona(email);
     }
 
     public void crearCuenta(String email, String pass) throws SQLException {

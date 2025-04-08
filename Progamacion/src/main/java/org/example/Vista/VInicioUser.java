@@ -5,27 +5,23 @@ import org.example.Controlador.VistaController;
 import javax.swing.*;
 import java.awt.*;
 
-public class VInicioAdmin extends JFrame {
+public class VInicioUser extends JFrame {
     private VistaController vistaController;
 
     private JPanel pPrincipal;
     private JPanel pHeader;
     private JPanel pBody;
+    private JPanel pBotones;
     private JButton bAdministrar;
-    private JButton bCerrarEtapa;
     private JButton bVerInforme;
-    private JButton bGenerarCalendario;
-    private JButton bIntroducirResultados;
-    private JPanel pArriba;
-    private JPanel pAbajo;
 
-    public VInicioAdmin(VistaController vistaController) {
+    public VInicioUser(VistaController vistaController) throws HeadlessException {
         this.vistaController = vistaController;
 
         setContentPane(pPrincipal);
-        setTitle("Vista Admin");
+        setTitle("Vista Inicio");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(700, 400);
+        setSize(500, 300);
         setLocationRelativeTo(null);
     }
 }

@@ -29,15 +29,6 @@ public class ModeloController {
         this.vistaController = vistaController;
     }
 
-    public boolean iniciarSesion(String email, String pass) throws SQLException {
-        Persona persona = getPersona(email);
-
-        if (!persona.getEmail().equals(email) && !persona.getPassword().equals(pass)) {
-            return false;
-        }else
-            return true;
-    }
-
     public void crearCuenta(String email, String pass) throws SQLException {
         personaController.crearCuenta(email, pass);
     }
