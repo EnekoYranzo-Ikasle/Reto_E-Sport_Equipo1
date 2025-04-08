@@ -4,9 +4,9 @@ public class Persona {
     private int codPersona;
     private String email;
     private String password;
-    private tiposUsers tipo;
+    private String tipo;
 
-    public Persona(int codPersona, String email, String password, tiposUsers tipo) {
+    public Persona(int codPersona, String email, String password, String tipo) {
         this.codPersona = codPersona;
         this.email = email;
         this.password = password;
@@ -37,11 +37,11 @@ public class Persona {
         this.password = password;
     }
 
-    public tiposUsers getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(tiposUsers tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 }

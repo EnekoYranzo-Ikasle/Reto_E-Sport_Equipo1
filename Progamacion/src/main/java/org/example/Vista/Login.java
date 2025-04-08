@@ -31,13 +31,27 @@ public class Login extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 350);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         iniciarSesionButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         iniciarSesionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    String email = tfEmail.getText();
+                    String pass = String.valueOf(pfPasword.getPassword());
 
+                    boolean userValido = vistaController.iniciarSesion(email, pass);
+
+                    if (!userValido) {
+                        throw new Exception("Usuario / Contraseña incorrecta");
+                    }
+
+
+                }catch (Exception ex){
+                    JOptionPane.showMessageDialog(pPrincipal, ex.getMessage());
+                }
             }
         });
 

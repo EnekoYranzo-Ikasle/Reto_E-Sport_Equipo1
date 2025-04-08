@@ -16,12 +16,14 @@ public class Main {
     private static EnfrentamientoController enfrentamientoController;
     private static ModeloController modeloController;
     private static VistaController vistaController;
+    private static PersonaController personaController;
 
     private static JugadorDAO jugadorDAO;
     private static EquipoDAO equipoDAO;
     private static JornadaDAO jornadaDAO;
     private static CompeticionDAO competicionDAO;
     private static EnfrentamientoDAO enfrentamientoDAO;
+    private static PersonaDAO personaDAO;
 
     public static void main(String[] args) {
         try {
@@ -35,6 +37,7 @@ public class Main {
     private static void crearObjetos() {
         ConexionDB.connect();
         Connection conn = ConexionDB.getConnection();
+
         equipoDAO = new EquipoDAO(conn);
         equipoController = new EquipoController(equipoDAO);
 
@@ -50,11 +53,13 @@ public class Main {
         competicionDAO = new CompeticionDAO(conn);
         competicionController = new CompeticionController(competicionDAO, jornadaDAO);
 
+        personaDAO = new PersonaDAO(conn);
+        personaController = new PersonaController(personaDAO);
+
         modeloController = new ModeloController(equipoController, jugadorController, enfrentamientoController,
-                jornadaController, competicionController);
+                jornadaController, competicionController, personaController);
 
         vistaController = new VistaController(modeloController);
-
         modeloController = new ModeloController(vistaController);
     }
 }
