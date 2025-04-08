@@ -29,6 +29,10 @@ public class Jugador {
         this.equipo = equipo;
     }
 
+    public Jugador() {
+
+    }
+
     // Getters and Setters:
     public String getDni() {
         return dni;

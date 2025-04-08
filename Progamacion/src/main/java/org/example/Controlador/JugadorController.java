@@ -4,6 +4,7 @@ import org.example.Excepcion.DatoNoValido;
 import org.example.Modelo.*;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class JugadorController {
     }
 
     // Funciones:
-    public void altaValidarDatosJugador() {
+    public void altaValidarDatosJugador() throws SQLException {
 
         String dni = solicitarDatos("Dni", "Ingrese el dni del jugador", "^[0-9]{8}[A-Z]$");
         String nombre = solicitarDatos("Nombre", "Ingrese el nombre del jugador", "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$");
@@ -49,25 +50,24 @@ public class JugadorController {
             equipo = solicitarEquipo(mensaje);
         } while (equipo == null);
 
-        boolean verificacion = jugadorDAO.verificarDni(dni);
+
         Jugador jugador = new Jugador(dni, nombre, apellido, nacionalidad, fechaNac, nickname, rol, sueldo, equipo);
 
-        if (verificacion) {
-            equipoDAO.agregarJugador(jugador);
+
+            equipoDAO.agregarJugador(jugador, equipo.getCodEquipo());
             jugadorDAO.agregarJugador(jugador);
-        } else
-            JOptionPane.showMessageDialog(null, "Ya hay un jugador registrado con ese dni");
+
 
     }
 
-    public void eliminarJugador() {
+    public void eliminarJugador() throws SQLException {
         String cod = JOptionPane.showInputDialog("Ingrese el código del jugador que quieres borrar");
         String mensaje = jugadorDAO.eliminarJugador(cod);
 
         JOptionPane.showMessageDialog(null, mensaje);
     }
 
-    public void mostrarJugador() {
+    public void mostrarJugador() throws SQLException {
         String codigo = JOptionPane.showInputDialog("Ingrese el código del jugador que quieres ver");
         Jugador jugador = jugadorDAO.mostrarJugador(codigo);
 
@@ -194,7 +194,7 @@ public class JugadorController {
         do {
             try {
                 String codigo = JOptionPane.showInputDialog(mensaje);
-                equipo = equipoDAO.obtenerEquipo(codigo);
+                equipo = equipoDAO.buscarEquipoPorCod(codigo);
 
                 if (equipo != null)
                     error = true;
@@ -202,7 +202,7 @@ public class JugadorController {
                     throw new DatoNoValido("El equipo con código: " + codigo + " no existe");
 
 
-            } catch (DatoNoValido e) {
+            } catch (DatoNoValido | SQLException e) {
                 error = false;
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }

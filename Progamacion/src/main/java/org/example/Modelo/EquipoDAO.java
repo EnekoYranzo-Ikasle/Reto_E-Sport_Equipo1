@@ -2,16 +2,24 @@ package org.example.Modelo;
 
 import org.example.Util.ConexionDB;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class EquipoDAO {
-    private ConexionDB conn;
+
+    private Connection conn;
+    private static PreparedStatement ps;
+    private static ResultSet rs;
+
     private final ArrayList<Equipo> listaEquipos;
 
     // Constructor:
-    public EquipoDAO(ConexionDB conn) {
+    public EquipoDAO(Connection conn) {
         this.conn = conn;
         this.listaEquipos = new ArrayList<>();
     }
@@ -29,61 +37,57 @@ public class EquipoDAO {
         listaEquipos.remove(equipo);
     }
 
-    private Optional<Equipo> buscarEquipoPorCod(String idEquipo) {
-        Optional<Equipo> buscarEquip = listaEquipos.stream().filter(equipoABuscar ->
-                        equipoABuscar.getCodEquipo().equals(idEquipo))
-                .findFirst();
-        return buscarEquip;
+    public Equipo buscarEquipoPorCod(String idEquipo) throws SQLException {
+        ps=conn.prepareStatement("select * from equipos where cod_equipo=?");
+        ps.setString(1, idEquipo);
+        rs=ps.executeQuery();
+        Equipo equipo = new Equipo();
+        if(rs.next()) {
+            equipo= hacerEquipo(rs);
+
+
+        }
+        return equipo;
+
     }
 
-    public Equipo buscarEquipoPorNombre(String nombre) {
-        return listaEquipos.stream()
-                .filter(e -> e.getNombreEquipo().equalsIgnoreCase(nombre))
-                .findFirst()
-                .orElse(null);
+    public Equipo buscarEquipoPorNombre(String nombre) throws SQLException {
+        ps=conn.prepareStatement("select * from equipos where nombre=?");
+        ps.setString(1, nombre);
+        rs=ps.executeQuery();
+        Equipo equipo = new Equipo();
+        if(rs.next()) {
+            equipo= hacerEquipo(rs);
+
+
+        }
+        return equipo;
+
     }
 
-    public Equipo obtenerEquipo(String idEquipo) {
-        Optional<Equipo> buscarEquip = buscarEquipoPorCod(idEquipo);
-        return buscarEquip.orElse(null);
+
+
+    public void agregarJugador(Jugador jugador, String codequip) throws SQLException {
+        ps=conn.prepareStatement("UPDATE jugadores SET cod_equipo = ? WHERE cod_jugador = ?");
+        ps.setString(1, codequip);
+        ps.setString(2, jugador.getDni());
+        ps.executeUpdate();
+
+        rs=ps.executeQuery();
     }
 
-    public void agregarJugador(Jugador jugador) {
-        String idEquipo = jugador.getEquipo().getCodEquipo();
 
-        Optional<Equipo> buscarEquipo = buscarEquipoPorCod(idEquipo);
-
-        buscarEquipo.get().getListaJugadores().add(jugador);
-    }
-
-    public void eliminarJugador(Jugador jugador, String idEquipo) {
-        Optional<Equipo> buscarEquip = buscarEquipoPorCod(idEquipo);
-        buscarEquip.get().bajaJugador(jugador);
-    }
 
     // Verificaciones:
-    public Boolean verificarCodigo(String codEquipo) {
-        boolean verificacion;
 
-        Optional<Equipo> buscarEquipo = listaEquipos.stream().filter(equipo -> equipo.getNombreEquipo().equals(codEquipo)).findFirst();
 
-        if (buscarEquipo.isPresent())
-            verificacion = false;
-        else
-            verificacion = true;
-        return verificacion;
-    }
 
-    public Boolean verificarNombre(String nombre) {
-        boolean verificacion;
-
-        Optional<Equipo> buscarEquipo = listaEquipos.stream().filter(equipo -> equipo.getNombreEquipo().equals(nombre)).findFirst();
-
-        if (buscarEquipo.isPresent())
-            verificacion = false;
-        else
-            verificacion = true;
-        return verificacion;
+    public Equipo hacerEquipo(ResultSet rs) throws SQLException {
+        Equipo equipo = new Equipo();
+        equipo.setCodEquipo(rs.getString("cod_equipo"));
+        equipo.setNombreEquipo(rs.getString("nombre_equipo"));
+        equipo.setFechaFund(rs.getDate("fechaFundacion").toLocalDate());
+        return equipo;
     }
 }
 
