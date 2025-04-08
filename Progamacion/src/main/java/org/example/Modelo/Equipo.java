@@ -7,14 +7,17 @@ public class Equipo {
     private String codEquipo;
     private String nombreEquipo;
     private LocalDate fechaFund;
-    private ArrayList<Jugador> listaJugadores;
+
 
     // Constructor:
     public Equipo(String codEquipo, String nombreEquipo, LocalDate fechaFund) {
         this.codEquipo = codEquipo;
         this.nombreEquipo = nombreEquipo;
-        this.fechaFund = fechaFund;
-        this.listaJugadores = new ArrayList<>();
+
+    }
+
+    public Equipo() {
+
     }
 
     // Getters and Setters:
@@ -42,21 +45,7 @@ public class Equipo {
         this.fechaFund = fechaFund;
     }
 
-    public ArrayList<Jugador> getListaJugadores() {
-        return listaJugadores;
-    }
 
-    public void setListaJugadores(ArrayList<Jugador> listaJugadores) {
-        this.listaJugadores = listaJugadores;
-    }
-
-    public void altaJugador(Jugador jugador) {
-        this.listaJugadores.add(jugador);
-    }
-
-    public void bajaJugador(Jugador jugador) {
-        this.listaJugadores.remove(jugador);
-    }
 
     // To String:
     @Override

@@ -3,6 +3,7 @@ package org.example.Controlador;
 import org.example.Modelo.*;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -56,7 +57,7 @@ public class JornadaController {
         }
     }
 
-    public void buscarJornadasPorEquipo() {
+    public void buscarJornadasPorEquipo() throws SQLException {
         StringBuilder mensaje;
 
         String nombreEquipo = JOptionPane.showInputDialog("Ingrese el nombre del equipo para buscar sus jornadas:");
