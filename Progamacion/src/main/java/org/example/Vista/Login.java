@@ -46,7 +46,8 @@ public class Login extends JFrame {
         linkCuenta.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Esto es una prueba");
+                SignUp signUp = new SignUp(vistaController);
+                signUp.setVisible(true);
             }
         });
     }
