@@ -3,14 +3,15 @@ package org.example.Modelo;
 import org.example.Util.ConexionDB;
 
 import javax.swing.*;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EnfrentamientoDAO {
-    private ConexionDB conn;
+    private Connection conn;
     private final List<Enfrentamiento> ListaEnfrentamientos;
 
-    public EnfrentamientoDAO(ConexionDB conn) {
+    public EnfrentamientoDAO(Connection conn) {
         this.conn = conn;
         ListaEnfrentamientos = new ArrayList<Enfrentamiento>();
     }

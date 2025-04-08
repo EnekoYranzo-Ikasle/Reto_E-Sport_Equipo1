@@ -3,17 +3,18 @@ package org.example.Modelo;
 import org.example.Util.ConexionDB;
 
 import javax.swing.*;
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class JornadaDAO {
-    private ConexionDB conn;
+    private Connection conn;
     private final List<Jornada> listaJornadas;
     private final Random rand = new Random();
 
-    public JornadaDAO(ConexionDB conn) {
+    public JornadaDAO(Connection conn) {
         this.conn = conn;
         this.listaJornadas = new ArrayList<Jornada>();
     }
