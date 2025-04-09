@@ -15,20 +15,20 @@ public class JornadaDAO {
         this.listaJornadas = new ArrayList<>();
     }
 
-    public void eliminarJornadaPorCod(String codJornada) {
+    public void eliminarJornadaPorCod(int codJornada) {
         Optional<Jornada> jornadaAEliminar = listaJornadas.stream()
-                .filter(j -> j.getCodJornada().equals(codJornada))
+                .filter(j -> j.getCodJornada()==codJornada)
                 .findFirst();
 
         jornadaAEliminar.ifPresent(listaJornadas::remove);
     }
 
     public void modificarJornadaPorCod(Jornada jornada) {
-        String codJornada = jornada.getCodJornada();
+        int codJornada = jornada.getCodJornada();
         LocalDate fechaJornada = jornada.getFechaJornada();
 
         Optional<Jornada> jornadaAModificar = listaJornadas.stream()
-                .filter(j -> j.getCodJornada().equals(codJornada))
+                .filter(j -> j.getCodJornada()==codJornada)
                 .findFirst();
 
         if (jornadaAModificar.isPresent()) {
@@ -38,9 +38,10 @@ public class JornadaDAO {
         }
     }
 
-    public Jornada buscarJornadaPorCod(String codJornada) {
+    public Jornada buscarJornadaPorCod(int codJornada) {
+        
         for (Jornada j : listaJornadas) {
-            if (j.getCodJornada().equalsIgnoreCase(codJornada)) {
+            if (j.getCodJornada()== codJornada) {
                 return j;
             }
         }

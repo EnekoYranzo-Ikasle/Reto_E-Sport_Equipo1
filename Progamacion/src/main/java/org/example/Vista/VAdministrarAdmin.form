@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.example.Vista.VInicioAdmin">
-  <grid id="27dc6" binding="pPrincipal" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.example.Vista.VAdministrarAdmin">
+  <grid id="cbd77" binding="pPrincipal" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="688" height="466"/>
+      <xy x="48" y="54" width="629" height="386"/>
     </constraints>
     <properties>
       <background color="-14800328"/>
-      <preferredSize width="700" height="400"/>
     </properties>
     <border type="none"/>
     <children>
-      <grid id="59206" binding="pHeader" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="c477a" binding="pHeader" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -21,17 +20,17 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="a2852" class="javax.swing.JLabel">
+          <component id="c6da4" class="javax.swing.JLabel">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font size="24" style="1"/>
               <foreground color="-1"/>
-              <text value="Panel de administración"/>
+              <text value="Administrar"/>
             </properties>
           </component>
-          <component id="779a4" class="javax.swing.JButton" binding="bLogOut">
+          <component id="7f6cd" class="javax.swing.JButton" binding="bVolver">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="-1" height="30"/>
@@ -44,20 +43,20 @@
               <font size="14"/>
               <foreground color="-1"/>
               <icon value="Images/logOut.png"/>
-              <text value="Salir"/>
+              <text value="Volver"/>
             </properties>
           </component>
-          <hspacer id="96461">
+          <hspacer id="e117c">
             <constraints>
               <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
-          <hspacer id="38677">
+          <hspacer id="6a3d7">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
-          <hspacer id="d54a0">
+          <hspacer id="f67da">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="80" height="-1"/>
@@ -66,7 +65,7 @@
           </hspacer>
         </children>
       </grid>
-      <grid id="db446" binding="pBody" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="4b602" binding="pBody" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -76,7 +75,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <grid id="ef0fe" binding="pArriba" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+          <grid id="6e591" binding="pArriba" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -85,7 +84,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="2df71" class="javax.swing.JButton" binding="bAdministrar">
+              <component id="82df" class="javax.swing.JButton" binding="bAdministrar">
                 <constraints/>
                 <properties>
                   <background color="-14800328"/>
@@ -93,12 +92,12 @@
                   <focusPainted value="false"/>
                   <foreground color="-1"/>
                   <horizontalTextPosition value="0"/>
-                  <icon value="Images/settings.png"/>
-                  <text value="Administrar"/>
+                  <icon value="Images/jugador.png"/>
+                  <text value="Jugador"/>
                   <verticalTextPosition value="3"/>
                 </properties>
               </component>
-              <component id="fdf51" class="javax.swing.JButton" binding="bGenerarCalendario">
+              <component id="cd294" class="javax.swing.JButton" binding="bGenerarCalendario">
                 <constraints/>
                 <properties>
                   <background color="-14800328"/>
@@ -106,12 +105,12 @@
                   <focusPainted value="false"/>
                   <foreground color="-1"/>
                   <horizontalTextPosition value="0"/>
-                  <icon value="Images/calendar.png"/>
-                  <text value="Generar calendario"/>
+                  <icon value="Images/groups.png"/>
+                  <text value="Equipos"/>
                   <verticalTextPosition value="3"/>
                 </properties>
               </component>
-              <component id="aa5f3" class="javax.swing.JButton" binding="bCerrarEtapa">
+              <component id="49e9f" class="javax.swing.JButton" binding="bCerrarEtapa">
                 <constraints/>
                 <properties>
                   <background color="-14800328"/>
@@ -119,12 +118,12 @@
                   <focusPainted value="false"/>
                   <foreground color="-1"/>
                   <horizontalTextPosition value="0"/>
-                  <icon value="Images/stop.png"/>
-                  <text value="Cerrar etapa"/>
+                  <icon value="Images/enfrentamiento.png"/>
+                  <text value="Enfrentamiento"/>
                   <verticalTextPosition value="3"/>
                 </properties>
               </component>
-              <component id="676c9" class="javax.swing.JButton" binding="bIntroducirResultados">
+              <component id="57434" class="javax.swing.JButton" binding="bIntroducirResultados">
                 <constraints/>
                 <properties>
                   <background color="-14800328"/>
@@ -132,48 +131,32 @@
                   <focusPainted value="false"/>
                   <foreground color="-1"/>
                   <horizontalTextPosition value="0"/>
-                  <icon value="Images/insert.png"/>
-                  <text value="Introducir resultados"/>
+                  <icon value="Images/jornada.png"/>
+                  <text value="Jornada"/>
+                  <verticalTextPosition value="3"/>
+                </properties>
+              </component>
+              <component id="df5c5" class="javax.swing.JButton">
+                <constraints/>
+                <properties>
+                  <background color="-14800328"/>
+                  <borderPainted value="false"/>
+                  <focusPainted value="false"/>
+                  <foreground color="-1"/>
+                  <horizontalTextPosition value="0"/>
+                  <icon value="Images/leaderboard.png"/>
+                  <text value="Competicion"/>
                   <verticalTextPosition value="3"/>
                 </properties>
               </component>
             </children>
           </grid>
-          <grid id="af2a1" binding="pAbajo" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <vspacer id="7abc9">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <background color="-14800328"/>
-            </properties>
-            <border type="none"/>
-            <children>
-              <component id="e615e" class="javax.swing.JButton" binding="bVerInforme">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                    <preferred-size width="80" height="40"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <background color="-14800328"/>
-                  <borderPainted value="false"/>
-                  <focusPainted value="false"/>
-                  <foreground color="-1"/>
-                  <horizontalTextPosition value="0"/>
-                  <icon value="Images/visibility.png"/>
-                  <text value="Ver informes"/>
-                  <verticalTextPosition value="3"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-          <vspacer id="648b">
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
-          <vspacer id="4e4a8">
+          <vspacer id="79c9c">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
                 <preferred-size width="-1" height="30"/>
@@ -182,14 +165,14 @@
           </vspacer>
         </children>
       </grid>
-      <vspacer id="8e52e">
+      <vspacer id="c9a28">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
             <preferred-size width="-1" height="30"/>
           </grid>
         </constraints>
       </vspacer>
-      <vspacer id="e388d">
+      <vspacer id="a574e">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
             <preferred-size width="-1" height="30"/>

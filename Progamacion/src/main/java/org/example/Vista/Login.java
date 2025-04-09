@@ -6,6 +6,8 @@ import org.example.Modelo.Persona;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Login extends JFrame {
     private VistaController vistaController;
@@ -41,27 +43,17 @@ public class Login extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     String email = tfEmail.getText();
+
+                    boolean emailValido = validarFormatoEmail(email);
+
+                    if (!emailValido) {
+                        throw new Exception("Formato de email incorrecto");
+                    }
+
                     String pass = String.valueOf(pfPasword.getPassword());
 
-                    Persona usuario = vistaController.getPersona(email);
+                    vistaController.logIn(email, pass);
 
-                    if (!usuario.getEmail().equals(email) && !usuario.getPassword().equals(pass)) {
-                        throw new Exception("Usuario / Contraseña incorrecta");
-                    }
-
-                    switch (usuario.getTipo()) {
-                        case "user":{
-                            VInicioUser vInicioUser = new VInicioUser(vistaController);
-                            vInicioUser.setVisible(true);
-                        }break;
-                        case "admin": {
-                            VInicioAdmin vInicioAdmin = new VInicioAdmin(vistaController);
-                            vInicioAdmin.setVisible(true);
-                        }break;
-                        default: {
-                            throw new Exception("Tipo de usuario incorrecto");
-                        }
-                    }
                 }catch (Exception ex){
                     JOptionPane.showMessageDialog(pPrincipal, ex.getMessage());
                 }
@@ -76,5 +68,11 @@ public class Login extends JFrame {
                 signUp.setVisible(true);
             }
         });
+    }
+
+    private boolean validarFormatoEmail(String email) {
+        Pattern patron = Pattern.compile("^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+        Matcher matcher = patron.matcher(email);
+        return matcher.matches();
     }
 }

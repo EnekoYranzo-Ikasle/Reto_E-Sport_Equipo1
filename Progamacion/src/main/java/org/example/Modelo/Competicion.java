@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Competicion {
-    private String codCompe;
+    private int codCompe;
     private String nombre;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
@@ -12,7 +12,7 @@ public class Competicion {
     private ArrayList<Jornada> listaJornadas;
 
 
-    public Competicion(String codCompe, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String estado) {
+    public Competicion(int codCompe, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String estado) {
         this.codCompe = codCompe;
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
@@ -30,11 +30,11 @@ public class Competicion {
     }
 
 //    Getter and Setter
-    public String getCodCompe() {
+    public int getCodCompe() {
         return codCompe;
     }
 
-    public void setCodCompe(String codCompe) {
+    public void setCodCompe(int codCompe) {
         this.codCompe = codCompe;
     }
 

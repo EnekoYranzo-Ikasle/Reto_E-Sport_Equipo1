@@ -8,7 +8,6 @@ import org.example.Modelo.JornadaDAO;
 
 import javax.swing.*;
 import java.sql.SQLException;
-import java.sql.Savepoint;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -31,9 +30,7 @@ public class CompeticionController {
     public void eliminarCompeticion(Competicion competicion) throws SQLException {
         competicionDAO.eliminarCompeticion(competicion);
     }
-
     public void generarCalendario() throws Exception {
         competicionDAO.generarCalendario();
     }
 }
-

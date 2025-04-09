@@ -12,7 +12,7 @@ public class Jornada {
 
     public Jornada() {
     }
-
+  
     public Jornada(String codJornada,String codCompe, LocalDate fechaJornada) {
         this.codCompe = codCompe;
         this.codJornada = codJornada;
@@ -25,11 +25,11 @@ public class Jornada {
     }
 
 //  Getter and Setter
-    public String getCodJornada() {
+    public int getCodJornada() {
         return codJornada;
     }
 
-    public void setCodJornada(String cod_jornada) {
+    public void setCodJornada(int cod_jornada) {
         this.codJornada = cod_jornada;
     }
 
