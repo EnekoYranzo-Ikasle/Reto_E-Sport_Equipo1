@@ -10,8 +10,8 @@ public class ConexionDB {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String url = "jdbc:oracle:thin:@SrvOracle:1521:orcl";
-            String user = "daw21";
-            String password = "daw21";
+            String user = "eqdaw01";
+            String password = "eqdaw01";
             conn = DriverManager.getConnection(url, user, password);
 
         }catch (ClassNotFoundException e) {
