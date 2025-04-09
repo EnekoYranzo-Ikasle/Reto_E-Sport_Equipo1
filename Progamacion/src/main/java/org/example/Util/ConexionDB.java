@@ -9,7 +9,7 @@ public class ConexionDB {
     public static void connect(){
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            String url = "jdbc:oracle:thin:@SrvOracle:1521:orcl";
+            String url = "jdbc:oracle:thin:@172.20.225.114:1521:orcl";
             String user = "eqdaw01";
             String password = "eqdaw01";
             conn = DriverManager.getConnection(url, user, password);
