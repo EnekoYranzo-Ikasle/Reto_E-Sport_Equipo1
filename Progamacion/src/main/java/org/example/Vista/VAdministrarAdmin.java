@@ -3,36 +3,37 @@ package org.example.Vista;
 import org.example.Controlador.VistaController;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class VInicioUser extends JFrame {
+public class VAdministrarAdmin extends JFrame {
     private VistaController vistaController;
-    private Login login;
 
     private JPanel pPrincipal;
-    private JPanel pBody;
-    private JPanel pBotones;
-    private JButton bAdministrar;
-    private JButton bVerInforme;
+    private JButton buttonOK;
     private JPanel pHeader;
-    private JButton bLogOut;
+    private JButton bVolver;
+    private JPanel pBody;
+    private JPanel pArriba;
+    private JButton bAdministrar;
+    private JButton bGenerarCalendario;
+    private JButton bCerrarEtapa;
+    private JButton bIntroducirResultados;
 
-    public VInicioUser(VistaController vistaController) throws HeadlessException {
+    public VAdministrarAdmin(VistaController vistaController) {
         this.vistaController = vistaController;
 
         setContentPane(pPrincipal);
-        setTitle("Vista Inicio");
+        setTitle("Vista Admin - Administrar");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
+        setSize(700, 300);
         setLocationRelativeTo(null);
 
-        bLogOut.addActionListener(new ActionListener() {
+        bVolver.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                login = new Login(vistaController);
-                login.setVisible(true);
+                VInicioAdmin vInicioAdmin = new VInicioAdmin(vistaController, null);
+                vInicioAdmin.setVisible(true);
                 dispose();
             }
         });

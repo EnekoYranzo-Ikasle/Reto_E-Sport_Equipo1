@@ -22,7 +22,7 @@ public class JornadaController {
         try {
             int numJornadas = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántas jornadas deseas generar?"));
 
-            jornadaDAO.generarJornadas(numJornadas, equipoDAO.obtenerEquipos(), enfrentamientoDAO);
+//            jornadaDAO.generarJornadas(numJornadas, equipoDAO.obtenerEquipos(), enfrentamientoDAO);
 
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -30,10 +30,9 @@ public class JornadaController {
     }
 
     public void borrarJornada() {
-
         try {
             String codJornada = JOptionPane.showInputDialog(null, "Escribe el código de jornada que deseas borrar");
-            int codigo=Integer.parseInt(codJornada);
+            int codigo = Integer.parseInt(codJornada);
             jornadaDAO.eliminarJornadaPorCod(codigo);
             
         }catch (Exception e) {
@@ -46,7 +45,7 @@ public class JornadaController {
 
         try {
             String codJornada = JOptionPane.showInputDialog(null, "Escribe el código de jornada que deseas modificar");
-            int codigo= Integer.parseInt(codJornada);
+            int codigo = Integer.parseInt(codJornada);
             LocalDate fechaModificada = LocalDate.parse(JOptionPane.showInputDialog(null, "Introduce la nueva fecha de la jornada (dd/MM/yyyy)"), formatoFecha);
 
             Jornada j = new Jornada(codigo, fechaModificada);

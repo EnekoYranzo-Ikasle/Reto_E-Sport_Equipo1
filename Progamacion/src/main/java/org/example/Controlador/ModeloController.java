@@ -36,4 +36,8 @@ public class ModeloController {
     public Persona getPersona(String email) throws SQLException {
         return personaController.getPersona(email);
     }
+
+    public void generarCalendario() throws Exception {
+        competicionController.generarCalendario();
+    }
 }

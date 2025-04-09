@@ -3,9 +3,7 @@ package org.example.Modelo;
 import java.time.LocalDate;
 
 public class Jugador {
-
-    // Atributos:
-    private int cod_jugador;
+    private int codJugador;
     private String nombre;
     private String apellidos;
     private String nacionalidad;
@@ -13,12 +11,12 @@ public class Jugador {
     private String nickname;
     private Roles rol;
     private double sueldo;
-    private Equipo equipo;
+    private int codEquipo;
 
     // Constructor:
     public Jugador(int codJugador, String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
-                   String nickname, Roles rol, double sueldo, Equipo equipo) {
-        this.cod_jugador = codJugador;
+                   String nickname, Roles rol, double sueldo, int codEquipo) {
+        this.codJugador = codJugador;
         this.nombre = nombre;
         this.apellidos = apellido;
         this.nacionalidad = nacionalidad;
@@ -26,7 +24,7 @@ public class Jugador {
         this.nickname = nickname;
         this.rol = rol;
         this.sueldo = sueldo;
-        this.equipo = equipo;
+        this.codEquipo = codEquipo;
     }
 
     public Jugador() {
@@ -34,14 +32,12 @@ public class Jugador {
     }
 
     // Getters and Setters:
-
-
-    public int getCod_jugador() {
-        return cod_jugador;
+    public int getCodJugador() {
+        return codJugador;
     }
 
-    public void setCod_jugador(int cod_jugador) {
-        this.cod_jugador = cod_jugador;
+    public void setCodJugador(int codJugador) {
+        this.codJugador = codJugador;
     }
 
     public String getNombre() {
@@ -100,18 +96,18 @@ public class Jugador {
         this.sueldo = sueldo;
     }
 
-    public Equipo getEquipo() {
-        return equipo;
+    public int getCodEquipo() {
+        return codEquipo;
     }
 
-    public void setEquipo(Equipo equipo) {
-        this.equipo = equipo;
+    public void setCodEquipo(int codEquipo) {
+        this.codEquipo = codEquipo;
     }
 
     // To String:
     @Override
     public String toString() {
-        return "dni -> " + cod_jugador  + "\n " +
+        return "id -> " + codJugador + "\n " +
                 "nombre -> " + nombre  + "\n " +
                 "apellidos -> " + apellidos  + "\n " +
                 "nacionalidad -> " + nacionalidad  + "\n " +
@@ -119,7 +115,6 @@ public class Jugador {
                 "nickname -> " + nickname  + "\n " +
                 "rol -> " + rol  + "\n " +
                 "sueldo -> " + sueldo  + "\n " +
-                "equipo -> " + equipo + "\n "
-                ;
+                "equipo -> " + codEquipo + "\n ";
     }
 }

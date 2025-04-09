@@ -51,7 +51,7 @@ public class Main {
         jornadaController = new JornadaController(jornadaDAO, equipoDAO, enfrentamientoDAO);
 
         competicionDAO = new CompeticionDAO(conn);
-        competicionController = new CompeticionController(competicionDAO, jornadaDAO);
+        competicionController = new CompeticionController(competicionDAO);
 
         personaDAO = new PersonaDAO(conn);
         personaController = new PersonaController(personaDAO);

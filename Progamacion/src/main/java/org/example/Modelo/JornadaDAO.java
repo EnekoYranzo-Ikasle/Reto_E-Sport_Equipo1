@@ -1,70 +1,26 @@
 package org.example.Modelo;
 
-import org.example.Util.ConexionDB;
-
 import javax.swing.*;
 import java.sql.Connection;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class JornadaDAO {
-    private Connection conn;
+    private final Connection conn;
     private final List<Jornada> listaJornadas;
-    private final Random rand = new Random();
 
     public JornadaDAO(Connection conn) {
         this.conn = conn;
-        this.listaJornadas = new ArrayList<Jornada>();
-    }
-
-    public void generarJornadas(int numJornadas, List<Equipo> equipos, EnfrentamientoDAO enfrentamientoDAO) {
-        if (equipos.size()%2==0){
-            for (int i = 1; i <= numJornadas; i++) {
-                LocalDate fechaJornada = LocalDate.now().plusDays(i); // Generara jornadas a partir del dia siguiente que se genere la jornada
-
-                int codJornada= i;
-                Jornada jornada = new Jornada(codJornada, fechaJornada);
-                Set<String> enfrentados = new HashSet<>();
-                LocalTime horaInicial = LocalTime.of(9, 0);
-
-                while (jornada.getListaEnfrentamientos().size() < equipos.size() / 2) {
-                    // Genera los enfrentamientos automaticamente.
-                    Equipo e1 = equipos.get(rand.nextInt(equipos.size()));
-                    Equipo e2 = equipos.get(rand.nextInt(equipos.size()));
-
-                    // Verificar que no se hayan enfrentado antes.
-                    if (!e1.equals(e2) && !enfrentados.contains(e1.getNombreEquipo() + e2.getNombreEquipo()) &&
-                            !enfrentados.contains(e2.getNombreEquipo() + e1.getNombreEquipo())) {
-                        // Creamos los objetos y los añadimos al ArrayList
-                        Enfrentamiento enf = new Enfrentamiento("E" + i + jornada.getListaEnfrentamientos().size(), e1, e2, horaInicial);
-
-                        jornada.addEnfrentamiento(enf);
-                        enfrentamientoDAO.guardarEnfrentamientos(enf);
-
-                        enfrentados.add(e1.getNombreEquipo() + e2.getNombreEquipo());
-                        enfrentados.add(e2.getNombreEquipo() + e1.getNombreEquipo());
-
-                        horaInicial = horaInicial.plusHours(2); // Entre enfrentamientos pasaran 2 horas.
-                    }
-                }
-                listaJornadas.add(jornada);
-            }
-        }else{
-            JOptionPane.showMessageDialog(null, "No se puede generar la jornada si no hay equipos pares");
-        }
-
+        this.listaJornadas = new ArrayList<>();
     }
 
     public void eliminarJornadaPorCod(int codJornada) {
         Optional<Jornada> jornadaAEliminar = listaJornadas.stream()
-                .filter(j -> j.getCodJornada()==codJornada)
+                .filter(j -> j.getCodJornada() == codJornada)
                 .findFirst();
 
-        if (jornadaAEliminar.isPresent()) {
-            listaJornadas.remove(jornadaAEliminar.get());
-        }
+        jornadaAEliminar.ifPresent(listaJornadas::remove);
     }
 
     public void modificarJornadaPorCod(Jornada jornada) {
@@ -72,20 +28,21 @@ public class JornadaDAO {
         LocalDate fechaJornada = jornada.getFechaJornada();
 
         Optional<Jornada> jornadaAModificar = listaJornadas.stream()
-                .filter(j -> j.getCodJornada()==codJornada)
+                .filter(j -> j.getCodJornada() == codJornada)
                 .findFirst();
 
         if (jornadaAModificar.isPresent()) {
             jornadaAModificar.get().setFechaJornada(fechaJornada);
         } else {
-            JOptionPane.showMessageDialog(null, "No se encontró la jornada con código: " + codJornada, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se encontró la jornada con código: " +
+                    codJornada, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public Jornada buscarJornadaPorCod(int codJornada) {
         
         for (Jornada j : listaJornadas) {
-            if (j.getCodJornada()== codJornada) {
+            if (j.getCodJornada() == codJornada) {
                 return j;
             }
         }
@@ -111,10 +68,10 @@ public class JornadaDAO {
         StringBuilder mensaje = new StringBuilder();
 
         if (listaJornadas.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El equipo " + equipo.getNombreEquipo() + " no tiene jornadas registradas.",
-                    "Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El equipo " + equipo.getNombreEquipo() +
+                            " no tiene jornadas registradas.", "Información", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            mensaje = new StringBuilder(equipo.getNombreEquipo() + " participa en las siguientes jornadas" + ":\n");
+            mensaje.append(equipo.getNombreEquipo()).append(" participa en las siguientes jornadas:\n");
             for (Jornada jornada : listaJornadas) {
                 mensaje.append("- Jornada: ").append(jornada.getCodJornada()).append("\n");
             }

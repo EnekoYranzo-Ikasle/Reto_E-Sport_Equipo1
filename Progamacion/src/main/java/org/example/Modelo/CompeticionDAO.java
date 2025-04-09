@@ -1,30 +1,78 @@
 package org.example.Modelo;
 
-import javax.swing.*;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CompeticionDAO {
-    private Connection conn;
-    private static PreparedStatement ps;
-    private static ResultSet rs;
-    private final ArrayList<Competicion> listaCompeticiones;
-    private final ArrayList<Jornada> listaJornadas;
+    private final Connection conn;
+    private PreparedStatement ps;
+    private ResultSet rs;
+    private String plantilla;
 
     public CompeticionDAO(Connection conn) {
         this.conn = conn;
-        listaCompeticiones = new ArrayList<>();
-        listaJornadas = new ArrayList<>();
     }
 
+    public void agregarCompeticion(Competicion c) throws SQLException {
+        ps = conn.prepareStatement("INSERT INTO competiciones VALUES(?,?,?)");
+        ps.setString(1, c.getNombre());
+        ps.setDate(2, parsearFecha(c.getFechaInicio()));
+        ps.setDate(3, parsearFecha(c.getFecha_fin()));
+        ps.executeUpdate();
+    }
+    public void modificarCompeticion(Competicion c) throws SQLException {
+        ps = conn.prepareStatement("UPDATE competiciones SET nombre = ?, fechaInicio = ?, fechaFin = ? WHERE cod_comp = ?");
+        ps.setString(1,c.getNombre());
+        ps.setDate(2,parsearFecha(c.getFechaInicio()));
+        ps.setDate(3,parsearFecha(c.getFecha_fin()));
+        ps.executeUpdate();
+    }
+    public void eliminarCompeticion(Competicion c) throws SQLException {
+        ps = conn.prepareStatement("DELETE FROM competiciones WHERE cod_comp = ?");
+        ps.setString(1, c.getNombre());
+        ps.executeUpdate();
+    }
+
+    public void generarCalendario() throws Exception {
+        try {
+            CallableStatement stmt = conn.prepareCall("{call generar_calendario}");
+            stmt.execute();
+            System.out.println("Calendario generado correctamente.");
+
+        } catch (SQLException ex) {
+            System.out.println("Error al generar el calendario: " + ex.getMessage());
+        }
+    }
+
+    private Date parsearFecha(LocalDate fecha1){
+        return Date.valueOf(fecha1);
+    }
+
+    /*
+    public List<Competicion> listarCompeticiones() throws SQLException {
+        Statement st=con.createStatement();
+        rs=st.executeQuery("SELECT * FROM competiciones");
+        List<Competicion> Listcompeticiones=new ArrayList<>();
+        while (rs.next()) {
+            Competicion competicion=new Competicion();
+            competicion.setNombre(rs.getString(1));
+            competicion.setFecha_inicia(LocalDate.parse(rs.getString(2)));
+            competicion.setFecha_fin(LocalDate.parse(rs.getString(3)));
+            Listcompeticiones.add(competicion);
+        }
+        return Listcompeticiones;
+    }
+
+    public void agregarCompeticion(Competicion competicion) {
+   
     public void agregarCompeticion(Competicion competicion) throws SQLException {
         ps=conn.prepareStatement("INSERT into competiciones (fechaInicio, fechaFin, estado, nombre) values (?, ?, ?, ?)");
         ps.setDate(1, parsearFecha(competicion.getFechaInicio()));
         ps.setDate(2, parsearFecha(competicion.getFecha_fin()));
         ps.setString(3,competicion.getEstado());
         ps.setString(4,competicion.getNombre());
-
 
         listaCompeticiones.add(competicion);
     }
@@ -220,13 +268,6 @@ public class CompeticionDAO {
         c.setEstado(rs.getString("estado"));
         c.setNombre(rs.getString("nombre"));
         return c;
-
-
-
     }
-
-    private Date parsearFecha(LocalDate fecha1){
-        Date fecha=Date.valueOf(fecha1);
-        return fecha;
-    }
+*/
 }

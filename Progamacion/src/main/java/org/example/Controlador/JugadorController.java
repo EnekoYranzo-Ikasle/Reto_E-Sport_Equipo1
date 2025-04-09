@@ -32,6 +32,7 @@ public class JugadorController {
         LocalDate fechaNac = formatearFecha(solicitarDatos("Fecha de Nacimiento", "Ingrese el fecha del nacimiento del jugador dd/MM/yyyy", "^(0[1-9]|(1|2)[0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$"));
         String nickname = solicitarDatos("Nickname", "Ingrese el nickname del jugador", "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$");
         int dni2=Integer.parseInt(dni);
+
         double sueldo;
         do {
             String mensaje = "Introduce el sueldo del jugador";
@@ -50,8 +51,7 @@ public class JugadorController {
             equipo = solicitarEquipo(mensaje);
         } while (equipo == null);
 
-
-        Jugador jugador = new Jugador(dni2, nombre, apellido, nacionalidad, fechaNac, nickname, rol, sueldo, equipo);
+        Jugador jugador = new Jugador(dni2, nombre, apellido, nacionalidad, fechaNac, nickname, rol, sueldo, equipo.getCodEquipo());
 
 
             equipoDAO.agregarJugador(jugador, equipo.getCodEquipo());
@@ -93,10 +93,10 @@ public class JugadorController {
             if (jugadorAtrModificar != null) {
                 switch (jugadorAtrModificar) {
                     case "Nombre":
-                        jugadorElegido.setNombre(solicitarDatos("Nombre", "Introduce el nuevo nombre del jugador: " + jugadorElegido.getCod_jugador(), "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$"));
+                        jugadorElegido.setNombre(solicitarDatos("Nombre", "Introduce el nuevo nombre del jugador: " + jugadorElegido.getCodJugador(), "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$"));
                         break;
                     case "Apellidos":
-                        jugadorElegido.setApellidos(solicitarDatos("Apellidos", "Introduce los nuevos Apellidos del jugador: " + jugadorElegido.getCod_jugador(), "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$"));
+                        jugadorElegido.setApellidos(solicitarDatos("Apellidos", "Introduce los nuevos Apellidos del jugador: " + jugadorElegido.getCodJugador(), "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$"));
                         break;
                     case "Fecha de nacimiento":
                         jugadorElegido.setFechaNacimiento(formatearFecha(solicitarDatos("Fecha de Nacimiento", "Ingrese la nueva fecha del nacimiento del jugador: " + jugadorElegido.getNombre() + jugadorElegido.getApellidos() + " (dd/MM/yyyy)", "^(0[1-9]|(1|2)[0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$")));
@@ -128,7 +128,7 @@ public class JugadorController {
                             String mensaje = "Introduce el código del equipo en el que deseas introducir el jugador: " + jugadorElegido.getNombre() + jugadorElegido.getApellidos();
                             equipo = solicitarEquipo(mensaje);
                         } while (equipo == null);
-                        jugadorElegido.setEquipo(equipo);
+                        jugadorElegido.setCodEquipo(equipo.getCodEquipo());
                         break;
                 }
             }
