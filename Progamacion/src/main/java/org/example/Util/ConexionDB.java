@@ -19,6 +19,7 @@ public class ConexionDB {
         }catch (Exception e) {
             System.out.println("Error al abrir conexion " + e.getMessage());
         }
+
     }
 
     public static Connection getConnection() {
