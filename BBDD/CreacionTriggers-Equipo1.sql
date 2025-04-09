@@ -3,7 +3,9 @@ DROP TRIGGER trg_valida_ganador_Equipo01;
 DROP TRIGGER max_jugadores_equipo;
 DROP TRIGGER salario_minimo;
 DROP TRIGGER minJugadoresPorEquipo;
-
+DROP TRIGGER FECHA_COMPETICIONES;
+DROP TRIGGER HORA_ENFRE_EQUIPOS;
+DROP TRIGGER FECHA_JORNADA;
 
 CREATE OR REPLACE TRIGGER trg_valida_ganador_Equipo01
 BEFORE INSERT OR UPDATE ON enfrentamientos
@@ -16,12 +18,12 @@ BEGIN
       raise e_equipos;
     END IF;
 EXCEPTION
+WHEN e_equipos then
+    v_mensaje:= 'El equipo ganador debe ser el equipo1 o el equipo2 del enfrentamiento.';
+     RAISE_APPLICATION_ERROR(-20002,v_mensaje);
 WHEN OTHERS THEN
-v_mensaje:= 'Error desconcido ' || to_char(SQLCODE) ||  SQLERRM;
-RAISE_APPLICATION_ERROR(-20099, v_mensaje);
-when e_equipos then
-v_mensaje:= 'El equipo ganador debe ser el equipo1 o el equipo2 del enfrentamiento.';
- RAISE_APPLICATION_ERROR(-20002,v_mensaje);
+    v_mensaje:= 'Error desconcido ' || to_char(SQLCODE) ||  SQLERRM;
+    RAISE_APPLICATION_ERROR(-20099, v_mensaje);
 END trg_valida_ganador_Equipo01;
 
 
@@ -57,6 +59,8 @@ END max_jugadores_equipo;
 CREATE OR REPLACE TRIGGER salario_minimo
     BEFORE INSERT ON jugadores
     FOR EACH ROW
+    DECLARE
+        V_MENSAJE VARCHAR2(255);
     BEGIN
         IF (:new.sueldo < 1184) THEN
             :new.sueldo := 1184;
@@ -64,8 +68,8 @@ CREATE OR REPLACE TRIGGER salario_minimo
     
     EXCEPTION
         WHEN OTHERS THEN
-            v_mensaje := 'Err. desconocido, ' || TO_CHAR(SQLCODE) || SQLERRM;
-            RAISE_APPLICATION_ERROR(-20099, v_mensaje);
+            V_MENSAJE := 'Err. desconocido, ' || TO_CHAR(SQLCODE) || SQLERRM;
+            RAISE_APPLICATION_ERROR(-20099, V_MENSAJE);
     
 END salario_minimo;
 
@@ -99,42 +103,34 @@ CREATE OR REPLACE TRIGGER minJugadoresPorEquipo
             RAISE_APPLICATION_ERROR(-20099, v_mensaje);
 END minJugadoresPorEquipo;
 
--------------------------------------------------------------------------------------------
-
-/*TRIGGERS COMPETICIONES, ENFRENTAMIENTOS Y JORNADAS*/
 /* 
 Trigger para que la fecha fin de competiciones no sea anterior a la de inicio y 
 la de inicio no sea mayor a la de fin
 */
-CREATE OR REPLACE TRIGGER FECHA_COMPETICIONES_TRIGGER
-BEFORE INSERT OR UPDATE ON COMPETICIONES
-FOR EACH ROW
-DECLARE 
-    e_fecha EXCEPTION;
-BEGIN
-    IF :NEW.fechaFin < :NEW.fechaInicio THEN
-        RAISE e_fecha;
-    END IF;
+CREATE OR REPLACE TRIGGER FECHA_COMPETICIONES
+    BEFORE INSERT OR UPDATE ON COMPETICIONES
+    FOR EACH ROW
+    DECLARE 
+        e_fecha EXCEPTION;
+    BEGIN
+        IF :NEW.fechaFin < :NEW.fechaInicio THEN
+            RAISE e_fecha;
+        END IF;
+    
+    EXCEPTION   
+        WHEN e_fecha THEN
+            RAISE_APPLICATION_ERROR(-20001, 'LA FECHA FIN NO PUEDE SER ANTERIOR A LA FECHA DE INICIO');
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20002, 'ERROR ORACLE: ' || SQLCODE || ' - ' || SQLERRM);
+END FECHA_COMPETICIONES;
 
-EXCEPTION   
-    WHEN e_fecha THEN
-        RAISE_APPLICATION_ERROR(-20001, 'LA FECHA FIN NO PUEDE SER ANTERIOR A LA FECHA DE INICIO');
-    WHEN OTHERS THEN
-        RAISE_APPLICATION_ERROR(-20002, 'ERROR ORACLE: ' || SQLCODE || ' - ' || SQLERRM);
-END FECHA_COMPETICIONES_TRIGGER;
-
-----------------------------------------------------------------------------------------------
 /* 
 Trigger para uno de los dos equipos no juegue a la misma hora, pero solo pueden
 jugar con 2 de diferencia.
-Ejemplo para saltar el trigger:
-Leones versus Gatos - 14:30, Leones versus Loros -14:30
-Ejemplo bueno:
-Leones versus Gatos -14:30, Leones versus Loros 16:30
 */
-CREATE OR REPLACE TRIGGER HORA_ENFRE_EQUIPOS_TRIGGER
-BEFORE INSERT OR UPDATE OF hora, cod_equipo1, cod_equipo2, cod_jornada
-                        ON enfrentamientos
+CREATE OR REPLACE TRIGGER HORA_ENFRE_EQUIPOS
+BEFORE INSERT OR UPDATE OF hora, equipo1, equipo2, jornada
+    ON enfrentamientos
 FOR EACH ROW
 DECLARE
     v_count NUMBER;
@@ -142,17 +138,12 @@ DECLARE
 BEGIN
     -- Verificar equipo 1
     SELECT COUNT(*) INTO v_count
-    FROM enfrentamientos
-    WHERE cod_jornada = :NEW.cod_jornada
-      
-      AND cod_enfre != NVL(:NEW.cod_enfre, -1)  -- Evita conflicto consigo mismo
-      
-      AND (
-            cod_equipo1 = :NEW.cod_equipo1 OR cod_equipo2 = :NEW.cod_equipo1
-          )
-          
-      AND ABS(TO_NUMBER(TO_CHAR(hora, 'HH24')) - TO_NUMBER(TO_CHAR(:NEW.hora, 'HH24'))) < 2;
-
+        FROM enfrentamientos
+        WHERE jornada = :NEW.jornada
+            AND cod_enfre != NVL(:NEW.cod_enfre, -1)
+            AND (equipo1 = :NEW.equipo1 OR 
+            equipo2 = :NEW.equipo1)
+      AND ABS((hora - :NEW.hora) * 24) < 2;  
     IF v_count > 0 THEN
         RAISE e_hora;
     END IF;
@@ -160,16 +151,11 @@ BEGIN
     -- Verificar equipo 2
     SELECT COUNT(*) INTO v_count
     FROM enfrentamientos
-    WHERE cod_jornada = :NEW.cod_jornada
-    
+    WHERE jornada = :NEW.jornada
       AND cod_enfre != NVL(:NEW.cod_enfre, -1)
-      
       AND (
-            cod_equipo1 = :NEW.cod_equipo2 OR cod_equipo2 = :NEW.cod_equipo2
-          )
-          
-      AND ABS(TO_NUMBER(TO_CHAR(hora, 'HH24')) - TO_NUMBER(TO_CHAR(:NEW.hora, 'HH24'))) < 2;
-
+            equipo1 = :NEW.equipo2 OR equipo2 = :NEW.equipo2)
+      AND ABS((hora - :NEW.hora) * 24) < 2;  
     IF v_count > 0 THEN
         RAISE e_hora;
     END IF;
@@ -177,17 +163,18 @@ BEGIN
 EXCEPTION
     WHEN e_hora THEN
         RAISE_APPLICATION_ERROR(-20010, 'Uno de los equipos tiene un 
-        enfrentamiento demasiado cercano en la misma jornada (menos de 2h).');
+            enfrentamiento demasiado cercano en la misma jornada (menos de 2h).');
     WHEN OTHERS THEN
-        RAISE_APPLICATION_ERROR(-20099, 'Error inesperado: ' || SQLCODE || ' - '
-                                || SQLERRM);
-END HORA_ENFRE_EQUIPOS_TRIGGER;
+        RAISE_APPLICATION_ERROR(-20099, 'Error inesperado: ' || TO_CHAR(SQLCODE) 
+            || SQLERRM);
+END HORA_ENFRE_EQUIPOS;
+
 --------------------------------------------------
 /*
 TRIGGER PARA QUE AL INSERTAR O ACTUALIZAR LA FECHA DE JORNADAS, SEA ENTRE LA 
 FECHAINICIO Y LA FECHA FIN DE LA COMPETICION
 */
-CREATE OR REPLACE TRIGGER FECHA_JORNADA_TRIGGER 
+CREATE OR REPLACE TRIGGER FECHA_JORNADA
 BEFORE INSERT OR UPDATE OF FECHA ON JORNADAS
 FOR EACH ROW
 DECLARE
@@ -197,15 +184,16 @@ DECLARE
 BEGIN
     SELECT FECHAINICIO,FECHAFIN INTO V_FECHAINICIO,V_FECHAFIN
     FROM COMPETICIONES
-    WHERE COD_COMP = :NEW.COD_COMP;
+    WHERE COD_COMP = :NEW.COMPETICION;
     
     IF :NEW.FECHA < V_FECHAINICIO OR :NEW.FECHA > V_FECHAFIN THEN
     RAISE E_FECHA;
     END IF;
+    
 EXCEPTION
     WHEN E_FECHA THEN
     RAISE_APPLICATION_ERROR(-20001,'LA FECHA TIENE QUE ESTAR ENTRE LAS FECHAS '||
                             TO_CHAR(V_FECHAINICIO)||' - '||TO_CHAR(V_FECHAFIN));
     WHEN OTHERS THEN
     RAISE_APPLICATION_ERROR(-20002,'ERROR ORACLE: '||SQLCODE||'-'||TO_CHAR(SQLERRM));
-END FECHA_JORNADA_TRIGGER;
+END FECHA_JORNADA;
