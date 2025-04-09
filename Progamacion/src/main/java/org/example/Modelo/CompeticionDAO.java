@@ -30,6 +30,8 @@ public class CompeticionDAO {
     }
 
     public boolean agregarJornadaACompeticion(String codCompe, Jornada jornada) throws SQLException {
+        ps=conn.prepareStatement("insert into jornadas (,,,)");
+
         int codigo=Integer.parseInt(codCompe);
         Competicion competicion = buscarCompeticion(codigo);
 

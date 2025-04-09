@@ -23,8 +23,8 @@ public class JornadaDAO {
         if (equipos.size()%2==0){
             for (int i = 1; i <= numJornadas; i++) {
                 LocalDate fechaJornada = LocalDate.now().plusDays(i); // Generara jornadas a partir del dia siguiente que se genere la jornada
-                String codJornada = String.format("J-%04d", i);
 
+                int codJornada= i;
                 Jornada jornada = new Jornada(codJornada, fechaJornada);
                 Set<String> enfrentados = new HashSet<>();
                 LocalTime horaInicial = LocalTime.of(9, 0);
@@ -57,9 +57,9 @@ public class JornadaDAO {
 
     }
 
-    public void eliminarJornadaPorCod(String codJornada) {
+    public void eliminarJornadaPorCod(int codJornada) {
         Optional<Jornada> jornadaAEliminar = listaJornadas.stream()
-                .filter(j -> j.getCodJornada().equals(codJornada))
+                .filter(j -> j.getCodJornada()==codJornada)
                 .findFirst();
 
         if (jornadaAEliminar.isPresent()) {
@@ -68,11 +68,11 @@ public class JornadaDAO {
     }
 
     public void modificarJornadaPorCod(Jornada jornada) {
-        String codJornada = jornada.getCodJornada();
+        int codJornada = jornada.getCodJornada();
         LocalDate fechaJornada = jornada.getFechaJornada();
 
         Optional<Jornada> jornadaAModificar = listaJornadas.stream()
-                .filter(j -> j.getCodJornada().equals(codJornada))
+                .filter(j -> j.getCodJornada()==codJornada)
                 .findFirst();
 
         if (jornadaAModificar.isPresent()) {
@@ -82,9 +82,10 @@ public class JornadaDAO {
         }
     }
 
-    public Jornada buscarJornadaPorCod(String codJornada) {
+    public Jornada buscarJornadaPorCod(int codJornada) {
+        
         for (Jornada j : listaJornadas) {
-            if (j.getCodJornada().equalsIgnoreCase(codJornada)) {
+            if (j.getCodJornada()== codJornada) {
                 return j;
             }
         }
