@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jornada {
-    private String codJornada;
+    private int codJornada;
     private LocalDate fechaJornada;
     private List<Enfrentamiento> listaEnfrentamientos;
 
     public Jornada() {
     }
 
-    public Jornada(String codJornada, LocalDate fechaJornada) {
+    public Jornada(int codJornada, LocalDate fechaJornada) {
         this.codJornada = codJornada;
         this.fechaJornada = fechaJornada;
         this.listaEnfrentamientos = new ArrayList<>();
@@ -23,11 +23,11 @@ public class Jornada {
     }
 
 //  Getter and Setter
-    public String getCodJornada() {
+    public int getCodJornada() {
         return codJornada;
     }
 
-    public void setCodJornada(String cod_jornada) {
+    public void setCodJornada(int cod_jornada) {
         this.codJornada = cod_jornada;
     }
 
