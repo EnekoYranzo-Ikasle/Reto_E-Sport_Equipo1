@@ -7,6 +7,7 @@ import org.example.Modelo.Jornada;
 import org.example.Modelo.JornadaDAO;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -54,7 +55,8 @@ public class CompeticionController {
 
         try {
             String cod = validarDato("cod", "Introduzca el código de la competición ha modificar", "^[0-9]{4}$");
-            Competicion comp = competicionDAO.buscarCompeticion(cod);
+            int codi=Integer.parseInt(cod);
+            Competicion comp = competicionDAO.buscarCompeticion(codi);
             if (comp == null) {
                 throw new Exception();
             }
@@ -98,7 +100,8 @@ public class CompeticionController {
         while (continuar) {
             try {
                 String cod = validarDato("codigo", "Introduzca el código de la competición ha eliminar", "^[0-9]{4}");
-                Competicion c = competicionDAO.buscarCompeticion(cod);
+                int cod2=Integer.parseInt(cod);
+                Competicion c = competicionDAO.buscarCompeticion(cod2);
 
                 if (c == null) {
                     throw new Exception();
@@ -115,7 +118,7 @@ public class CompeticionController {
         }
     }
 
-    public void mostrarCompeticiones() {
+    public void mostrarCompeticiones() throws SQLException {
         competicionDAO.listarCompeticiones();
     }
 
@@ -131,13 +134,15 @@ public class CompeticionController {
         }
 
         String estado = "Activo";
+        int cod2= Integer.parseInt(cod);
 
-        return new Competicion(cod, nombre, fecha_inicia, fecha_fin, estado);
+        return new Competicion(cod2, nombre, fecha_inicia, fecha_fin, estado);
     }
 
     public void visualizarResult() {
         String cod = JOptionPane.showInputDialog("Ingrese el código de la competición cuyos resultados quieres ver:");
-        StringBuilder lista = competicionDAO.listaGanador(cod);
+        int cod2 = Integer.parseInt(cod);
+        StringBuilder lista = competicionDAO.listaGanador(cod2);
 
         JOptionPane.showMessageDialog(null, lista);
     }
@@ -185,7 +190,8 @@ public class CompeticionController {
 
     public void ModificarSuEstado() {
         String codigo = JOptionPane.showInputDialog("Ingresa el codigo de la competicion");
-        String respuesta = competicionDAO.modificarEstado(codigo);
+        int cod2 = Integer.parseInt(codigo);
+        String respuesta = competicionDAO.modificarEstado(cod2);
 
     }
 }
