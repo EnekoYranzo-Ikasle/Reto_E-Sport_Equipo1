@@ -99,7 +99,7 @@ CREATE OR REPLACE TRIGGER minJugadoresPorEquipo
             RAISE_APPLICATION_ERROR(-20099, v_mensaje);
 END minJugadoresPorEquipo;
 
-
+-------------------------------------------------------------------------------------------
 
 /*TRIGGERS COMPETICIONES, ENFRENTAMIENTOS Y JORNADAS*/
 /* 
