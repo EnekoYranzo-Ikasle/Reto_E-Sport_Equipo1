@@ -1,3 +1,10 @@
+
+DROP TRIGGER trg_valida_ganador_Equipo01;
+DROP TRIGGER max_jugadores_equipo;
+DROP TRIGGER salario_minimo;
+DROP TRIGGER minJugadoresPorEquipo;
+
+
 CREATE OR REPLACE TRIGGER trg_valida_ganador_Equipo01
 BEFORE INSERT OR UPDATE ON enfrentamientos
 FOR EACH ROW
