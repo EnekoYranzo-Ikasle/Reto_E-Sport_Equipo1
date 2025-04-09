@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jornada {
-    private String codJornada;
+    private int codJornada;
     private String codCompe;
     private LocalDate fechaJornada;
     private List<Enfrentamiento> listaEnfrentamientos;
@@ -13,11 +13,16 @@ public class Jornada {
     public Jornada() {
     }
   
-    public Jornada(String codJornada,String codCompe, LocalDate fechaJornada) {
-        this.codCompe = codCompe;
+    public Jornada(int codJornada,String codCompe, LocalDate fechaJornada) {
         this.codJornada = codJornada;
+        this.codCompe = codCompe;
         this.fechaJornada = fechaJornada;
         this.listaEnfrentamientos = new ArrayList<>();
+    }
+
+    public Jornada(int codJornada, LocalDate fechaJornada) {
+        this.codJornada = codJornada;
+        this.fechaJornada = fechaJornada;
     }
 
     public void addEnfrentamiento(Enfrentamiento enfrentamiento) {
@@ -29,8 +34,8 @@ public class Jornada {
         return codJornada;
     }
 
-    public void setCodJornada(int cod_jornada) {
-        this.codJornada = cod_jornada;
+    public void setCodJornada(int codJornada) {
+        this.codJornada = codJornada;
     }
 
     public String getCodCompeticion() {
@@ -40,12 +45,13 @@ public class Jornada {
     public void setCodCompeticion(String codCompe) {
         this.codCompe = codCompe;
     }
+
     public LocalDate getFechaJornada() {
         return fechaJornada;
     }
 
-    public void setFechaJornada(LocalDate fecha_jornada) {
-        this.fechaJornada = fecha_jornada;
+    public void setFechaJornada(LocalDate fechaJornada) {
+        this.fechaJornada = fechaJornada;
     }
 
     public List<Enfrentamiento> getListaEnfrentamientos() {
@@ -55,6 +61,7 @@ public class Jornada {
     public void setListaEnfrentamientos(List<Enfrentamiento> listaEnfrentamientos) {
         this.listaEnfrentamientos = listaEnfrentamientos;
     }
+
     //    Funciones:
     public boolean contieneEquipo(Equipo equipo) {
         return listaEnfrentamientos.stream().anyMatch(e -> e.participaEquipo(equipo));

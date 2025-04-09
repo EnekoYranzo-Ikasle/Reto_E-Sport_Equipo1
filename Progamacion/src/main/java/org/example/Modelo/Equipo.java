@@ -1,23 +1,19 @@
 package org.example.Modelo;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Equipo {
     private int codEquipo;
     private String nombreEquipo;
     private LocalDate fechaFund;
 
-
-    // Constructor:
     public Equipo(int codEquipo, String nombreEquipo, LocalDate fechaFund) {
         this.codEquipo = codEquipo;
         this.nombreEquipo = nombreEquipo;
-
+        this.fechaFund = fechaFund;
     }
 
     public Equipo() {
-
     }
 
     // Getters and Setters:
@@ -45,14 +41,11 @@ public class Equipo {
         this.fechaFund = fechaFund;
     }
 
-
-
     // To String:
     @Override
     public String toString() {
         return "Código Equipo -> " + codEquipo + "\n " +
                 "Nombre Equipo -> " + nombreEquipo + "\n " +
-                "Fecha Fundación -> " + fechaFund
-                ;
+                "Fecha Fundación -> " + fechaFund;
     }
 }

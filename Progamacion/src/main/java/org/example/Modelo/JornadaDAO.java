@@ -7,17 +7,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class JornadaDAO {
-    private final Connection con;
+    private final Connection conn;
     private final List<Jornada> listaJornadas;
 
     public JornadaDAO(Connection conn) {
-        this.con = conn;
+        this.conn = conn;
         this.listaJornadas = new ArrayList<>();
     }
 
     public void eliminarJornadaPorCod(int codJornada) {
         Optional<Jornada> jornadaAEliminar = listaJornadas.stream()
-                .filter(j -> j.getCodJornada()==codJornada)
+                .filter(j -> j.getCodJornada() == codJornada)
                 .findFirst();
 
         jornadaAEliminar.ifPresent(listaJornadas::remove);
@@ -28,20 +28,21 @@ public class JornadaDAO {
         LocalDate fechaJornada = jornada.getFechaJornada();
 
         Optional<Jornada> jornadaAModificar = listaJornadas.stream()
-                .filter(j -> j.getCodJornada()==codJornada)
+                .filter(j -> j.getCodJornada() == codJornada)
                 .findFirst();
 
         if (jornadaAModificar.isPresent()) {
             jornadaAModificar.get().setFechaJornada(fechaJornada);
         } else {
-            JOptionPane.showMessageDialog(null, "No se encontró la jornada con código: " + codJornada, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se encontró la jornada con código: " +
+                    codJornada, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public Jornada buscarJornadaPorCod(int codJornada) {
         
         for (Jornada j : listaJornadas) {
-            if (j.getCodJornada()== codJornada) {
+            if (j.getCodJornada() == codJornada) {
                 return j;
             }
         }
@@ -67,8 +68,8 @@ public class JornadaDAO {
         StringBuilder mensaje = new StringBuilder();
 
         if (listaJornadas.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El equipo " + equipo.getNombreEquipo() + " no tiene jornadas registradas.",
-                    "Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El equipo " + equipo.getNombreEquipo() +
+                            " no tiene jornadas registradas.", "Información", JOptionPane.INFORMATION_MESSAGE);
         } else {
             mensaje.append(equipo.getNombreEquipo()).append(" participa en las siguientes jornadas:\n");
             for (Jornada jornada : listaJornadas) {

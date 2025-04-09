@@ -1,14 +1,12 @@
 package org.example.Modelo;
 
-import org.example.Util.ConexionDB;
-
 import javax.swing.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EnfrentamientoDAO {
-    private Connection conn;
+    private final Connection conn;
     private final List<Enfrentamiento> ListaEnfrentamientos;
 
     public EnfrentamientoDAO(Connection conn) {
@@ -16,8 +14,8 @@ public class EnfrentamientoDAO {
         ListaEnfrentamientos = new ArrayList<Enfrentamiento>();
     }
 
-    public void guardarEnfrentamientos(Enfrentamiento e){
-        ListaEnfrentamientos.add(e);
+    public void guardarEnfrentamientos(Enfrentamiento enfretamiento) {
+        ListaEnfrentamientos.add(enfretamiento);
     }
 
     public List<Enfrentamiento> getListaEnfrentamientos() {
