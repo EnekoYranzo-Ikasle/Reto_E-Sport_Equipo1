@@ -2,10 +2,8 @@ package org.example.Modelo;
 
 import org.example.Util.ConexionDB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,12 +14,12 @@ public class EquipoDAO {
     private static PreparedStatement ps;
     private static ResultSet rs;
 
-    private final ArrayList<Equipo> listaEquipos;
+
 
     // Constructor:
     public EquipoDAO(Connection conn) {
         this.conn = conn;
-        this.listaEquipos = new ArrayList<>();
+
     }
 
     // Funciones:
@@ -43,12 +41,25 @@ public class EquipoDAO {
         return equipos;
     }
 
-    public void altaEquipo(Equipo equipo) {
-        listaEquipos.add(equipo);
+    public void altaEquipo(Equipo equipo) throws SQLException {
+        ps= conn.prepareStatement("insert into equipos (cod_equipo, nombre, fechaFundacion) values (?,?,?)");
+        ps.setString(1, equipo.getCodEquipo());
+        ps.setString(2,equipo.getNombreEquipo());
+        ps.setDate(3,parsearfecha(equipo.getFechaFund()));
+
+        ps.executeUpdate();
+
+
+
     }
 
-    public void bajaEquipo(Equipo equipo) {
-        listaEquipos.remove(equipo);
+    public void bajaEquipo(Equipo equipo) throws SQLException {
+        ps= conn.prepareStatement("delete from equipos where cod_equipo =?");
+        ps.setString(1, equipo.getCodEquipo());
+        ps.executeUpdate();
+
+
+
     }
 
     public Equipo buscarEquipoPorCod(String idEquipo) throws SQLException {
@@ -103,5 +114,30 @@ public class EquipoDAO {
         equipo.setFechaFund(rs.getDate("fechaFundacion").toLocalDate());
         return equipo;
     }
+    private Date parsearfecha(LocalDate fecha1){
+        Date fecha=Date.valueOf(fecha1);
+        return fecha;
+    }
+
+    public void actualizarEquipo(Equipo equipo, String campo) throws SQLException {
+
+        switch (campo.toLowerCase()) {
+            case "nombre":
+                ps = conn.prepareStatement("UPDATE equipos SET nombre = ? WHERE cod_equipo = ?");
+                ps.setString(1, equipo.getNombreEquipo());
+                ps.setString(2, equipo.getCodEquipo());
+                break;
+            case "ciudad":
+                ps = conn.prepareStatement("UPDATE equipos SET fechaFundacion = ? WHERE cod_equipo = ?");
+                ps.setDate(1,parsearfecha(equipo.getFechaFund()));
+                ps.setString(2, equipo.getCodEquipo());
+                break;
+            // Agrega más campos si es necesario, como "entrenador", "fundacion", etc.
+            default:
+                throw new IllegalArgumentException("Campo no válido para actualizar: " + campo);
+        }
+        ps.executeUpdate();
+    }
+
 }
 

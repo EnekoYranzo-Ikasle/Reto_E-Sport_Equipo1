@@ -33,6 +33,7 @@ public class JugadorDAO {
         ps.setString(5,j.getNickname());
         ps.setString(6,j.getRol().toString());
         ps.setDouble(7,j.getSueldo());
+        ps.executeUpdate();
 
 
         listaJugadores.add(j);
@@ -45,7 +46,7 @@ public class JugadorDAO {
     public String eliminarJugador(String cod) throws SQLException {
         ps=conn.prepareStatement("delete from jugadores where cod_jugador =?");
         ps.setString(1, cod);
-        rs=ps.executeQuery();
+        ps.executeUpdate();
 
         String mensaje;
 
