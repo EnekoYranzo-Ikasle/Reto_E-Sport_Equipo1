@@ -5,14 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jornada {
-    private int codJornada;
+    private String codJornada;
+    private String codCompe;
     private LocalDate fechaJornada;
     private List<Enfrentamiento> listaEnfrentamientos;
 
     public Jornada() {
     }
-
-    public Jornada(int codJornada, LocalDate fechaJornada) {
+  
+    public Jornada(String codJornada,String codCompe, LocalDate fechaJornada) {
+        this.codCompe = codCompe;
         this.codJornada = codJornada;
         this.fechaJornada = fechaJornada;
         this.listaEnfrentamientos = new ArrayList<>();
@@ -31,6 +33,13 @@ public class Jornada {
         this.codJornada = cod_jornada;
     }
 
+    public String getCodCompeticion() {
+        return codCompe;
+    }
+
+    public void setCodCompeticion(String codCompe) {
+        this.codCompe = codCompe;
+    }
     public LocalDate getFechaJornada() {
         return fechaJornada;
     }
@@ -46,7 +55,6 @@ public class Jornada {
     public void setListaEnfrentamientos(List<Enfrentamiento> listaEnfrentamientos) {
         this.listaEnfrentamientos = listaEnfrentamientos;
     }
-
     //    Funciones:
     public boolean contieneEquipo(Equipo equipo) {
         return listaEnfrentamientos.stream().anyMatch(e -> e.participaEquipo(equipo));

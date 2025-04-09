@@ -52,4 +52,7 @@ public class VistaController {
     public void crearCuenta(String email, String pass) throws SQLException {
         modeloController.crearCuenta(email, pass);
     }
+    public void generarCalendario() throws Exception {
+        modeloController.generarCalendario();
+    }
 }
