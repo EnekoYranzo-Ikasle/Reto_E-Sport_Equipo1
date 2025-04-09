@@ -21,6 +21,10 @@ public class Competicion {
         this.listaJornadas = new ArrayList<>();
     }
 
+    public Competicion() {
+
+    }
+
     public void agregarJornada(Jornada jornada) {
         listaJornadas.add(jornada);
     }
