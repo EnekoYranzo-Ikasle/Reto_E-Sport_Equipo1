@@ -27,7 +27,7 @@ public class JugadorDAO {
         ps.setString(1, j.getNombre());
         ps.setString(2,j.getApellidos());
         ps.setString(3,j.getNacionalidad());
-        ps.setDate(4,parsearfecha(j.getFechaNacimiento()));
+        ps.setDate(4, parsearFecha(j.getFechaNacimiento()));
         ps.setString(5,j.getNickname());
         ps.setString(6,j.getRol().toString());
         ps.setDouble(7,j.getSueldo());
@@ -96,7 +96,7 @@ public class JugadorDAO {
 
 
 
-    private Date parsearfecha(LocalDate fecha1){
+    private Date parsearFecha(LocalDate fecha1){
         Date fecha=Date.valueOf(fecha1);
         return fecha;
     }
