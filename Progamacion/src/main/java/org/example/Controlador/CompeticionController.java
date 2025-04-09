@@ -34,8 +34,9 @@ public class CompeticionController {
             if (codJornada == null || codJornada.isEmpty()) {
                 throw new Exception("El código de la jornada no puede estar vacío");
             }
+            int codigo = Integer.parseInt(codJornada);
 
-            jornada = jornadaDAO.buscarJornadaPorCod(codJornada);
+            jornada = jornadaDAO.buscarJornadaPorCod(codigo);
 
             c.agregarJornada(jornada);
             competicionDAO.agregarCompeticion(c);
