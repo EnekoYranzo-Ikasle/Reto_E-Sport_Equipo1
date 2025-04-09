@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Jugador {
 
     // Atributos:
-    private String dni;
+    private int cod_jugador;
     private String nombre;
     private String apellidos;
     private String nacionalidad;
@@ -16,9 +16,9 @@ public class Jugador {
     private Equipo equipo;
 
     // Constructor:
-    public Jugador(String codJugador, String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
+    public Jugador(int codJugador, String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
                    String nickname, Roles rol, double sueldo, Equipo equipo) {
-        this.dni = codJugador;
+        this.cod_jugador = codJugador;
         this.nombre = nombre;
         this.apellidos = apellido;
         this.nacionalidad = nacionalidad;
@@ -34,12 +34,14 @@ public class Jugador {
     }
 
     // Getters and Setters:
-    public String getDni() {
-        return dni;
+
+
+    public int getCod_jugador() {
+        return cod_jugador;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setCod_jugador(int cod_jugador) {
+        this.cod_jugador = cod_jugador;
     }
 
     public String getNombre() {
@@ -109,7 +111,7 @@ public class Jugador {
     // To String:
     @Override
     public String toString() {
-        return "dni -> " + dni  + "\n " +
+        return "dni -> " + cod_jugador  + "\n " +
                 "nombre -> " + nombre  + "\n " +
                 "apellidos -> " + apellidos  + "\n " +
                 "nacionalidad -> " + nacionalidad  + "\n " +

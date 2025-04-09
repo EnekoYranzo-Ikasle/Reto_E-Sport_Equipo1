@@ -1,17 +1,15 @@
 package org.example.Modelo;
 
-import org.example.Util.ConexionDB;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 public class JugadorDAO {
     private Connection conn;
     private static PreparedStatement ps;
     private static ResultSet rs;
-    private final ArrayList<Jugador> listaJugadores;
+
     EquipoDAO equipoDAO = new EquipoDAO(conn);
 
 
@@ -19,7 +17,7 @@ public class JugadorDAO {
     // Constructor:
     public JugadorDAO(Connection conn) {
         this.conn = conn;
-        listaJugadores = new ArrayList<>();
+
     }
 
     // Funciones:
@@ -33,30 +31,37 @@ public class JugadorDAO {
         ps.setString(5,j.getNickname());
         ps.setString(6,j.getRol().toString());
         ps.setDouble(7,j.getSueldo());
+        ps.executeUpdate();
 
 
-        listaJugadores.add(j);
     }
 
-    public ArrayList<Jugador> getListaJugadores() {
-        return listaJugadores;
+    public List<Jugador> getListaJugadores() throws SQLException {
+        ArrayList<Jugador> Jugadoress = new ArrayList<>();
+        ps=conn.prepareStatement("select * from jugadores");
+        rs=ps.executeQuery();
+        while(rs.next()) {
+            Jugador Jug =hacerJugador(rs);
+            Jugadoress.add(Jug);
+
+
+
+
+
+
+        }
+
+        return Jugadoress;
+
     }
 
-    public String eliminarJugador(String cod) throws SQLException {
+    public void eliminarJugador(String cod) throws SQLException {
         ps=conn.prepareStatement("delete from jugadores where cod_jugador =?");
         ps.setString(1, cod);
-        rs=ps.executeQuery();
+        ps.executeUpdate();
 
-        String mensaje;
 
-        Optional<Jugador> jugador = listaJugadores.stream().filter(jugadorABuscar -> jugadorABuscar.getDni().equals(cod)).findFirst();
-        if (jugador.isPresent()) {
-            listaJugadores.remove(jugador.get());
-            mensaje = "Jugador eliminado";
-        } else {
-            mensaje = "No existe el jugador";
-        }
-        return mensaje;
+
     }
 
     public Jugador mostrarJugador(String cod) throws SQLException {
@@ -65,28 +70,28 @@ public class JugadorDAO {
         rs=ps.executeQuery();
         Jugador j= new Jugador();
         if (rs.next()) {
-            j.setDni(rs.getString("cod_jugador"));
-            j.setNombre(rs.getString("nombre"));
-            j.setApellidos(rs.getString("apellidos"));
-            j.setNacionalidad(rs.getString("nacionalidad"));
-            j.setNickname(rs.getString("nickname"));
-            j.setRol(Roles.valueOf(rs.getString("rol")));
-            j.setSueldo(rs.getDouble("sueldo"));
-            j.setFechaNacimiento(LocalDate.parse(rs.getString("fechaNacimiento")));
+            j=hacerJugador(rs);
         }
 
-        Jugador jugador;
 
-        Optional<Jugador> jugadorOpt = listaJugadores.stream().filter(jugadorABuscar -> jugadorABuscar.getDni().equals(cod)).findFirst();
-        if (jugadorOpt.isPresent()) {
-            jugador = jugadorOpt.get();
-        } else {
-            jugador = null;
-        }
-        return jugador;
+
+
+        return j;
     }
 
     // Verificaciones:
+    public Jugador hacerJugador(ResultSet rs) throws SQLException {
+        Jugador j = new Jugador();
+        j.setCod_jugador(rs.getInt("cod_jugador"));
+        j.setNombre(rs.getString("nombre"));
+        j.setApellidos(rs.getString("apellidos"));
+        j.setNacionalidad(rs.getString("nacionalidad"));
+        j.setNickname(rs.getString("nickname"));
+        j.setRol(Roles.valueOf(rs.getString("rol")));
+        j.setSueldo(rs.getDouble("sueldo"));
+        j.setFechaNacimiento(LocalDate.parse(rs.getString("fechaNacimiento")));
+        return j;
+    }
 
 
 
