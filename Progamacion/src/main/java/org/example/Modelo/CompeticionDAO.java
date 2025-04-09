@@ -1,14 +1,14 @@
 package org.example.Modelo;
 
-import org.example.Util.ConexionDB;
-
 import javax.swing.*;
-import java.sql.Connection;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class CompeticionDAO {
     private Connection conn;
+    private static PreparedStatement ps;
+    private static ResultSet rs;
     private final ArrayList<Competicion> listaCompeticiones;
     private final ArrayList<Jornada> listaJornadas;
 
@@ -18,12 +18,20 @@ public class CompeticionDAO {
         listaJornadas = new ArrayList<>();
     }
 
-    public void agregarCompeticion(Competicion competicion) {
+    public void agregarCompeticion(Competicion competicion) throws SQLException {
+        ps=conn.prepareStatement("INSERT into competiciones (fechaInicio, fechaFin, estado, nombre) values (?, ?, ?, ?)");
+        ps.setDate(1, parsearFecha(competicion.getFechaInicio()));
+        ps.setDate(2, parsearFecha(competicion.getFecha_fin()));
+        ps.setString(3,competicion.getEstado());
+        ps.setString(4,competicion.getNombre());
+
+
         listaCompeticiones.add(competicion);
     }
 
-    public boolean agregarJornadaACompeticion(String codCompe, Jornada jornada) {
-        Competicion competicion = buscarCompeticion(codCompe);
+    public boolean agregarJornadaACompeticion(String codCompe, Jornada jornada) throws SQLException {
+        int codigo=Integer.parseInt(codCompe);
+        Competicion competicion = buscarCompeticion(codigo);
 
         if (competicion != null) {
             competicion.agregarJornada(jornada);
@@ -37,7 +45,7 @@ public class CompeticionDAO {
 
         while (continuar) {
             for (Competicion comp : listaCompeticiones) {
-                if (comp.getCodCompe().equals(competicion.getCodCompe())) {
+                if (comp.getCodCompe()==competicion.getCodCompe()) {
                     comp.setNombre(competicion.getNombre());
                     comp.setFecha_inicia(competicion.getFechaInicio());
                     comp.setFecha_fin(competicion.getFecha_fin());
@@ -49,20 +57,37 @@ public class CompeticionDAO {
         }
     }
 
-    public void eliminarCompeticion(Competicion competicion) {
+    public void eliminarCompeticion(Competicion competicion) throws SQLException {
+        ps=conn.prepareStatement("delete from competiciones where cod_comp =?");
+        ps.setInt(1,competicion.getCodCompe());
+        ps.executeUpdate();
+
         listaCompeticiones.remove(competicion);
     }
 
-    public Competicion buscarCompeticion(String cod) {
-        for (Competicion competicion : listaCompeticiones) {
-            if (competicion.getCodCompe().equals(cod)) {
-                return competicion;
-            }
+    public Competicion buscarCompeticion(int cod) throws SQLException {
+        ps=conn.prepareStatement("select* from competiciones where cod_comp =?");
+        ps.setInt(1,cod);
+        rs=ps.executeQuery();
+        Competicion c = new Competicion();
+        if(rs.next()) {
+            c= hacerCompe(rs);
+
         }
-        return null;
+
+        return c;
     }
 
-    public void listarCompeticiones() {
+    public void listarCompeticiones() throws SQLException {
+        ps=conn.prepareStatement("select * from competiciones");
+        rs=ps.executeQuery();
+        ArrayList<Competicion> competiciones = new ArrayList<>();
+        while (rs.next()) {
+            Competicion c = new Competicion();
+           c= hacerCompe(rs);
+            competiciones.add(c);
+        }
+
         StringBuilder sbCompes = new StringBuilder("Listado de competiciones:\n\n");
 
         for (Competicion competicion : listaCompeticiones) {
@@ -82,11 +107,11 @@ public class CompeticionDAO {
         JOptionPane.showMessageDialog(null, sbCompes.toString());
     }
 
-    public StringBuilder listaGanador(String codigo) {
+    public StringBuilder listaGanador(int codigo) {
         StringBuilder listaGanador = new StringBuilder();
 
         for (int i = 0; i < listaCompeticiones.size(); i++) {
-            if (listaCompeticiones.get(i).getCodCompe().equals(codigo)) {
+            if (listaCompeticiones.get(i).getCodCompe()==codigo) {
                 listaGanador.append("Competición: ").append(listaCompeticiones.get(i).getNombre()).append("\n");
                 listaGanador.append("====================================\n");
 
@@ -181,14 +206,25 @@ public class CompeticionDAO {
         }
         return listaInforme;
     }
-    public String modificarEstado(String codigo){
-        Optional<Competicion> compe = listaCompeticiones.stream().filter(comp -> comp.getCodCompe().equals(codigo)).findFirst();
-        if (compe.isPresent()) {
-            compe.get().setEstado("inactivo");
-            return "etapa cerrada";
-        }else {
-            return "no se ha encontrado la competicion";
-        }
+    public String modificarEstado(int codigo){
 
+        return  null;
+    }
+    public Competicion hacerCompe(ResultSet rs) throws SQLException {
+        Competicion c = new Competicion();
+        c.setCodCompe(rs.getInt("cod_comp"));
+        c.setFecha_inicia(rs.getDate("fechaInicio").toLocalDate());
+        c.setFecha_fin(rs.getDate("fechaFin").toLocalDate());
+        c.setEstado(rs.getString("estado"));
+        c.setNombre(rs.getString("nombre"));
+        return c;
+
+
+
+    }
+
+    private Date parsearFecha(LocalDate fecha1){
+        Date fecha=Date.valueOf(fecha1);
+        return fecha;
     }
 }

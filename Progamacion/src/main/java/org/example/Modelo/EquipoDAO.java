@@ -1,12 +1,9 @@
 package org.example.Modelo;
 
-import org.example.Util.ConexionDB;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class EquipoDAO {
 
@@ -45,7 +42,7 @@ public class EquipoDAO {
         ps= conn.prepareStatement("insert into equipos (cod_equipo, nombre, fechaFundacion) values (?,?,?)");
         ps.setInt(1, equipo.getCodEquipo());
         ps.setString(2,equipo.getNombreEquipo());
-        ps.setDate(3,parsearfecha(equipo.getFechaFund()));
+        ps.setDate(3, parsearFecha(equipo.getFechaFund()));
 
         ps.executeUpdate();
 
@@ -114,7 +111,7 @@ public class EquipoDAO {
         equipo.setFechaFund(rs.getDate("fechaFundacion").toLocalDate());
         return equipo;
     }
-    private Date parsearfecha(LocalDate fecha1){
+    private Date parsearFecha(LocalDate fecha1){
         Date fecha=Date.valueOf(fecha1);
         return fecha;
     }
@@ -129,7 +126,7 @@ public class EquipoDAO {
                 break;
             case "ciudad":
                 ps = conn.prepareStatement("UPDATE equipos SET fechaFundacion = ? WHERE cod_equipo = ?");
-                ps.setDate(1,parsearfecha(equipo.getFechaFund()));
+                ps.setDate(1, parsearFecha(equipo.getFechaFund()));
                 ps.setInt(2, equipo.getCodEquipo());
                 break;
             // Agrega más campos si es necesario, como "entrenador", "fundacion", etc.
