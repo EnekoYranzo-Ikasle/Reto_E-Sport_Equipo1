@@ -4,13 +4,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Equipo {
-    private String codEquipo;
+    private int codEquipo;
     private String nombreEquipo;
     private LocalDate fechaFund;
 
 
     // Constructor:
-    public Equipo(String codEquipo, String nombreEquipo, LocalDate fechaFund) {
+    public Equipo(int codEquipo, String nombreEquipo, LocalDate fechaFund) {
         this.codEquipo = codEquipo;
         this.nombreEquipo = nombreEquipo;
 
@@ -21,11 +21,11 @@ public class Equipo {
     }
 
     // Getters and Setters:
-    public String getCodEquipo() {
+    public int getCodEquipo() {
         return codEquipo;
     }
 
-    public void setCodEquipo(String codEquipo) {
+    public void setCodEquipo(int codEquipo) {
         this.codEquipo = codEquipo;
     }
 

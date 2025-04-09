@@ -25,13 +25,13 @@ public class JugadorController {
     // Funciones:
     public void altaValidarDatosJugador() throws SQLException {
 
-        String dni = solicitarDatos("Dni", "Ingrese el dni del jugador", "^[0-9]{8}[A-Z]$");
+        String dni = solicitarDatos("cod_jugador", "Ingrese el dni del jugador", "^[0-9]{4}$");
         String nombre = solicitarDatos("Nombre", "Ingrese el nombre del jugador", "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$");
         String apellido = solicitarDatos("Apellidos", "Ingrese los apellidos del jugador", "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$");
         String nacionalidad = solicitarDatos("Nacionalidad", "Ingrese el nacionalidad del jugador", "^[A-Z][a-z]*$");
         LocalDate fechaNac = formatearFecha(solicitarDatos("Fecha de Nacimiento", "Ingrese el fecha del nacimiento del jugador dd/MM/yyyy", "^(0[1-9]|(1|2)[0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$"));
         String nickname = solicitarDatos("Nickname", "Ingrese el nickname del jugador", "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$");
-
+        int dni2=Integer.parseInt(dni);
         double sueldo;
         do {
             String mensaje = "Introduce el sueldo del jugador";
@@ -51,7 +51,7 @@ public class JugadorController {
         } while (equipo == null);
 
 
-        Jugador jugador = new Jugador(dni, nombre, apellido, nacionalidad, fechaNac, nickname, rol, sueldo, equipo);
+        Jugador jugador = new Jugador(dni2, nombre, apellido, nacionalidad, fechaNac, nickname, rol, sueldo, equipo);
 
 
             equipoDAO.agregarJugador(jugador, equipo.getCodEquipo());
@@ -62,9 +62,9 @@ public class JugadorController {
 
     public void eliminarJugador() throws SQLException {
         String cod = JOptionPane.showInputDialog("Ingrese el código del jugador que quieres borrar");
-        String mensaje = jugadorDAO.eliminarJugador(cod);
+         jugadorDAO.eliminarJugador(cod);
 
-        JOptionPane.showMessageDialog(null, mensaje);
+
     }
 
     public void mostrarJugador() throws SQLException {
@@ -75,7 +75,7 @@ public class JugadorController {
 
     }
 
-    public void modificarJugador() {
+    public void modificarJugador() throws SQLException {
         List<Jugador> jugadores = jugadorDAO.getListaJugadores();
 
         String[] menuAtrJugador = {
@@ -93,10 +93,10 @@ public class JugadorController {
             if (jugadorAtrModificar != null) {
                 switch (jugadorAtrModificar) {
                     case "Nombre":
-                        jugadorElegido.setNombre(solicitarDatos("Nombre", "Introduce el nuevo nombre del jugador: " + jugadorElegido.getDni(), "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$"));
+                        jugadorElegido.setNombre(solicitarDatos("Nombre", "Introduce el nuevo nombre del jugador: " + jugadorElegido.getCod_jugador(), "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$"));
                         break;
                     case "Apellidos":
-                        jugadorElegido.setApellidos(solicitarDatos("Apellidos", "Introduce los nuevos Apellidos del jugador: " + jugadorElegido.getDni(), "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$"));
+                        jugadorElegido.setApellidos(solicitarDatos("Apellidos", "Introduce los nuevos Apellidos del jugador: " + jugadorElegido.getCod_jugador(), "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$"));
                         break;
                     case "Fecha de nacimiento":
                         jugadorElegido.setFechaNacimiento(formatearFecha(solicitarDatos("Fecha de Nacimiento", "Ingrese la nueva fecha del nacimiento del jugador: " + jugadorElegido.getNombre() + jugadorElegido.getApellidos() + " (dd/MM/yyyy)", "^(0[1-9]|(1|2)[0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$")));

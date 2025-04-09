@@ -43,7 +43,7 @@ public class EquipoDAO {
 
     public void altaEquipo(Equipo equipo) throws SQLException {
         ps= conn.prepareStatement("insert into equipos (cod_equipo, nombre, fechaFundacion) values (?,?,?)");
-        ps.setString(1, equipo.getCodEquipo());
+        ps.setInt(1, equipo.getCodEquipo());
         ps.setString(2,equipo.getNombreEquipo());
         ps.setDate(3,parsearfecha(equipo.getFechaFund()));
 
@@ -55,7 +55,7 @@ public class EquipoDAO {
 
     public void bajaEquipo(Equipo equipo) throws SQLException {
         ps= conn.prepareStatement("delete from equipos where cod_equipo =?");
-        ps.setString(1, equipo.getCodEquipo());
+        ps.setInt(1, equipo.getCodEquipo());
         ps.executeUpdate();
 
 
@@ -92,10 +92,10 @@ public class EquipoDAO {
 
 
 
-    public void agregarJugador(Jugador jugador, String codequip) throws SQLException {
+    public void agregarJugador(Jugador jugador, int codequip) throws SQLException {
         ps=conn.prepareStatement("UPDATE jugadores SET cod_equipo = ? WHERE cod_jugador = ?");
-        ps.setString(1, codequip);
-        ps.setString(2, jugador.getDni());
+        ps.setInt(1, codequip);
+        ps.setInt(2, jugador.getCod_jugador());
         ps.executeUpdate();
 
         rs=ps.executeQuery();
@@ -109,7 +109,7 @@ public class EquipoDAO {
 
     public Equipo hacerEquipo(ResultSet rs) throws SQLException {
         Equipo equipo = new Equipo();
-        equipo.setCodEquipo(rs.getString("cod_equipo"));
+        equipo.setCodEquipo(rs.getInt("cod_equipo"));
         equipo.setNombreEquipo(rs.getString("nombre_equipo"));
         equipo.setFechaFund(rs.getDate("fechaFundacion").toLocalDate());
         return equipo;
@@ -125,12 +125,12 @@ public class EquipoDAO {
             case "nombre":
                 ps = conn.prepareStatement("UPDATE equipos SET nombre = ? WHERE cod_equipo = ?");
                 ps.setString(1, equipo.getNombreEquipo());
-                ps.setString(2, equipo.getCodEquipo());
+                ps.setInt(2, equipo.getCodEquipo());
                 break;
             case "ciudad":
                 ps = conn.prepareStatement("UPDATE equipos SET fechaFundacion = ? WHERE cod_equipo = ?");
                 ps.setDate(1,parsearfecha(equipo.getFechaFund()));
-                ps.setString(2, equipo.getCodEquipo());
+                ps.setInt(2, equipo.getCodEquipo());
                 break;
             // Agrega más campos si es necesario, como "entrenador", "fundacion", etc.
             default:
