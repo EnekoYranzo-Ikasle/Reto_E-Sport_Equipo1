@@ -25,8 +25,22 @@ public class EquipoDAO {
     }
 
     // Funciones:
-    public List<Equipo> obtenerEquipos() {
-        return listaEquipos;
+    public List<Equipo> obtenerEquipos() throws SQLException {
+        ArrayList<Equipo> equipos = new ArrayList<>();
+        ps=conn.prepareStatement("select * from equipos");
+        rs=ps.executeQuery();
+        while(rs.next()) {
+            Equipo equipo =hacerEquipo(rs);
+            equipos.add(equipo);
+
+
+
+
+
+
+        }
+
+        return equipos;
     }
 
     public void altaEquipo(Equipo equipo) {
