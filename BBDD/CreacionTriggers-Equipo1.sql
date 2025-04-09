@@ -28,7 +28,7 @@ END trg_valida_ganador_Equipo01;
 
 
 /*NO Mï¿½S DE 6 JUGADORES*/
-CREATE OR REPLACE TRIGGER max_jugadores_equipo
+CREATE OR REPLACE TRIGGER maximoJugadoresEquipo
 BEFORE INSERT ON JUGADORES
 FOR EACH ROW
 
@@ -56,7 +56,7 @@ END max_jugadores_equipo;
 
 
 /*SALARIO MINIMO SMI*/
-CREATE OR REPLACE TRIGGER salario_minimo
+CREATE OR REPLACE TRIGGER sueldoMinimo
     BEFORE INSERT ON jugadores
     FOR EACH ROW
     DECLARE
@@ -107,7 +107,7 @@ END minJugadoresPorEquipo;
 Trigger para que la fecha fin de competiciones no sea anterior a la de inicio y 
 la de inicio no sea mayor a la de fin
 */
-CREATE OR REPLACE TRIGGER FECHA_COMPETICIONES
+CREATE OR REPLACE TRIGGER fechaCompeticiones
     BEFORE INSERT OR UPDATE ON COMPETICIONES
     FOR EACH ROW
     DECLARE 
@@ -128,7 +128,7 @@ END FECHA_COMPETICIONES;
 Trigger para uno de los dos equipos no juegue a la misma hora, pero solo pueden
 jugar con 2 de diferencia.
 */
-CREATE OR REPLACE TRIGGER HORA_ENFRE_EQUIPOS
+CREATE OR REPLACE TRIGGER horaEnfrentamientosEquipos
 BEFORE INSERT OR UPDATE OF hora, equipo1, equipo2, jornada
     ON enfrentamientos
 FOR EACH ROW
@@ -174,7 +174,7 @@ END HORA_ENFRE_EQUIPOS;
 TRIGGER PARA QUE AL INSERTAR O ACTUALIZAR LA FECHA DE JORNADAS, SEA ENTRE LA 
 FECHAINICIO Y LA FECHA FIN DE LA COMPETICION
 */
-CREATE OR REPLACE TRIGGER FECHA_JORNADA
+CREATE OR REPLACE TRIGGER fechaJornada
 BEFORE INSERT OR UPDATE OF FECHA ON JORNADAS
 FOR EACH ROW
 DECLARE
@@ -197,3 +197,62 @@ EXCEPTION
     WHEN OTHERS THEN
     RAISE_APPLICATION_ERROR(-20002,'ERROR ORACLE: '||SQLCODE||'-'||TO_CHAR(SQLERRM));
 END FECHA_JORNADA;
+
+
+/* Trigger para controlar que una vez generado el calendario de la competición, no se pueden
+modificar, ni los equipos, ni los jugadores de cada equipo*/
+CREATE OR REPLACE TRIGGER noModificarEquipos
+BEFORE INSERT OR UPDATE ON equipos
+FOR EACH ROW
+
+DECLARE
+    v_mensaje VARCHAR2(225);
+    v_contar NUMBER;
+    e_excepcion EXCEPTION;
+
+BEGIN
+    SELECT COUNT(*) INTO v_contar
+        FROM jornadas;
+    
+    IF v_contar != 0 THEN
+        RAISE e_excepcion;
+    END IF;    
+        
+EXCEPTION
+
+    WHEN e_excepcion THEN
+        RAISE_APPLICATION_ERROR(-20001,'El calendario de la competicion ya a sido generado.');
+
+    WHEN OTHERS THEN
+        v_mensaje := 'Error desconocido, ' || TO_CHAR(SQLCODE) || SQLERRM;
+        RAISE_APPLICATION_ERROR(-20099, v_mensaje);
+
+END noModificarEquipos;
+
+CREATE OR REPLACE TRIGGER noModificarJugadores
+BEFORE INSERT OR UPDATE ON jugadores
+FOR EACH ROW
+
+DECLARE
+    v_mensaje VARCHAR2(225);
+    v_contar NUMBER;
+    e_excepcion EXCEPTION;
+
+BEGIN
+    SELECT COUNT(*) INTO v_contar
+        FROM jornadas;
+    
+    IF v_contar != 0 THEN
+        RAISE e_excepcion;
+    END IF;    
+        
+EXCEPTION
+
+    WHEN e_excepcion THEN
+        RAISE_APPLICATION_ERROR(-20001,'El calendario de la competicion ya a sido generado.');
+
+    WHEN OTHERS THEN
+        v_mensaje := 'Error desconocido, ' || TO_CHAR(SQLCODE) || SQLERRM;
+        RAISE_APPLICATION_ERROR(-20099, v_mensaje);
+
+END noModificarJugadores;
