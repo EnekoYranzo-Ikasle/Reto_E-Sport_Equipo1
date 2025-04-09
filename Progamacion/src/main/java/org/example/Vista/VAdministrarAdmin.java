@@ -15,10 +15,11 @@ public class VAdministrarAdmin extends JFrame {
     private JButton bVolver;
     private JPanel pBody;
     private JPanel pArriba;
-    private JButton bAdministrar;
-    private JButton bGenerarCalendario;
-    private JButton bCerrarEtapa;
-    private JButton bIntroducirResultados;
+    private JButton bJugador;
+    private JButton bEquipos;
+    private JButton bEnfrentamiento;
+    private JButton bJornada;
+    private JButton bCompeticion;
 
     public VAdministrarAdmin(VistaController vistaController) {
         this.vistaController = vistaController;
@@ -35,6 +36,42 @@ public class VAdministrarAdmin extends JFrame {
                 VInicioAdmin vInicioAdmin = new VInicioAdmin(vistaController, null);
                 vInicioAdmin.setVisible(true);
                 dispose();
+            }
+        });
+
+        bJugador.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DJugador dJugador = new DJugador();
+                dJugador.setVisible(true);
+            }
+        });
+
+        bEquipos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        bEnfrentamiento.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        bJornada.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        bCompeticion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }

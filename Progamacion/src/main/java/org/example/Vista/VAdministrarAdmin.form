@@ -84,7 +84,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="82df" class="javax.swing.JButton" binding="bAdministrar">
+              <component id="82df" class="javax.swing.JButton" binding="bJugador">
                 <constraints/>
                 <properties>
                   <background color="-14800328"/>
@@ -97,7 +97,7 @@
                   <verticalTextPosition value="3"/>
                 </properties>
               </component>
-              <component id="cd294" class="javax.swing.JButton" binding="bGenerarCalendario">
+              <component id="cd294" class="javax.swing.JButton" binding="bEquipos">
                 <constraints/>
                 <properties>
                   <background color="-14800328"/>
@@ -110,7 +110,7 @@
                   <verticalTextPosition value="3"/>
                 </properties>
               </component>
-              <component id="49e9f" class="javax.swing.JButton" binding="bCerrarEtapa">
+              <component id="49e9f" class="javax.swing.JButton" binding="bEnfrentamiento">
                 <constraints/>
                 <properties>
                   <background color="-14800328"/>
@@ -123,7 +123,7 @@
                   <verticalTextPosition value="3"/>
                 </properties>
               </component>
-              <component id="57434" class="javax.swing.JButton" binding="bIntroducirResultados">
+              <component id="57434" class="javax.swing.JButton" binding="bJornada">
                 <constraints/>
                 <properties>
                   <background color="-14800328"/>
@@ -136,7 +136,7 @@
                   <verticalTextPosition value="3"/>
                 </properties>
               </component>
-              <component id="df5c5" class="javax.swing.JButton">
+              <component id="df5c5" class="javax.swing.JButton" binding="bCompeticion">
                 <constraints/>
                 <properties>
                   <background color="-14800328"/>
