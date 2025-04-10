@@ -79,6 +79,18 @@ public class JugadorDAO {
         );
         return j;
     }
+    public List<Jugador> jugadorPorEquipo(int codEquip) throws SQLException {
+        ps=conn.prepareStatement("select * from jugadores where cod_equipo = ?");
+        ps.setInt(1, codEquip);
+        rs = ps.executeQuery();
+        List<Jugador> Jugadores = new ArrayList<>();
+        while(rs.next()) {
+            Jugador j = crearJugador(rs);
+            Jugadores.add(j);
+        }
+        return Jugadores;
+
+    }
 
 
 

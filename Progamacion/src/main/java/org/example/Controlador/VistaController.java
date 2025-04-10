@@ -1,5 +1,7 @@
 package org.example.Controlador;
 
+import org.example.Modelo.Equipo;
+import org.example.Modelo.Jugador;
 import org.example.Modelo.Persona;
 import org.example.Vista.Login;
 import org.example.Vista.VInicioAdmin;
@@ -7,6 +9,7 @@ import org.example.Vista.VInicioUser;
 
 import javax.swing.*;
 import java.sql.SQLException;
+import java.util.List;
 
 public class VistaController {
     private ModeloController modeloController;
@@ -51,6 +54,13 @@ public class VistaController {
 
     public void crearCuenta(String email, String pass) throws SQLException {
         modeloController.crearCuenta(email, pass);
+    }
+
+    public List<Equipo> mostrar() throws SQLException {
+        return  modeloController.mostrar();
+    }
+    public List <Jugador> mostrarJugadores(int codequipo) throws SQLException{
+        return modeloController.mostrajugs(codequipo);
     }
 
     public void generarCalendario() throws Exception {

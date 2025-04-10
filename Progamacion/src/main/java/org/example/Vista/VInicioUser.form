@@ -30,7 +30,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="8f5df" class="javax.swing.JButton" binding="bAdministrar">
+              <component id="8f5df" class="javax.swing.JButton" binding="bMostrarEquipos">
                 <constraints/>
                 <properties>
                   <background color="-14800328"/>

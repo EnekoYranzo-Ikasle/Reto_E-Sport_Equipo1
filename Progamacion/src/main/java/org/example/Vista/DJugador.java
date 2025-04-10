@@ -13,6 +13,8 @@ public class DJugador extends JDialog {
     private JTextField textField4;
     private JTextField textField5;
     private JButton aceptarButton;
+    private JTextField codigo;
+    private JButton aceptarButton1;
     private JButton buttonOK;
 
     public DJugador() {
