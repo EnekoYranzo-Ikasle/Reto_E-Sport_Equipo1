@@ -70,7 +70,8 @@ public class Login extends JFrame {
         });
     }
 
-    private boolean validarFormatoEmail(String email) {
+    private boolean
+    validarFormatoEmail(String email) {
         Pattern patron = Pattern.compile("^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
         Matcher matcher = patron.matcher(email);
         return matcher.matches();

@@ -1,24 +1,27 @@
 package org.example.Modelo;
 
 public class Persona {
-    private int codPersona;
+    private int id;
     private String email;
     private String password;
     private String tipo;
 
-    public Persona(int codPersona, String email, String password, String tipo) {
-        this.codPersona = codPersona;
+    public Persona(int id, String email, String password, String tipo) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.tipo = tipo;
     }
 
-    public int getCodPersona() {
-        return codPersona;
+    public Persona() {
     }
 
-    public void setCodPersona(int codPersona) {
-        this.codPersona = codPersona;
+    public int getId() {
+        return id;
+    }
+
+    public void setCodPersona(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
