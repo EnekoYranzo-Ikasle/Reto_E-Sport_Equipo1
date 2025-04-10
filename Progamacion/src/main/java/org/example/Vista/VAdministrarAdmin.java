@@ -42,7 +42,7 @@ public class VAdministrarAdmin extends JFrame {
         bJugador.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DJugador dJugador = new DJugador();
+                DJugador dJugador = new DJugador(vistaController);
                 dJugador.setVisible(true);
             }
         });

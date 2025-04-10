@@ -17,8 +17,9 @@ public class DVisualizarEquipos extends JDialog {
 
         setContentPane(pPrincipal);
         setModal(true);
+        setSize(500, 350);
+        setLocationRelativeTo(null);
         getRootPane().setDefaultButton(buttonOK);
-
 
     }
 }
