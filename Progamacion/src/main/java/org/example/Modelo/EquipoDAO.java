@@ -84,7 +84,11 @@ public class EquipoDAO {
         }
         return equipo;
     }
-
+    public void eliminarJugador(int codEquip, int codJug) throws SQLException {
+        ps = conn.prepareStatement("update jugadores set codEquipo= null where codJug=?");
+        ps.setInt(1, codJug);
+        ps.executeUpdate();
+    }
     public void agregarJugador(Jugador jugador, int codEquip) throws SQLException {
         ps = conn.prepareStatement("UPDATE jugadores SET cod_equipo = ? WHERE cod_jugador = ?");
         ps.setInt(1, codEquip);
