@@ -7,9 +7,7 @@ import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,6 +63,9 @@ public class JugadorController {
          jugadorDAO.eliminarJugador(cod);
 
 
+    }
+    public List<Jugador> mostrarJugadores(int CodEquip) throws SQLException{
+        return jugadorDAO.jugadorPorEquipo(CodEquip);
     }
 
     public void mostrarJugador() throws SQLException {

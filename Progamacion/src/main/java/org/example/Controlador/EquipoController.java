@@ -74,10 +74,10 @@ public class EquipoController {
         JOptionPane.showMessageDialog(null, "Se ha dado de baja al equipo con éxito", "Baja Completada", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void mostrar() throws SQLException {
-        List<Equipo> equipos = equipoDAO.obtenerEquipos();
+    public List<Equipo> mostrar() throws SQLException {
+        return  equipoDAO.obtenerEquipos();
 
-        JOptionPane.showMessageDialog(null, equipos);
+
     }
 
     // Solicitar:
@@ -108,6 +108,7 @@ public class EquipoController {
 
         return variable;
     }
+
 
     // Validaciones:
     private LocalDate formatearFecha(String fecha) {

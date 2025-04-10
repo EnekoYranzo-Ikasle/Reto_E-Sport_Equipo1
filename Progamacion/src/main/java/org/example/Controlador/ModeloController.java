@@ -1,9 +1,12 @@
 package org.example.Controlador;
 
 import org.example.Modelo.Competicion;
+import org.example.Modelo.Equipo;
+import org.example.Modelo.Jugador;
 import org.example.Modelo.Persona;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class ModeloController {
     private EquipoController equipoController;
@@ -39,5 +42,14 @@ public class ModeloController {
 
     public void generarCalendario() throws Exception {
         competicionController.generarCalendario();
+    }
+
+    public List<Equipo> mostrar() throws SQLException {
+        return  equipoController.mostrar();
+
+
+    }
+    public List<Jugador> mostrajugs(int codEquip)throws SQLException {
+        return jugadorController.mostrarJugadores(codEquip);
     }
 }
