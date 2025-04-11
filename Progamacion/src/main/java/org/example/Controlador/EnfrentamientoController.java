@@ -35,7 +35,7 @@ public class EnfrentamientoController {
 
         enfrentamientoDAO.agregarResultados(seleccion, lista, resultado);
     }
-    public List<String> getganador(String codigoJorn) throws SQLException {
+    public List<Integer> getganador(int codigoJorn) throws SQLException {
         return enfrentamientoDAO.obtenerGanadores(codigoJorn);
     }
 }

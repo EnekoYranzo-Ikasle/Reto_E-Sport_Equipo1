@@ -68,12 +68,12 @@ public class JornadaDAO {
 
         JOptionPane.showMessageDialog(null, mensajeFinal.toString(), "Jornadas", JOptionPane.INFORMATION_MESSAGE);
     }
-    public List<String> obtenercodjornada() throws SQLException {
+    public List<Integer> obtenercodjornada() throws SQLException {
         ps = conn.prepareStatement("select codJornada from jornadas");
         rs = ps.executeQuery();
-        List<String> codjornada = new ArrayList<>();
+        List<Integer> codjornada = new ArrayList<>();
         while(rs.next()) {
-            codjornada.add(rs.getString("codJornada"));
+            codjornada.add(rs.getInt("codJornada"));
         }
         return codjornada;
     }

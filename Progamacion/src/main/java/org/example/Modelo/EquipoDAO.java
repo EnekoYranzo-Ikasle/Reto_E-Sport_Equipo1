@@ -59,11 +59,11 @@ public class EquipoDAO {
         ps.executeUpdate();
     }
 
-    public Equipo buscarEquipoPorCod(String idEquipo) throws SQLException {
+    public Equipo buscarEquipoPorCod(int idEquipo) throws SQLException {
         Equipo equipo = new Equipo();
 
         ps = conn.prepareStatement("select * from equipos where cod_equipo = ?");
-        ps.setString(1, idEquipo);
+        ps.setInt(1, idEquipo);
         rs = ps.executeQuery();
 
         if(rs.next()) {
@@ -111,16 +111,6 @@ public class EquipoDAO {
     private Date parsearFecha(LocalDate fecha1){
         return Date.valueOf(fecha1);
     }
-    public List<Equipo> buscarEquiposPorCodigo(String codEquipo) throws SQLException {
-        ps=conn.prepareStatement("select * from equipos where cod_equipo = ?");
-        ps.setString(1, codEquipo);
-        rs=ps.executeQuery();
-        List<Equipo> equipos = new ArrayList<>();
-        while(rs.next()) {
-            equipos.add(crearEquipo(rs));
-        }
-        return equipos;
 
-    }
 }
 

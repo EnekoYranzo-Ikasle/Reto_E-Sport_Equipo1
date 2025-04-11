@@ -195,7 +195,7 @@ public class JugadorController {
         do {
             try {
                 String codigo = JOptionPane.showInputDialog(mensaje);
-                equipo = equipoDAO.buscarEquipoPorCod(codigo);
+                equipo = equipoDAO.buscarEquipoPorCod(Integer.parseInt(codigo));
 
                 if (equipo != null)
                     error = true;
