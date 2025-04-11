@@ -10,7 +10,6 @@ import org.example.Vista.VInicioUser;
 
 import javax.swing.*;
 import java.sql.SQLException;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -71,9 +70,14 @@ public class VistaController {
     }
 
     public void altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
-                            String nickname, double sueldo, String rol){
-        Jugador jugador = new Jugador(null, nombre, apellido, nacionalidad, fechaNacimiento, nickname,
-                Roles.valueOf(rol), sueldo, null);
+                            String nickname, double sueldo, String rol, String nombreEquipo) throws SQLException {
+
+        Equipo equipo = modeloController.getEquipoPorNombre(nombreEquipo);
+
+        Jugador jugador = new Jugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname,
+                Roles.valueOf(rol), sueldo, equipo.getCodEquipo());
+
+        modeloController.altaJugador(jugador);
     }
 
     public List<Integer> obtenerCodJornada() throws SQLException {
@@ -83,6 +87,6 @@ public class VistaController {
         return modeloController.getganador(codigoJorn);
     }
     public Equipo getGanador(int codEquip) throws SQLException {
-        return modeloController.getEquipoGanador(codEquip);
+        return modeloController.getGanador(codEquip);
     }
 }

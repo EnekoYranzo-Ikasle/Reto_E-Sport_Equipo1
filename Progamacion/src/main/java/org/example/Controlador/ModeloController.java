@@ -57,7 +57,7 @@ public class ModeloController {
     public List<Integer> getganador(int codigoJorn) throws SQLException {
         return enfrentamientoController.getganador(codigoJorn);
     }
-    public Equipo getEquipoGanador(int codEquip) throws SQLException {
+    public Equipo getGanador(int codEquip) throws SQLException {
         return equipoController.getGanador(codEquip);
     }
 }
