@@ -30,7 +30,7 @@ public class VInicioAdmin extends JFrame {
 
         setContentPane(pPrincipal);
         setTitle("Vista Admin");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(700, 400);
         setLocationRelativeTo(null);
 
@@ -56,11 +56,10 @@ public class VInicioAdmin extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    dVisualizarResultados = new DVisualizarResultados(vistaController);
+                    DVisualizarResultados dVisualizarResultados = new DVisualizarResultados(vistaController);
                     dVisualizarResultados.setVisible(true);
-                    dispose();
 
-                }catch (SQLException ex){
+                }catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
             }

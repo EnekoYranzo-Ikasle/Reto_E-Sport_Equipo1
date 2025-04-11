@@ -17,8 +17,10 @@ public class DVisualizarResultados extends JDialog {
 
     public DVisualizarResultados(VistaController vistaController) throws SQLException {
         this.vistaController = vistaController;
+
         setContentPane(contentPane);
         setModal(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(500, 500);
         setLocationRelativeTo(null);
 

@@ -57,16 +57,15 @@ public class VInicioUser extends JFrame {
         bVerInforme.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DVisualizarResultados dVisualizarResultados = null;
-                try {
-                    dVisualizarResultados = new DVisualizarResultados(vistaController);
-                }catch (SQLException ex){
-                    throw new RuntimeException(ex);
-                }
-                dVisualizarResultados.setVisible(true);
-                dispose();
+               try {
+                   DVisualizarResultados dVisualizarResultados = new DVisualizarResultados(vistaController);
+                   dVisualizarResultados.setVisible(true);
 
+               }catch (SQLException ex) {
+                   throw new RuntimeException(ex);
+               }
             }
         });
+
     }
 }
