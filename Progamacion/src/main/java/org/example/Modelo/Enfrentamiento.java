@@ -9,9 +9,17 @@ public class Enfrentamiento {
     private Equipo equipo1;
     private Equipo equipo2;
 
+    private int codJornada;
+
     public Enfrentamiento() {
     }
-
+    // Constructor para insertar nuevos enfrentamientos
+    public Enfrentamiento(Equipo equipo1, Equipo equipo2, LocalTime hora, int codJornada) {
+        this.equipo1 = equipo1;
+        this.equipo2 = equipo2;
+        this.hora = hora;
+        this.codJornada = codJornada;
+    }
     public Enfrentamiento(String codEnfrentamiento, Equipo equipo1, Equipo equipo2, LocalTime hora) {
         this.codEnfrentamiento = codEnfrentamiento;
         this.equipo1 = equipo1;
