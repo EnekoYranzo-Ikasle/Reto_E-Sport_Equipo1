@@ -101,8 +101,8 @@ public class EquipoDAO {
 //    Funciones privadas
     private Equipo crearEquipo(ResultSet rs) throws SQLException {
         Equipo equipo = new Equipo(
-                rs.getInt("cod_equipo"),
-                rs.getString("nombre_equipo"),
+                rs.getInt("codEquipo"),
+                rs.getString("nombre"),
                 rs.getDate("fechaFundacion").toLocalDate()
         );
         return equipo;

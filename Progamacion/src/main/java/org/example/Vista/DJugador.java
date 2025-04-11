@@ -54,16 +54,15 @@ public class DJugador extends JDialog {
 
                     vistaController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, rol, nombreEquipo);
 
+                    JOptionPane.showMessageDialog(null, "Jugador dado de alta correctamente");
+                    dispose();
+
                 }catch (Exception ex) {
                     JOptionPane.showMessageDialog(DJugador.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
     }
-
-
-
-
 
     private LocalDate parsearFecha(String fechaStr) {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
