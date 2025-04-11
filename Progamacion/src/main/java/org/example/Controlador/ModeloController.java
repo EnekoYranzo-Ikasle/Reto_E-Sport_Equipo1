@@ -45,19 +45,29 @@ public class ModeloController {
 
     public List<Equipo> mostrar() throws SQLException {
         return  equipoController.mostrar();
-
-
     }
+
     public List<Jugador> mostraJugs(int codEquip)throws SQLException {
         return jugadorController.mostrarJugadores(codEquip);
     }
+
     public List<Integer> mostrarCodJornada() throws SQLException {
         return jornadaController.obtenercodjornada();
     }
-    public List<Integer> getganador(int codigoJorn) throws SQLException {
+
+    public List<Integer> getGanador(int codigoJorn) throws SQLException {
         return enfrentamientoController.getganador(codigoJorn);
     }
-    public Equipo getGanador(int codEquip) throws SQLException {
+
+    public Equipo getGanadorEquipo(int codEquip) throws SQLException {
         return equipoController.getGanador(codEquip);
+    }
+
+    public Equipo getEquipoPorNombre(String nombre) throws SQLException {
+        return equipoController.getEquipoPorNombre(nombre);
+    }
+
+    public void altaJugador(Jugador jugador) throws SQLException {
+        jugadorController.altaJugador(jugador);
     }
 }

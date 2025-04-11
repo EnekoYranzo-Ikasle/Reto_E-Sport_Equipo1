@@ -84,9 +84,9 @@ public class VistaController {
         return modeloController.mostrarCodJornada();
     }
     public List<Integer> getganador(int codigoJorn) throws SQLException {
-        return modeloController.getganador(codigoJorn);
+        return modeloController.getGanador(codigoJorn);
     }
     public Equipo getGanador(int codEquip) throws SQLException {
-        return modeloController.getGanador(codEquip);
+        return modeloController.getGanadorEquipo(codEquip);
     }
 }
