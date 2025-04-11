@@ -54,7 +54,12 @@ public class DJugador extends JDialog {
         });
     }
 
+
+
+
+
     private LocalDate parsearFecha(String fechaStr) {
         return LocalDate.parse(fechaStr);
+
     }
 }
