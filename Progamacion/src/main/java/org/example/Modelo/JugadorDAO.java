@@ -54,11 +54,11 @@ public class JugadorDAO {
         ps.executeUpdate();
     }
 
-    public Jugador mostrarJugador(String codJugador) throws SQLException {
+    public Jugador mostrarJugador(int codJugador) throws SQLException {
         Jugador jugador = new Jugador();
 
         ps = conn.prepareStatement("select from jugadores where cod_jugador =?");
-        ps.setString(1, codJugador);
+        ps.setInt(1, codJugador);
         rs = ps.executeQuery();
 
         if (rs.next()) {
@@ -97,5 +97,20 @@ public class JugadorDAO {
 
     private Date parsearFecha(LocalDate fecha1){
         return Date.valueOf(fecha1);
+    }
+    public void EditarJugador(int codJugador, Jugador jugador) throws SQLException {
+        ps=conn.prepareStatement("update jugadores set nombre=?, apellidos=?, nacionalidad=?, fechaNacimiento=?, nickname=?, rol=?, sueldo=?, codEquipo=? where cod_jugador = ?");
+        ps.setString(1, jugador.getNombre());
+        ps.setString(2, jugador.getApellidos());
+        ps.setString(3, jugador.getNacionalidad());
+        ps.setDate(4, parsearFecha(jugador.getFechaNacimiento()));
+        ps.setString(5, jugador.getNickname());
+        ps.setString(6, jugador.getRol().toString());
+        ps.setDouble(7, jugador.getSueldo());
+        ps.setInt(8, jugador.getCodEquipo());
+        ps.setInt(9, codJugador);
+        ps.executeUpdate();
+
+
     }
 }
