@@ -23,5 +23,6 @@ public class DJugador extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
 
         tabbedPane1.setBorder(BorderFactory.createEmptyBorder());
+
     }
 }

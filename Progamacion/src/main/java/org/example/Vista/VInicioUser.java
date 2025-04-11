@@ -43,31 +43,14 @@ public class VInicioUser extends JFrame {
         bMostrarEquipos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DVisualizarEquipos dVisualizarEquipos = new DVisualizarEquipos(vistaController);
-                dVisualizarEquipos.setVisible(true);
+                DVisualizarEquipos dVisualizarEquipos = null;
                 try {
-                    List<Equipo> equipos = vistaController.mostrar();
-                    StringBuilder equiposText = new StringBuilder();
-                    for ( int i = 0; i < equipos.size(); i++ ) {
-
-                        equiposText.append(equipos.get(i));
-                        equiposText.append("\n");
-                        List < Jugador> jugadors = vistaController.mostrarJugadores(equipos.get(i).getCodEquipo());
-                        for (int j = i + 1; j < equipos.size(); j++ ) {
-                            equiposText.append(jugadors.get(j).getNombre());
-                            equiposText.append(" Alias: ");
-                            equiposText.append(jugadors.get(j).getNickname());
-                            equiposText.append("\n");
-                        }
-                        equiposText.append("\n \n \n");
-                        equiposText.append("---------------------------------");
-
-                    }
-
-
+                    dVisualizarEquipos = new DVisualizarEquipos(vistaController);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+                dVisualizarEquipos.setVisible(true);
+
             }
         });
     }
