@@ -13,7 +13,6 @@ public class DVisualizarResultados extends JDialog {
     private JButton volverButton;
     private JTextArea taMostrar;
     private JPanel pHeader;
-    private JButton buttonOK;
     private VistaController vistaController;
 
     public DVisualizarResultados(VistaController vistaController) throws SQLException {
@@ -22,27 +21,22 @@ public class DVisualizarResultados extends JDialog {
         setModal(true);
         setSize(500, 500);
         setLocationRelativeTo(null);
-        getRootPane().setDefaultButton(buttonOK);
-
 
         List<Integer> codJornadas = vistaController.obtenerCodJornada();
         for (int i = 0; i < codJornadas.size(); i++) {
             taMostrar.append("Jornada "+codJornadas.get(i) + "\n");
             taMostrar.append("Ganadores");
-            List<Integer> codGanadores=vistaController.getganador(codJornadas.get(i));
+            List<Integer> codGanadores=vistaController.getGanador(codJornadas.get(i));
             for (int j = 0; j < codGanadores.size(); j++) {
                 taMostrar.append("Enfrentamiento "+ j + "\n");
-                taMostrar.append(vistaController.getGanador(codGanadores.get(j)).getNombreEquipo() + "\n");
+                taMostrar.append(vistaController.getGanadorEquipo(codGanadores.get(j)).getNombreEquipo() + "\n");
             }
-
         }
+
         volverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                    getRootPane().setDefaultButton(buttonOK);
-                    dispose();
-
+                dispose();
             }
         });
     }

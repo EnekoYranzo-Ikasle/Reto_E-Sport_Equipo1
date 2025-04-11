@@ -1,8 +1,6 @@
 package org.example.Vista;
 
 import org.example.Controlador.VistaController;
-import org.example.Modelo.Equipo;
-import org.example.Modelo.Jugador;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,8 +21,9 @@ public class VInicioUser extends JFrame {
     private JPanel pHeader;
     private JButton bLogOut;
 
-    public VInicioUser(VistaController vistaController) throws HeadlessException {
+    public VInicioUser(VistaController vistaController, Login login) throws HeadlessException {
         this.vistaController = vistaController;
+        this.login = login;
 
         setContentPane(pPrincipal);
         setTitle("Vista Inicio");
@@ -35,11 +34,12 @@ public class VInicioUser extends JFrame {
         bLogOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                login = new Login(vistaController);
+                Login login = new Login(vistaController);
                 login.setVisible(true);
                 dispose();
             }
         });
+
         bMostrarEquipos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,6 +53,7 @@ public class VInicioUser extends JFrame {
 
             }
         });
+
         bVerInforme.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

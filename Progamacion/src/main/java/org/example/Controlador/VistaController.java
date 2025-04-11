@@ -34,7 +34,7 @@ public class VistaController {
 
             switch (usuario.getTipo()) {
                 case "user":{
-                    VInicioUser vInicioUser = new VInicioUser(this);
+                    VInicioUser vInicioUser = new VInicioUser(this, login);
                     vInicioUser.setVisible(true);
 
                     login.dispose();
@@ -61,8 +61,8 @@ public class VistaController {
     public List<Equipo> mostrar() throws SQLException {
         return  modeloController.mostrar();
     }
-    public List <Jugador> mostrarJugadores(int codequipo) throws SQLException{
-        return modeloController.mostraJugs(codequipo);
+    public List <Jugador> mostrarJugadores(int codEquipo) throws SQLException{
+        return modeloController.mostraJugs(codEquipo);
     }
 
     public void generarCalendario() throws Exception {
@@ -83,10 +83,12 @@ public class VistaController {
     public List<Integer> obtenerCodJornada() throws SQLException {
         return modeloController.mostrarCodJornada();
     }
-    public List<Integer> getganador(int codigoJorn) throws SQLException {
+
+    public List<Integer> getGanador(int codigoJorn) throws SQLException {
         return modeloController.getGanador(codigoJorn);
     }
-    public Equipo getGanador(int codEquip) throws SQLException {
+
+    public Equipo getGanadorEquipo(int codEquip) throws SQLException {
         return modeloController.getGanadorEquipo(codEquip);
     }
 }

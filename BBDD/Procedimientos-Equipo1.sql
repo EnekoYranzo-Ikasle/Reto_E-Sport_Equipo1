@@ -2,9 +2,9 @@
 funciones.*/
 
 /*Segundo procedimiento: Procedimiento almacenado en la base de datos, que permita
-después en Java, ver el informe con la relación de los jugadores de un equipo concreto.
-De cada jugador se verá el nombre, apellido, rol y salario. El nombre del equipo
-le llegará como parámetro. Las excepciones serán visualizadas en el programa Java.*/
+despuï¿½s en Java, ver el informe con la relaciï¿½n de los jugadores de un equipo concreto.
+De cada jugador se verï¿½ el nombre, apellido, rol y salario. El nombre del equipo
+le llegarï¿½ como parï¿½metro. Las excepciones serï¿½n visualizadas en el programa Java.*/
 
 CREATE OR REPLACE PROCEDURE ObtenerJugadoresEquipos (
     p_nombreEquipo IN equipos.nombre%TYPE,
@@ -12,7 +12,7 @@ CREATE OR REPLACE PROCEDURE ObtenerJugadoresEquipos (
 AS
     v_codEquipo equipos.codEquipo%TYPE;
     e_equipoNoExiste EXCEPTION;
-    v_error varchar(250);
+    v_error varchar2(250);
     v_existe NUMBER;
     
 BEGIN
