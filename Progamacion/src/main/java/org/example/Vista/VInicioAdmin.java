@@ -10,7 +10,8 @@ import java.sql.SQLException;
 public class VInicioAdmin extends JFrame {
     private VistaController vistaController;
     private Login login;
-    
+    private DVisualizarResultados dVisualizarResultados;
+
     private JPanel pPrincipal;
     private JPanel pHeader;
     private JPanel pBody;
@@ -29,7 +30,7 @@ public class VInicioAdmin extends JFrame {
 
         setContentPane(pPrincipal);
         setTitle("Vista Admin");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(700, 400);
         setLocationRelativeTo(null);
 
@@ -50,17 +51,17 @@ public class VInicioAdmin extends JFrame {
                 dispose();
             }
         });
+
         bVerInforme.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DVisualizarResultados dVisualizarResultados = null;
                 try {
-                    dVisualizarResultados = new DVisualizarResultados(vistaController);
-                }catch (SQLException ex){
+                    DVisualizarResultados dVisualizarResultados = new DVisualizarResultados(vistaController);
+                    dVisualizarResultados.setVisible(true);
+
+                }catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-                dVisualizarResultados.setVisible(true);
-                dispose();
             }
         });
     }
