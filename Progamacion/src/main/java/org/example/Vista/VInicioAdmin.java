@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 public class VInicioAdmin extends JFrame {
     private VistaController vistaController;
     private Login login;
-
+    
     private JPanel pPrincipal;
     private JPanel pHeader;
     private JPanel pBody;
@@ -35,6 +35,7 @@ public class VInicioAdmin extends JFrame {
         bLogOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Login login = new Login(vistaController);
                 login.setVisible(true);
                 dispose();
             }

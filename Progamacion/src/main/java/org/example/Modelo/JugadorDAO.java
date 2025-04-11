@@ -28,7 +28,7 @@ public class JugadorDAO {
         ps.setString(3, jugador.getNacionalidad());
         ps.setDate(4, parsearFecha(jugador.getFechaNacimiento()));
         ps.setString(5, jugador.getNickname());
-        ps.setString(6, jugador.getRol().toString());
+        ps.setString(6, jugador.getRol().toString().toLowerCase());
         ps.setDouble(7, jugador.getSueldo());
         ps.setInt(8, jugador.getCodEquipo());
 
