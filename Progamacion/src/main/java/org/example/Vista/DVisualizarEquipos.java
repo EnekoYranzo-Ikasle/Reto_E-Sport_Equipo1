@@ -21,7 +21,10 @@ public class DVisualizarEquipos extends JDialog {
 
         setContentPane(pPrincipal);
         setModal(true);
+        setSize(500, 350);
+        setLocationRelativeTo(null);
         getRootPane().setDefaultButton(buttonOK);
+
 
         List<Equipo> equipos = vistaController.mostrar();
 
@@ -40,8 +43,6 @@ public class DVisualizarEquipos extends JDialog {
             taMostrar.append("---------------------------------");
 
         }
-
-
 
 
     }

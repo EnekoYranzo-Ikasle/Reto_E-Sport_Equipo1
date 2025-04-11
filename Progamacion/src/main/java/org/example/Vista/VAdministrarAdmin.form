@@ -27,7 +27,7 @@
             <properties>
               <font size="24" style="1"/>
               <foreground color="-1"/>
-              <text value="Administrar"/>
+              <text value="Administrar BD"/>
             </properties>
           </component>
           <component id="7f6cd" class="javax.swing.JButton" binding="bVolver">
