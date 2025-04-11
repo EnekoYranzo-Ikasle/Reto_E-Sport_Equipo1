@@ -5,6 +5,7 @@ import org.example.Controlador.VistaController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class VInicioAdmin extends JFrame {
     private VistaController vistaController;
@@ -45,6 +46,19 @@ public class VInicioAdmin extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 VAdministrarAdmin vAdministrarAdmin = new VAdministrarAdmin(vistaController);
                 vAdministrarAdmin.setVisible(true);
+                dispose();
+            }
+        });
+        bVerInforme.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DVisualizarResultados dVisualizarResultados = null;
+                try {
+                    dVisualizarResultados = new DVisualizarResultados(vistaController);
+                }catch (SQLException ex){
+                    throw new RuntimeException(ex);
+                }
+                dVisualizarResultados.setVisible(true);
                 dispose();
             }
         });
