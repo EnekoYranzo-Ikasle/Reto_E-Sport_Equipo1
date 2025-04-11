@@ -32,12 +32,11 @@ public class JugadorController {
         return jugadorDAO.jugadorPorEquipo(CodEquip);
     }
 
-    public void mostrarJugador() throws SQLException {
-        String codigo = JOptionPane.showInputDialog("Ingrese el código del jugador que quieres ver");
-        Jugador jugador = jugadorDAO.mostrarJugador(codigo);
-
-        JOptionPane.showMessageDialog(null, Objects.requireNonNullElse(jugador, "El jugador no existe"));
-
+    public Jugador  mostrarJugador(int CodigoJugador) throws SQLException {
+        return jugadorDAO.mostrarJugador(CodigoJugador);
+    }
+    public void EditarJugador(Jugador jugador, int codigo) throws SQLException {
+        jugadorDAO.EditarJugador(codigo, jugador);
     }
 
     public void modificarJugador() throws SQLException {
