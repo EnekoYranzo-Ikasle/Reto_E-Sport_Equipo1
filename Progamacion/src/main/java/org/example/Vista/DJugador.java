@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DJugador extends JDialog {
     private VistaController vistaController;
@@ -41,20 +42,27 @@ public class DJugador extends JDialog {
         aceptarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nombre = tfNombre.getText();
-                String apellido = tfApellido.getText();
-                String nacionalidad = tfNacionalidad.getText();
-                LocalDate fechaNacimiento = parsearFecha(tfNacimiento.getText());
-                String nickname = tfNickname.getText();
-                double sueldo = Double.parseDouble(tfSueldo.getText());
-                String rol = cbRol.getSelectedItem().toString();
+                try {
+                    String nombre = tfNombre.getText();
+                    String apellido = tfApellido.getText();
+                    String nacionalidad = tfNacionalidad.getText();
+                    LocalDate fechaNacimiento = parsearFecha(tfNacimiento.getText());
+                    String nickname = tfNickname.getText();
+                    String nombreEquipo = tfNombreEquipo.getText();
+                    double sueldo = Double.parseDouble(tfSueldo.getText());
+                    String rol = cbRol.getSelectedItem().toString();
 
-                vistaController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, rol);
+                    vistaController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, rol, nombreEquipo);
+
+                }catch (Exception ex) {
+                    JOptionPane.showMessageDialog(DJugador.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
 
     private LocalDate parsearFecha(String fechaStr) {
-        return LocalDate.parse(fechaStr);
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(fechaStr, formatoFecha);
     }
 }

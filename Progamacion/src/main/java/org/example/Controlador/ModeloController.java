@@ -1,6 +1,5 @@
 package org.example.Controlador;
 
-import org.example.Modelo.Competicion;
 import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
 import org.example.Modelo.Persona;
@@ -46,10 +45,17 @@ public class ModeloController {
 
     public List<Equipo> mostrar() throws SQLException {
         return  equipoController.mostrar();
-
-
     }
-    public List<Jugador> mostrajugs(int codEquip)throws SQLException {
+
+    public List<Jugador> mostraJugs(int codEquip)throws SQLException {
         return jugadorController.mostrarJugadores(codEquip);
+    }
+
+    public Equipo getEquipoPorNombre(String nombreEquipo) throws SQLException {
+        return equipoController.getEquipoPorNombre(nombreEquipo);
+    }
+
+    public void altaJugador(Jugador jugador) throws SQLException {
+        jugadorController.altaJugador(jugador);
     }
 }
