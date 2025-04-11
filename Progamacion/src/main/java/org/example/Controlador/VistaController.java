@@ -1,12 +1,7 @@
 package org.example.Controlador;
 
-import org.example.Modelo.Equipo;
-import org.example.Modelo.Jugador;
-import org.example.Modelo.Persona;
-import org.example.Modelo.Roles;
-import org.example.Vista.Login;
-import org.example.Vista.VInicioAdmin;
-import org.example.Vista.VInicioUser;
+import org.example.Modelo.*;
+import org.example.Vista.*;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -16,8 +11,8 @@ import java.util.List;
 public class VistaController {
     private ModeloController modeloController;
     private final Login login;
-     private VCompeticion vCompeticion;
     private vJornada vJornada;
+    private DCRUDCompeticion dCRUDCompeticion;
 
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
@@ -67,9 +62,7 @@ public class VistaController {
         return modeloController.mostraJugs(codEquipo);
     }
 
-    public void generarCalendario() throws Exception {
-        modeloController.generarCalendario();
-    }
+
 
     public void altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
                             String nickname, double sueldo, String rol, String nombreEquipo) throws SQLException {
@@ -82,9 +75,7 @@ public class VistaController {
         modeloController.altaJugador(jugador);
     }
 
-    public List<Integer> obtenerCodJornada() throws SQLException {
-        return modeloController.mostrarCodJornada();
-    }
+
 
     public List<Integer> getGanador(int codigoJorn) throws SQLException {
         return modeloController.getGanador(codigoJorn);
@@ -99,24 +90,16 @@ public class VistaController {
 
 
       //COMPETICIONES
-    /*
-    public void agregarCompeticion(int codCompe, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String estado) throws SQLException {
-        Competicion competicion=new Competicion(codCompe,nombre,fechaInicio,fechaFin,estado);
-        modeloController.agregarCompeticion(competicion);
-    }
-
-    public void modificarCompeticion(int codCompe,String nombre, LocalDate fechaInicio, LocalDate fechaFin,String estado) throws SQLException {
-        Competicion competicion=new Competicion(codCompe,nombre,fechaInicio,fechaFin,estado);
-        modeloController.modificarCompeticion(competicion);
-    }
-
-    public void eliminarCompeticion(Competicion competicion) throws SQLException {
-        modeloController.eliminarCompeticion(competicion);
-    }
-     */
     public void crearVentanaCompe(){
-        vCompeticion = new VCompeticion(this);
-        vCompeticion.setVisible(true);
+        dCRUDCompeticion = new DCRUDCompeticion(this);
+        dCRUDCompeticion.setVisible(true);
+    }
+    public void eliminarCompeticion(String nombreCompe) throws SQLException {
+        modeloController.eliminarCompeticion(nombreCompe);
+    }
+    public void modificarCompeticion(String nombre,LocalDate fechaInicio,LocalDate fechaFin,String estado) throws SQLException {
+        Competicion competicion=new Competicion(nombre,fechaInicio,fechaFin,estado);
+        modeloController.modificarCompeticion(competicion);
     }
     public String getNombreCompeticion() throws SQLException {
         return modeloController.getNombreCompeticion();
@@ -159,5 +142,6 @@ public class VistaController {
     public void generarCalendario(int codCompeticion, int numJornadas) throws SQLException {
         modeloController.generarCalendario(codCompeticion, numJornadas);
     }
+
 
 }

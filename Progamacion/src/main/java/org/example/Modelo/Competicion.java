@@ -20,6 +20,13 @@ public class Competicion {
         this.estado = estado;
         this.listaJornadas = new ArrayList<>();
     }
+    public Competicion(String nombre, LocalDate fechaInicio, LocalDate fechaFin, String estado) {
+        this.nombre = nombre;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = estado;
+        this.listaJornadas = new ArrayList<>();
+    }
 
     public Competicion() {
 

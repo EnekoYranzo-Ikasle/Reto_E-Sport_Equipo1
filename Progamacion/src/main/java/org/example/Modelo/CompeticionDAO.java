@@ -24,16 +24,17 @@ public class CompeticionDAO {
         ps.executeUpdate();
     }
     public void modificarCompeticion(Competicion c) throws SQLException {
-        ps = conn.prepareStatement("UPDATE competiciones SET nombre = ?, fechaInicio = ?, fechaFin = ?, estado= ? WHERE nombre = ?");
-        ps.setString(1,c.getNombre());
-        ps.setDate(2,parsearFecha(c.getFechaInicio()));
-        ps.setDate(3,parsearFecha(c.getFecha_fin()));
+        ps = conn.prepareStatement("UPDATE competiciones SET nombre = ?, fechaInicio = ?, fechaFin = ?, estado = ? WHERE nombre = ?");
+        ps.setString(1, c.getNombre());
+        ps.setDate(2, parsearFecha(c.getFechaInicio()));
+        ps.setDate(3, parsearFecha(c.getFecha_fin()));
         ps.setString(4, c.getEstado());
+        ps.setString(5, c.getNombre()); // Esta es la condición WHERE
         ps.executeUpdate();
     }
-    public void eliminarCompeticion(Competicion c) throws SQLException {
+    public void eliminarCompeticion(String nombreCompeticion) throws SQLException {
         ps = conn.prepareStatement("DELETE FROM competiciones WHERE nombre = ?");
-        ps.setString(1, c.getNombre());
+        ps.setString(1, nombreCompeticion);
         ps.executeUpdate();
     }
 

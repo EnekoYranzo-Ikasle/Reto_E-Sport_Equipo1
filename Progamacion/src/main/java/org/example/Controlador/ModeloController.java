@@ -1,9 +1,8 @@
 package org.example.Controlador;
 
-import org.example.Modelo.Equipo;
-import org.example.Modelo.Jugador;
-import org.example.Modelo.Persona;
+import org.example.Modelo.*;
 
+import javax.swing.*;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -39,10 +38,6 @@ public class ModeloController {
         return personaController.getPersona(email);
     }
 
-    public void generarCalendario() throws Exception {
-        competicionController.generarCalendario();
-    }
-
     public List<Equipo> mostrar() throws SQLException {
         return  equipoController.mostrar();
     }
@@ -51,9 +46,6 @@ public class ModeloController {
         return jugadorController.mostrarJugadores(codEquip);
     }
 
-    public List<Integer> mostrarCodJornada() throws SQLException {
-        return jornadaController.obtenercodjornada();
-    }
 
     public List<Integer> getGanador(int codigoJorn) throws SQLException {
         return enfrentamientoController.getganador(codigoJorn);
@@ -77,18 +69,12 @@ public class ModeloController {
 
 
      //COMPETICIONES
-   /* public void agregarCompeticion(Competicion competicion) throws SQLException {
-        competicionController.agregarCompetcion(competicion);
+    public void eliminarCompeticion(String nombreCompeticion) throws SQLException{
+        competicionController.eliminarCompeticion(nombreCompeticion);
     }
-
     public void modificarCompeticion(Competicion competicion) throws SQLException {
         competicionController.modificarCompeticion(competicion);
     }
-
-    public void eliminarCompeticion(Competicion competicion) throws SQLException {
-        competicionController.eliminarCompeticion(competicion);
-    }
-    */
     public String getNombreCompeticion() throws SQLException {
         return competicionController.getNombreCompeticion();
     }

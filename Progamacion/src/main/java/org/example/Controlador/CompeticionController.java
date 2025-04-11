@@ -20,8 +20,8 @@ public class CompeticionController {
         competicionDAO.modificarCompeticion(competicion);
     }
 
-    public void eliminarCompeticion(Competicion competicion) throws SQLException {
-        competicionDAO.eliminarCompeticion(competicion);
+    public void eliminarCompeticion(String nombreCompeticion) throws SQLException {
+        competicionDAO.eliminarCompeticion(nombreCompeticion);
     }
 
     public String getNombreCompeticion() throws SQLException {
