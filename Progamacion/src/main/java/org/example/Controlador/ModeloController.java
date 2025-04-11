@@ -74,21 +74,16 @@ public class ModeloController {
         jugadorController.eliminarJugador(CodigoJugador);
     }
 
-
-
-     //COMPETICIONES
-   /* public void agregarCompeticion(Competicion competicion) throws SQLException {
-        competicionController.agregarCompetcion(competicion);
+    public Jugador  mostrarJugador(int CodigoJugador) throws SQLException {
+        return jugadorController.mostrarJugador(CodigoJugador);
     }
+    public void modificarJugador(Jugador jugador, int codigo) throws SQLException {
+        jugadorController.EditarJugador(jugador, codigo);
 
-    public void modificarCompeticion(Competicion competicion) throws SQLException {
-        competicionController.modificarCompeticion(competicion);
-    }
 
-    public void eliminarCompeticion(Competicion competicion) throws SQLException {
-        competicionController.eliminarCompeticion(competicion);
-    }
-    */
+
+
+   
     public String getNombreCompeticion() throws SQLException {
         return competicionController.getNombreCompeticion();
     }
@@ -99,7 +94,7 @@ public class ModeloController {
         competicionController.cargarCompeticionActiva();
     }
 
-    //JORNADAS
+
     public void borrarJornada(Jornada jornada) throws SQLException {
         try {
             jornadaController.borrarJornada(jornada);
@@ -125,5 +120,6 @@ public class ModeloController {
     }
     public void generarCalendario(int codCompeticion, int numJornadas) throws SQLException {
         jornadaController.generarJornada(codCompeticion, numJornadas);
+
     }
 }

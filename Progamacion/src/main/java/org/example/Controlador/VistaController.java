@@ -81,6 +81,9 @@ public class VistaController {
 
         modeloController.altaJugador(jugador);
     }
+    public Equipo mostrarEquipo(String nombrEquipo) throws SQLException{
+        return modeloController.getEquipoPorNombre(nombrEquipo);
+    }
 
     public List<Integer> obtenerCodJornada() throws SQLException {
         return modeloController.mostrarCodJornada();
@@ -97,23 +100,27 @@ public class VistaController {
         modeloController.eliminarJugador(CodJugador);
     }
 
+    public Jugador  mostrarJugador(int CodigoJugador) throws SQLException {
+        return modeloController.mostrarJugador(CodigoJugador);
+    }
+    public void EditarJugador(int codigo,String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nikcname, String roless, Double sueldo, int codEquipo) throws SQLException {
+        Roles rol = Roles.valueOf(roless);
 
-      //COMPETICIONES
-    /*
-    public void agregarCompeticion(int codCompe, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String estado) throws SQLException {
-        Competicion competicion=new Competicion(codCompe,nombre,fechaInicio,fechaFin,estado);
-        modeloController.agregarCompeticion(competicion);
+        Jugador j = new Jugador();
+        j.setNombre(nombre);
+        j.setApellidos(apellido);
+        j.setNacionalidad(nacionalidad);
+        j.setFechaNacimiento(fechaNacimiento);
+        j.setNickname(nikcname);
+        j.setRol(rol);
+        j.setSueldo(sueldo);
+        j.setCodEquipo(codEquipo);
+        modeloController.modificarJugador(j,codigo);
+
     }
 
-    public void modificarCompeticion(int codCompe,String nombre, LocalDate fechaInicio, LocalDate fechaFin,String estado) throws SQLException {
-        Competicion competicion=new Competicion(codCompe,nombre,fechaInicio,fechaFin,estado);
-        modeloController.modificarCompeticion(competicion);
-    }
 
-    public void eliminarCompeticion(Competicion competicion) throws SQLException {
-        modeloController.eliminarCompeticion(competicion);
-    }
-     */
+
     public void crearVentanaCompe(){
         vCompeticion = new VCompeticion(this);
         vCompeticion.setVisible(true);
@@ -128,7 +135,7 @@ public class VistaController {
         modeloController.cargarCompeticionActiva();
     }
 
-    //JORNADAS
+
     public void crearVentanaJornada() {
         vJornada = new vJornada(this);
         vJornada.setVisible(true);

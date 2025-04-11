@@ -1,6 +1,8 @@
 package org.example.Vista;
 
 import org.example.Controlador.VistaController;
+import org.example.Modelo.Equipo;
+import org.example.Modelo.Jugador;
 import org.example.Modelo.Roles;
 
 import javax.swing.*;
@@ -11,6 +13,7 @@ import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
 
 public class DJugador extends JDialog {
     private VistaController vistaController;
@@ -30,7 +33,19 @@ public class DJugador extends JDialog {
     private JTextField tfNacionalidad;
     private JComboBox cbRol;
     private JTextField tfNombreEquipo;
+    private JTextField textField1;
+    private JButton botonsico;
+    private JTextField Nombre;
+    private JTextField apellido;
+    private JTextField Nacionalidad;
+    private JTextField fechaNacimiento;
+    private JTextField Nickname;
+    private JComboBox Rolesss;
+    private JTextField Sueldio;
+    private JTextField NombrEquip;
     private Boolean correcto;
+    private  LocalDate feca;
+    private int CodEquip;
     public DJugador(VistaController vistaController) {
         this.vistaController = vistaController;
 
@@ -41,6 +56,7 @@ public class DJugador extends JDialog {
         setLocationRelativeTo(null);
 
         cbRol.setModel(new DefaultComboBoxModel(Roles.values()));
+        Rolesss.setModel(new DefaultComboBoxModel(Roles.values()));
         
         aceptarButton.addActionListener(new ActionListener() {
             @Override
@@ -93,6 +109,111 @@ public class DJugador extends JDialog {
                 }
             }
         });
+        textField1.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+
+                try {
+                    Jugador j = vistaController.mostrarJugador(Integer.parseInt(textField1.getText()));
+                    if (j == null){
+                        JOptionPane.showMessageDialog(null,"Ese codigo no pertenece a ningun jugador");
+                    }
+
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        botonsico.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    vistaController.EditarJugador(Integer.parseInt(textField1.getText()), Nombre.getText(), apellido.getText(),Nacionalidad.getText(),feca, Nickname.getText(),Rolesss.getSelectedItem().toString(),Double.parseDouble(Sueldio.getText()), CodEquip);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+
+            }
+        });
+        Nombre.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                if (!parsearpatron(Nombre.getText(), Pattern.compile("^[a-zA-Z]*$"))){
+                    JOptionPane.showMessageDialog(null,"El nombre del jugador no cumple el patron correcto");
+                }
+            }
+        });
+        apellido.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                if (!parsearpatron(apellido.getText(), Pattern.compile("^[a-zA-Z]*$"))){
+                    JOptionPane.showMessageDialog(null,"El apellido del jugador no cumple el patron correcto");
+                }
+            }
+        });
+        Nacionalidad.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                if (!parsearpatron(Nacionalidad.getText(), Pattern.compile("^[a-zA-Z]*$"))){
+                    JOptionPane.showMessageDialog(null,"La nacionalidad esta mal escrita");
+                }
+            }
+        });
+        fechaNacimiento.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                     feca= parsearFecha(fechaNacimiento.getText());
+                }catch (Exception ex){
+                    JOptionPane.showMessageDialog(null, " la fecha esta mal insertada");
+                }
+
+            }
+        });
+        NombrEquip.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                try {
+                    Equipo equipo = vistaController.mostrarEquipo(NombrEquip.getText());
+                    if (e== null){
+                        JOptionPane.showMessageDialog(null,"No existe ese quipo");
+                    }else{
+                        CodEquip=equipo.getCodEquipo();
+                    }
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        Sueldio.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                if (!parsearpatron(Sueldio.getText(), Pattern.compile("[0-9]*"))){
+                    JOptionPane.showMessageDialog(null, " la sueldo esta mal insertada");
+                }else{
+
+                }
+            }
+        });
+
+    }
+    private boolean parsearpatron(String frase, Pattern patron){
+
+        if (frase.matches(patron.pattern())){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private LocalDate parsearFecha(String fechaStr) {
