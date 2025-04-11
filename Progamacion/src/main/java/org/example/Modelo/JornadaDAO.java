@@ -2,12 +2,17 @@ package org.example.Modelo;
 
 import javax.swing.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class JornadaDAO {
     private final Connection conn;
+    private static PreparedStatement ps;
+    private static ResultSet rs;
     private final List<Jornada> listaJornadas;
 
     public JornadaDAO(Connection conn) {
@@ -62,6 +67,15 @@ public class JornadaDAO {
         }
 
         JOptionPane.showMessageDialog(null, mensajeFinal.toString(), "Jornadas", JOptionPane.INFORMATION_MESSAGE);
+    }
+    public List<String> obtenercodjornada() throws SQLException {
+        ps = conn.prepareStatement("select codJornada from jornadas");
+        rs = ps.executeQuery();
+        List<String> codjornada = new ArrayList<>();
+        while(rs.next()) {
+            codjornada.add(rs.getString("codJornada"));
+        }
+        return codjornada;
     }
 
     public StringBuilder mostrarJornadasPorEquipo(Equipo equipo) {
