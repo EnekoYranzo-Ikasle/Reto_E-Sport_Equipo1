@@ -16,6 +16,8 @@ import java.util.List;
 public class VistaController {
     private ModeloController modeloController;
     private final Login login;
+     private VCompeticion vCompeticion;
+    private vJornada vJornada;
 
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
@@ -94,4 +96,68 @@ public class VistaController {
     public void EliminarJugador(int CodJugador) throws SQLException {
         modeloController.eliminarJugador(CodJugador);
     }
+
+
+      //COMPETICIONES
+    /*
+    public void agregarCompeticion(int codCompe, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String estado) throws SQLException {
+        Competicion competicion=new Competicion(codCompe,nombre,fechaInicio,fechaFin,estado);
+        modeloController.agregarCompeticion(competicion);
+    }
+
+    public void modificarCompeticion(int codCompe,String nombre, LocalDate fechaInicio, LocalDate fechaFin,String estado) throws SQLException {
+        Competicion competicion=new Competicion(codCompe,nombre,fechaInicio,fechaFin,estado);
+        modeloController.modificarCompeticion(competicion);
+    }
+
+    public void eliminarCompeticion(Competicion competicion) throws SQLException {
+        modeloController.eliminarCompeticion(competicion);
+    }
+     */
+    public void crearVentanaCompe(){
+        vCompeticion = new VCompeticion(this);
+        vCompeticion.setVisible(true);
+    }
+    public String getNombreCompeticion() throws SQLException {
+        return modeloController.getNombreCompeticion();
+    }
+    public int getCodigoCompeticion() throws SQLException {
+        return modeloController.getCodigoCompeticion();
+    }
+    public void cargarCompeticionActiva() throws SQLException {
+        modeloController.cargarCompeticionActiva();
+    }
+
+    //JORNADAS
+    public void crearVentanaJornada() {
+        vJornada = new vJornada(this);
+        vJornada.setVisible(true);
+    }
+    public void borrarJornada(Jornada jornada) throws SQLException {
+        try {
+            modeloController.borrarJornada(jornada);
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error " + e);
+        }
+    }
+
+    public void modificarJornada(Jornada jornada) throws SQLException {
+        try {
+            modeloController.modificarJornada(jornada);
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error " + e);
+        }
+    }
+
+    public void buscarJornadaCodigo(int codJornada) throws SQLException {
+        modeloController.buscarJornadaCodigo(codJornada);
+    }
+
+    public void mostrarJornadas() throws SQLException {
+        modeloController.mostrarJornadas();
+    }
+    public void generarCalendario(int codCompeticion, int numJornadas) throws SQLException {
+        modeloController.generarCalendario(codCompeticion, numJornadas);
+    }
+
 }
