@@ -6,6 +6,9 @@ import org.example.Modelo.Roles;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -22,12 +25,12 @@ public class DJugador extends JDialog {
     private JTextField tfSueldo;
     private JButton aceptarButton;
     private JTextField codigo;
-    private JButton aceptarButton1;
+    private JButton aceptarButton11;
     private JTextField tfApellido;
     private JTextField tfNacionalidad;
     private JComboBox cbRol;
     private JTextField tfNombreEquipo;
-
+    private Boolean correcto;
     public DJugador(VistaController vistaController) {
         this.vistaController = vistaController;
 
@@ -59,6 +62,34 @@ public class DJugador extends JDialog {
 
                 }catch (Exception ex) {
                     JOptionPane.showMessageDialog(DJugador.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        aceptarButton11.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (correcto){
+                        vistaController.EliminarJugador(Integer.parseInt(codigo.getText()));
+                        dispose();
+
+                    }else{
+                        JOptionPane.showMessageDialog(null,"El codigo del jugador tiene que ser si o si 4 valores numericos");
+                    }
+
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        codigo.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                if (!codigo.getText().matches("[0-9]{4}")) {
+                    correcto = false;
+                }else{
+                    correcto = true;
                 }
             }
         });
