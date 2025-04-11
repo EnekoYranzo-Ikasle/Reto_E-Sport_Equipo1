@@ -27,10 +27,9 @@ public class EquipoDAO {
     }
 
     public void altaEquipo(Equipo equipo) throws SQLException {
-        ps = conn.prepareStatement("insert into equipos (cod_equipo, nombre, fechaFundacion) values (?,?,?)");
-        ps.setInt(1, equipo.getCodEquipo());
-        ps.setString(2,equipo.getNombreEquipo());
-        ps.setDate(3, parsearFecha(equipo.getFechaFund()));
+        ps = conn.prepareStatement("insert into equipos (nombre, fechaFundacion) values (?,?)");
+        ps.setString(1,equipo.getNombreEquipo());
+        ps.setDate(2, parsearFecha(equipo.getFechaFund()));
         ps.executeUpdate();
     }
 
