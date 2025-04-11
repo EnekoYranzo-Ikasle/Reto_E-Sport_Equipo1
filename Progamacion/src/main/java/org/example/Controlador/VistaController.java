@@ -60,10 +60,13 @@ public class VistaController {
         return  modeloController.mostrar();
     }
     public List <Jugador> mostrarJugadores(int codequipo) throws SQLException{
-        return modeloController.mostrajugs(codequipo);
+        return modeloController.mostraJugs(codequipo);
     }
 
     public void generarCalendario() throws Exception {
         modeloController.generarCalendario();
+    }
+    public List<String> obtenerCodJornada() throws SQLException {
+        return modeloController.mostrarCodJornada();
     }
 }

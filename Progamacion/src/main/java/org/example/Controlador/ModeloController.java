@@ -1,6 +1,5 @@
 package org.example.Controlador;
 
-import org.example.Modelo.Competicion;
 import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
 import org.example.Modelo.Persona;
@@ -49,7 +48,10 @@ public class ModeloController {
 
 
     }
-    public List<Jugador> mostrajugs(int codEquip)throws SQLException {
+    public List<Jugador> mostraJugs(int codEquip)throws SQLException {
         return jugadorController.mostrarJugadores(codEquip);
+    }
+    public List<String> mostrarCodJornada() throws SQLException {
+        return jornadaController.obtenercodjornada();
     }
 }
