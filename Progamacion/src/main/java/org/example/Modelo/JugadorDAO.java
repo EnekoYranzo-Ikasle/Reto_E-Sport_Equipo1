@@ -48,9 +48,9 @@ public class JugadorDAO {
         return Jugadores;
     }
 
-    public void eliminarJugador(String codJugador) throws SQLException {
+    public void eliminarJugador(int codJugador) throws SQLException {
         ps = conn.prepareStatement("delete from jugadores where cod_jugador = ?");
-        ps.setString(1, codJugador);
+        ps.setInt(1, codJugador);
         ps.executeUpdate();
     }
 

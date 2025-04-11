@@ -91,4 +91,7 @@ public class VistaController {
     public Equipo getGanadorEquipo(int codEquip) throws SQLException {
         return modeloController.getGanadorEquipo(codEquip);
     }
+    public void EliminarJugador(int CodJugador) throws SQLException {
+        modeloController.eliminarJugador(CodJugador);
+    }
 }

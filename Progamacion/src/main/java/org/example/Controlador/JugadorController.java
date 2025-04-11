@@ -25,11 +25,8 @@ public class JugadorController {
         jugadorDAO.altaJugador(jugador);
     }
 
-    public void eliminarJugador() throws SQLException {
-        String cod = JOptionPane.showInputDialog("Ingrese el código del jugador que quieres borrar");
-         jugadorDAO.eliminarJugador(cod);
-
-
+    public void eliminarJugador(int codJugador) throws SQLException {
+        jugadorDAO.eliminarJugador(codJugador);
     }
     public List<Jugador> mostrarJugadores(int CodEquip) throws SQLException{
         return jugadorDAO.jugadorPorEquipo(CodEquip);
