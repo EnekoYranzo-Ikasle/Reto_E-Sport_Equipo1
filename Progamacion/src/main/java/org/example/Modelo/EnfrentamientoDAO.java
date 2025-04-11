@@ -2,11 +2,16 @@ package org.example.Modelo;
 
 import javax.swing.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EnfrentamientoDAO {
     private final Connection conn;
+    private static PreparedStatement ps;
+    private static ResultSet rs;
     private final List<Enfrentamiento> ListaEnfrentamientos;
 
     public EnfrentamientoDAO(Connection conn) {
@@ -36,5 +41,15 @@ public class EnfrentamientoDAO {
                 }
             }
         }
+    }
+    public List<String> obtenerGanadores(String codjornada) throws SQLException {
+        ps=conn.prepareStatement("select ganador from enfrentamientos where jornada=?");
+        ps.setString(1, codjornada);
+        rs=ps.executeQuery();
+        List<String> ganadores = new ArrayList<>();
+        while (rs.next()) {
+            ganadores.add(rs.getString("ganador"));
+        }
+        return ganadores;
     }
 }

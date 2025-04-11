@@ -80,4 +80,13 @@ public class VistaController {
         modeloController.altaJugador(jugador);
     }
 
+    public List<String> obtenerCodJornada() throws SQLException {
+        return modeloController.mostrarCodJornada();
+    }
+    public List<String> getganador(String codigoJorn) throws SQLException {
+        return modeloController.getganador(codigoJorn);
+    }
+    public List<Equipo> getGanador(String codEquip) throws SQLException {
+        return modeloController.getGanador(codEquip);
+    }
 }

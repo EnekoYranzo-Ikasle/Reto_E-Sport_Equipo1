@@ -119,4 +119,7 @@ public class EquipoController {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(fecha, formato);
     }
+    public List<Equipo> getGanador(String codEquip) throws SQLException {
+        return equipoDAO.buscarEquiposPorCodigo(codEquip);
+    }
 }
