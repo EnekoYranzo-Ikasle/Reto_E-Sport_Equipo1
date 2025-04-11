@@ -73,4 +73,57 @@ public class ModeloController {
     public void eliminarJugador(int CodigoJugador) throws SQLException {
         jugadorController.eliminarJugador(CodigoJugador);
     }
+
+
+
+     //COMPETICIONES
+   /* public void agregarCompeticion(Competicion competicion) throws SQLException {
+        competicionController.agregarCompetcion(competicion);
+    }
+
+    public void modificarCompeticion(Competicion competicion) throws SQLException {
+        competicionController.modificarCompeticion(competicion);
+    }
+
+    public void eliminarCompeticion(Competicion competicion) throws SQLException {
+        competicionController.eliminarCompeticion(competicion);
+    }
+    */
+    public String getNombreCompeticion() throws SQLException {
+        return competicionController.getNombreCompeticion();
+    }
+    public int getCodigoCompeticion() throws SQLException {
+        return competicionController.getCodigoCompeticion();
+    }
+    public void cargarCompeticionActiva() throws SQLException {
+        competicionController.cargarCompeticionActiva();
+    }
+
+    //JORNADAS
+    public void borrarJornada(Jornada jornada) throws SQLException {
+        try {
+            jornadaController.borrarJornada(jornada);
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error " + e);
+        }
+    }
+
+    public void modificarJornada(Jornada jornada) throws SQLException {
+        try {
+            jornadaController.modificarJornada(jornada);
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error " + e);
+        }
+    }
+
+    public void buscarJornadaCodigo(int codJornada) throws SQLException {
+        jornadaController.buscarJornadaCodigo(codJornada);
+    }
+
+    public void mostrarJornadas() throws SQLException {
+        jornadaController.mostrarJornadas();
+    }
+    public void generarCalendario(int codCompeticion, int numJornadas) throws SQLException {
+        jornadaController.generarJornada(codCompeticion, numJornadas);
+    }
 }
