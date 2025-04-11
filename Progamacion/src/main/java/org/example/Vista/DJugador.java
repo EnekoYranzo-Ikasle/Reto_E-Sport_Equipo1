@@ -61,6 +61,10 @@ public class DJugador extends JDialog {
         });
     }
 
+
+
+
+
     private LocalDate parsearFecha(String fechaStr) {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(fechaStr, formatoFecha);
