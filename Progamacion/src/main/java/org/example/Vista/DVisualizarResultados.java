@@ -3,6 +3,8 @@ package org.example.Vista;
 import org.example.Controlador.VistaController;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -34,5 +36,14 @@ public class DVisualizarResultados extends JDialog {
             }
 
         }
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                    getRootPane().setDefaultButton(buttonOK);
+                    dispose();
+
+            }
+        });
     }
 }

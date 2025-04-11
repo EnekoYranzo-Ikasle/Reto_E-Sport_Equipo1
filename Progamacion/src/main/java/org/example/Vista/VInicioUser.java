@@ -63,6 +63,7 @@ public class VInicioUser extends JFrame {
                     throw new RuntimeException(ex);
                 }
                 dVisualizarResultados.setVisible(true);
+                dispose();
 
             }
         });
