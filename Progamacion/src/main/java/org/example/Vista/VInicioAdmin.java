@@ -5,10 +5,12 @@ import org.example.Controlador.VistaController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class VInicioAdmin extends JFrame {
     private VistaController vistaController;
     private Login login;
+    private DVisualizarResultados dVisualizarResultados;
 
     private JPanel pPrincipal;
     private JPanel pHeader;
@@ -28,13 +30,14 @@ public class VInicioAdmin extends JFrame {
 
         setContentPane(pPrincipal);
         setTitle("Vista Admin");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(700, 400);
         setLocationRelativeTo(null);
 
         bLogOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Login login = new Login(vistaController);
                 login.setVisible(true);
                 dispose();
             }
@@ -46,6 +49,19 @@ public class VInicioAdmin extends JFrame {
                 VAdministrarAdmin vAdministrarAdmin = new VAdministrarAdmin(vistaController);
                 vAdministrarAdmin.setVisible(true);
                 dispose();
+            }
+        });
+
+        bVerInforme.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    DVisualizarResultados dVisualizarResultados = new DVisualizarResultados(vistaController);
+                    dVisualizarResultados.setVisible(true);
+
+                }catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }

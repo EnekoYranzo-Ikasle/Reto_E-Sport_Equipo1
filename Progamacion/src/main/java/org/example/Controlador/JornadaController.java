@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class JornadaController {
     private final JornadaDAO jornadaDAO;
@@ -74,5 +75,8 @@ public class JornadaController {
 
     public void mostrarJornadas() {
         jornadaDAO.mostrarJornadas();
+    }
+    public List<Integer> obtenercodjornada() throws SQLException {
+        return jornadaDAO.obtenercodjornada();
     }
 }

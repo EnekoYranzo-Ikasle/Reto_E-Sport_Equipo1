@@ -59,11 +59,11 @@ public class EquipoDAO {
         ps.executeUpdate();
     }
 
-    public Equipo buscarEquipoPorCod(String idEquipo) throws SQLException {
+    public Equipo buscarEquipoPorCod(int idEquipo) throws SQLException {
         Equipo equipo = new Equipo();
 
         ps = conn.prepareStatement("select * from equipos where cod_equipo = ?");
-        ps.setString(1, idEquipo);
+        ps.setInt(1, idEquipo);
         rs = ps.executeQuery();
 
         if(rs.next()) {
@@ -84,7 +84,11 @@ public class EquipoDAO {
         }
         return equipo;
     }
-
+    public void eliminarJugador(int codEquip, int codJug) throws SQLException {
+        ps = conn.prepareStatement("update jugadores set codEquipo= null where codJug=?");
+        ps.setInt(1, codJug);
+        ps.executeUpdate();
+    }
     public void agregarJugador(Jugador jugador, int codEquip) throws SQLException {
         ps = conn.prepareStatement("UPDATE jugadores SET cod_equipo = ? WHERE cod_jugador = ?");
         ps.setInt(1, codEquip);
@@ -97,8 +101,8 @@ public class EquipoDAO {
 //    Funciones privadas
     private Equipo crearEquipo(ResultSet rs) throws SQLException {
         Equipo equipo = new Equipo(
-                rs.getInt("cod_equipo"),
-                rs.getString("nombre_equipo"),
+                rs.getInt("codEquipo"),
+                rs.getString("nombre"),
                 rs.getDate("fechaFundacion").toLocalDate()
         );
         return equipo;
@@ -107,5 +111,6 @@ public class EquipoDAO {
     private Date parsearFecha(LocalDate fecha1){
         return Date.valueOf(fecha1);
     }
+
 }
 

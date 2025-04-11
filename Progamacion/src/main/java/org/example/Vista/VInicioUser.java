@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.List;
 
 public class VInicioUser extends JFrame {
     private VistaController vistaController;
@@ -14,13 +16,14 @@ public class VInicioUser extends JFrame {
     private JPanel pPrincipal;
     private JPanel pBody;
     private JPanel pBotones;
-    private JButton bAdministrar;
+    private JButton bMostrarEquipos;
     private JButton bVerInforme;
     private JPanel pHeader;
     private JButton bLogOut;
 
-    public VInicioUser(VistaController vistaController) throws HeadlessException {
+    public VInicioUser(VistaController vistaController, Login login) throws HeadlessException {
         this.vistaController = vistaController;
+        this.login = login;
 
         setContentPane(pPrincipal);
         setTitle("Vista Inicio");
@@ -31,10 +34,38 @@ public class VInicioUser extends JFrame {
         bLogOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                login = new Login(vistaController);
+                Login login = new Login(vistaController);
                 login.setVisible(true);
                 dispose();
             }
         });
+
+        bMostrarEquipos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DVisualizarEquipos dVisualizarEquipos = null;
+                try {
+                    dVisualizarEquipos = new DVisualizarEquipos(vistaController);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                dVisualizarEquipos.setVisible(true);
+
+            }
+        });
+
+        bVerInforme.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               try {
+                   DVisualizarResultados dVisualizarResultados = new DVisualizarResultados(vistaController);
+                   dVisualizarResultados.setVisible(true);
+
+               }catch (SQLException ex) {
+                   throw new RuntimeException(ex);
+               }
+            }
+        });
+
     }
 }

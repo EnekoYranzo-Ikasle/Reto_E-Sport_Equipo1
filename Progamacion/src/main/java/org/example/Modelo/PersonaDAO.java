@@ -1,5 +1,6 @@
 package org.example.Modelo;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,12 +16,23 @@ public class PersonaDAO {
     }
 
     public Persona getPersona(String email) throws SQLException {
-        ps = conn.prepareStatement("SELECT * FROM usuarios WHERE UPPER(email) = ?");
-        ps.setString(1, email.toUpperCase());
-        rs = ps.executeQuery();
+        Persona persona = new Persona();
 
-        rs.next();
-        return crearObjeto(rs);
+        try {
+            ps = conn.prepareStatement("SELECT * FROM usuarios WHERE UPPER(email) = ?");
+            ps.setString(1, email.toUpperCase());
+            rs = ps.executeQuery();
+
+            if (!rs.next()) {
+                throw new Exception("Email / Contraseña incorrecta");
+            }
+
+            persona = crearObjeto(rs);
+            
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return persona;
     }
 
     public void crearCuenta(String email, String pass) throws SQLException {
@@ -31,12 +43,11 @@ public class PersonaDAO {
     }
 
     private Persona crearObjeto(ResultSet rs) throws SQLException {
-        Persona persona = new Persona(
+        return new Persona(
                 rs.getInt("id"),
                 rs.getString("email"),
                 rs.getString("password"),
                 rs.getString("tipo")
         );
-        return persona;
     }
 }

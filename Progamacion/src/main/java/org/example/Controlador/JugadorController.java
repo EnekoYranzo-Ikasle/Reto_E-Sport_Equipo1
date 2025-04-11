@@ -7,9 +7,7 @@ import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,48 +21,15 @@ public class JugadorController {
     }
 
     // Funciones:
-    public void altaValidarDatosJugador() throws SQLException {
-
-        String dni = solicitarDatos("cod_jugador", "Ingrese el dni del jugador", "^[0-9]{4}$");
-        String nombre = solicitarDatos("Nombre", "Ingrese el nombre del jugador", "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$");
-        String apellido = solicitarDatos("Apellidos", "Ingrese los apellidos del jugador", "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$");
-        String nacionalidad = solicitarDatos("Nacionalidad", "Ingrese el nacionalidad del jugador", "^[A-Z][a-z]*$");
-        LocalDate fechaNac = formatearFecha(solicitarDatos("Fecha de Nacimiento", "Ingrese el fecha del nacimiento del jugador dd/MM/yyyy", "^(0[1-9]|(1|2)[0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$"));
-        String nickname = solicitarDatos("Nickname", "Ingrese el nickname del jugador", "^[A-Z][a-z]+(?:\\s[A-Z][a-z]+)*$");
-        int dni2=Integer.parseInt(dni);
-
-        double sueldo;
-        do {
-            String mensaje = "Introduce el sueldo del jugador";
-            sueldo = solicitarSueldo(mensaje);
-        } while (sueldo < 1184);
-
-        Roles rol;
-        do {
-            String mensaje = "Introduce el rol del jugador";
-            rol = solicitarRol(mensaje);
-        } while (rol == null);
-
-        Equipo equipo;
-        do {
-            String mensaje = "Introduce el código del equipo en el que deseas introducir el jugador";
-            equipo = solicitarEquipo(mensaje);
-        } while (equipo == null);
-
-        Jugador jugador = new Jugador(dni2, nombre, apellido, nacionalidad, fechaNac, nickname, rol, sueldo, equipo.getCodEquipo());
-
-
-            equipoDAO.agregarJugador(jugador, equipo.getCodEquipo());
-            jugadorDAO.agregarJugador(jugador);
-
-
+    public void altaJugador(Jugador jugador) throws SQLException {
+        jugadorDAO.altaJugador(jugador);
     }
 
-    public void eliminarJugador() throws SQLException {
-        String cod = JOptionPane.showInputDialog("Ingrese el código del jugador que quieres borrar");
-         jugadorDAO.eliminarJugador(cod);
-
-
+    public void eliminarJugador(int codJugador) throws SQLException {
+        jugadorDAO.eliminarJugador(codJugador);
+    }
+    public List<Jugador> mostrarJugadores(int CodEquip) throws SQLException{
+        return jugadorDAO.jugadorPorEquipo(CodEquip);
     }
 
     public void mostrarJugador() throws SQLException {
@@ -194,7 +159,7 @@ public class JugadorController {
         do {
             try {
                 String codigo = JOptionPane.showInputDialog(mensaje);
-                equipo = equipoDAO.buscarEquipoPorCod(codigo);
+                equipo = equipoDAO.buscarEquipoPorCod(Integer.parseInt(codigo));
 
                 if (equipo != null)
                     error = true;

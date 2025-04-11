@@ -74,10 +74,10 @@ public class EquipoController {
         JOptionPane.showMessageDialog(null, "Se ha dado de baja al equipo con éxito", "Baja Completada", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void mostrar() throws SQLException {
-        List<Equipo> equipos = equipoDAO.obtenerEquipos();
+    public List<Equipo> mostrar() throws SQLException {
+        return  equipoDAO.obtenerEquipos();
 
-        JOptionPane.showMessageDialog(null, equipos);
+
     }
 
     // Solicitar:
@@ -109,9 +109,17 @@ public class EquipoController {
         return variable;
     }
 
+    public Equipo getEquipoPorNombre(String nombreEquipo) throws SQLException {
+        return equipoDAO.buscarEquipoPorNombre(nombreEquipo);
+    }
+
+
     // Validaciones:
     private LocalDate formatearFecha(String fecha) {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(fecha, formato);
+    }
+    public Equipo getGanador(int codEquip) throws SQLException {
+        return equipoDAO.buscarEquipoPorCod(codEquip);
     }
 }

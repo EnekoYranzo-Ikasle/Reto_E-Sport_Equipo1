@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignUp extends JDialog {
     private VistaController vistaController;
@@ -52,6 +54,12 @@ public class SignUp extends JDialog {
                     String email = tfEmail.getText();
                     String pass = String.valueOf(pfPassword.getPassword());
 
+                    boolean emailValido = validarFormatoEmail(email);
+
+                    if (!emailValido) {
+                        throw new Exception("Formato de email incorrecto");
+                    }
+
                     vistaController.crearCuenta(email, pass);
 
                     JOptionPane.showMessageDialog(pPrincipal, "Cuenta creada correctamente");
@@ -62,5 +70,11 @@ public class SignUp extends JDialog {
                 }
             }
         });
+    }
+    private boolean
+    validarFormatoEmail(String email) {
+        Pattern patron = Pattern.compile("^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+        Matcher matcher = patron.matcher(email);
+        return matcher.matches();
     }
 }

@@ -2,6 +2,9 @@ package org.example.Modelo;
 
 import javax.swing.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -10,8 +13,13 @@ import java.util.stream.Collectors;
 public class JornadaDAO {
 <<<<<<< Updated upstream
     private final Connection conn;
+<<<<<<< HEAD
 =======
 >>>>>>> Stashed changes
+=======
+    private static PreparedStatement ps;
+    private static ResultSet rs;
+>>>>>>> origin/main
     private final List<Jornada> listaJornadas;
     private final Random rand = new Random();
 
@@ -112,6 +120,15 @@ public class JornadaDAO {
         }
 
         JOptionPane.showMessageDialog(null, mensajeFinal.toString(), "Jornadas", JOptionPane.INFORMATION_MESSAGE);
+    }
+    public List<Integer> obtenercodjornada() throws SQLException {
+        ps = conn.prepareStatement("select codJornada from jornadas");
+        rs = ps.executeQuery();
+        List<Integer> codjornada = new ArrayList<>();
+        while(rs.next()) {
+            codjornada.add(rs.getInt("codJornada"));
+        }
+        return codjornada;
     }
 
     public StringBuilder mostrarJornadasPorEquipo(Equipo equipo) {
