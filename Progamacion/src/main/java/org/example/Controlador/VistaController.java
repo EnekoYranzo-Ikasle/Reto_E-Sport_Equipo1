@@ -3,12 +3,14 @@ package org.example.Controlador;
 import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
 import org.example.Modelo.Persona;
+import org.example.Modelo.Roles;
 import org.example.Vista.Login;
 import org.example.Vista.VInicioAdmin;
 import org.example.Vista.VInicioUser;
 
 import javax.swing.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class VistaController {
@@ -66,4 +68,11 @@ public class VistaController {
     public void generarCalendario() throws Exception {
         modeloController.generarCalendario();
     }
+
+    public void altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
+                            String nickname, double sueldo, String rol){
+        Jugador jugador = new Jugador(null, nombre, apellido, nacionalidad, fechaNacimiento, nickname,
+                Roles.valueOf(rol), sueldo, null);
+    }
+
 }
