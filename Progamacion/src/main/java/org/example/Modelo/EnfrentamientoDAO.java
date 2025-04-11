@@ -42,13 +42,13 @@ public class EnfrentamientoDAO {
             }
         }
     }
-    public List<String> obtenerGanadores(String codjornada) throws SQLException {
+    public List<Integer> obtenerGanadores(int codjornada) throws SQLException {
         ps=conn.prepareStatement("select ganador from enfrentamientos where jornada=?");
-        ps.setString(1, codjornada);
+        ps.setInt(1, codjornada);
         rs=ps.executeQuery();
-        List<String> ganadores = new ArrayList<>();
+        List<Integer> ganadores = new ArrayList<>();
         while (rs.next()) {
-            ganadores.add(rs.getString("ganador"));
+            ganadores.add(rs.getInt("ganador"));
         }
         return ganadores;
     }

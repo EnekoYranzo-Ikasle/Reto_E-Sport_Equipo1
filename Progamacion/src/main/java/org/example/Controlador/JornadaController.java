@@ -76,7 +76,7 @@ public class JornadaController {
     public void mostrarJornadas() {
         jornadaDAO.mostrarJornadas();
     }
-    public List<String> obtenercodjornada() throws SQLException {
+    public List<Integer> obtenercodjornada() throws SQLException {
         return jornadaDAO.obtenercodjornada();
     }
 }
