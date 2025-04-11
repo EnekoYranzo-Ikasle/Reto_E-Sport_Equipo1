@@ -4,6 +4,7 @@ import org.example.Modelo.Enfrentamiento;
 import org.example.Modelo.EnfrentamientoDAO;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.util.List;
 
 public class EnfrentamientoController {
@@ -33,5 +34,8 @@ public class EnfrentamientoController {
         String resultado = JOptionPane.showInputDialog("Ingrese el resultado del enfrentamiento:");
 
         enfrentamientoDAO.agregarResultados(seleccion, lista, resultado);
+    }
+    public List<String> getganador(String codigoJorn) throws SQLException {
+        return enfrentamientoDAO.obtenerGanadores(codigoJorn);
     }
 }

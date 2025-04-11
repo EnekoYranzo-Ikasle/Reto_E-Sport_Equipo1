@@ -54,4 +54,10 @@ public class ModeloController {
     public List<String> mostrarCodJornada() throws SQLException {
         return jornadaController.obtenercodjornada();
     }
+    public List<String> getganador(String codigoJorn) throws SQLException {
+        return enfrentamientoController.getganador(codigoJorn);
+    }
+    public List<Equipo> getGanador(String codEquip) throws SQLException {
+        return equipoController.getGanador(codEquip);
+    }
 }
