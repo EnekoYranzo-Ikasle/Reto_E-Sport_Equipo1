@@ -27,6 +27,17 @@ public class Jugador {
         this.codEquipo = codEquipo;
     }
 
+    public Jugador(String nombre, String apellidos, String nacionalidad, LocalDate fechaNacimiento, String nickname, Roles rol, double sueldo, int codEquipo) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.nacionalidad = nacionalidad;
+        this.fechaNacimiento = fechaNacimiento;
+        this.nickname = nickname;
+        this.rol = rol;
+        this.sueldo = sueldo;
+        this.codEquipo = codEquipo;
+    }
+
     public Jugador() {
 
     }

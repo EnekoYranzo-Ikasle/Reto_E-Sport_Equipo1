@@ -70,9 +70,14 @@ public class VistaController {
     }
 
     public void altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
-                            String nickname, double sueldo, String rol){
-        Jugador jugador = new Jugador(null, nombre, apellido, nacionalidad, fechaNacimiento, nickname,
-                Roles.valueOf(rol), sueldo, null);
+                            String nickname, double sueldo, String rol, String nombreEquipo) throws SQLException {
+
+        Equipo equipo = modeloController.getEquipoPorNombre(nombreEquipo);
+
+        Jugador jugador = new Jugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname,
+                Roles.valueOf(rol), sueldo, equipo.getCodEquipo());
+
+        modeloController.altaJugador(jugador);
     }
 
     public List<String> obtenerCodJornada() throws SQLException {

@@ -109,6 +109,10 @@ public class EquipoController {
         return variable;
     }
 
+    public Equipo getEquipoPorNombre(String nombreEquipo) throws SQLException {
+        return equipoDAO.buscarEquipoPorNombre(nombreEquipo);
+    }
+
 
     // Validaciones:
     private LocalDate formatearFecha(String fecha) {
