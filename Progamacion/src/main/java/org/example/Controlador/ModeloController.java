@@ -70,7 +70,12 @@ public class ModeloController {
     public void altaJugador(Jugador jugador) throws SQLException {
         jugadorController.altaJugador(jugador);
     }
+
     public void eliminarJugador(int CodigoJugador) throws SQLException {
         jugadorController.eliminarJugador(CodigoJugador);
+    }
+
+    public void nuevoEquipo(Equipo equipo) throws SQLException {
+        equipoController.nuevoEquipo(equipo);
     }
 }

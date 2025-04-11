@@ -94,4 +94,10 @@ public class VistaController {
     public void EliminarJugador(int CodJugador) throws SQLException {
         modeloController.eliminarJugador(CodJugador);
     }
+
+    public void nuevoEquipo(String nombreEquipo, LocalDate fechaFundacion) throws SQLException {
+        Equipo equipo = new Equipo(nombreEquipo, fechaFundacion);
+
+        modeloController.nuevoEquipo(equipo);
+    }
 }

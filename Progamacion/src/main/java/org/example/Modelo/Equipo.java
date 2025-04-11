@@ -7,6 +7,11 @@ public class Equipo {
     private String nombreEquipo;
     private LocalDate fechaFund;
 
+    public Equipo(String nombreEquipo, LocalDate fechaFund) {
+        this.nombreEquipo = nombreEquipo;
+        this.fechaFund = fechaFund;
+    }
+
     public Equipo(int codEquipo, String nombreEquipo, LocalDate fechaFund) {
         this.codEquipo = codEquipo;
         this.nombreEquipo = nombreEquipo;

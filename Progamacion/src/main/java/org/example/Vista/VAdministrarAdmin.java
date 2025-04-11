@@ -51,7 +51,8 @@ public class VAdministrarAdmin extends JFrame {
         bEquipos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                DEquipo dEquipo = new DEquipo(vistaController);
+                dEquipo.setVisible(true);
             }
         });
 
