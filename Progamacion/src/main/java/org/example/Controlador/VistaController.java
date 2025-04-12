@@ -16,8 +16,6 @@ import java.util.List;
 public class VistaController {
     private ModeloController modeloController;
     private final Login login;
-     private VCompeticion vCompeticion;
-    private vJornada vJornada;
 
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;

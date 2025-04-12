@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 public class CompeticionController {
     private final CompeticionDAO competicionDAO;
-    private Competicion competicion;
 
     public CompeticionController(CompeticionDAO competicionDAO) {
         this.competicionDAO = competicionDAO;
@@ -24,19 +23,7 @@ public class CompeticionController {
         competicionDAO.eliminarCompeticion(competicion);
     }
 
-    public String getNombreCompeticion() throws SQLException {
-        return competicion.getNombre();
+    public void generarCalendario() throws Exception {
+        competicionDAO.generarCalendario();
     }
-    public int getCodigoCompeticion() throws SQLException {
-        return competicion.getCodCompe();
-    }
-    public void cargarCompeticionActiva() throws SQLException {
-        Competicion competicionActiva = new Competicion();
-        competicionActiva=competicionDAO.obtenerCompeticionActiva();
-        if(competicionActiva==null){
-            throw new SQLException();
-        }
-    }
-
-
 }
