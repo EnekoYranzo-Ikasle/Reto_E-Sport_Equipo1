@@ -75,6 +75,14 @@ public class ModeloController {
         jugadorController.eliminarJugador(CodigoJugador);
     }
 
+    public void modificarJugador(Jugador jugador, int codigo) throws SQLException {
+        jugadorController.editarJugador(jugador,codigo);
+    }
+
+    public Jugador mostrarJugador(int codJugador) throws SQLException {
+        return jugadorController.mostrarJugador(codJugador);
+    }
+
     public void nuevoEquipo(Equipo equipo) throws SQLException {
         equipoController.nuevoEquipo(equipo);
     }
