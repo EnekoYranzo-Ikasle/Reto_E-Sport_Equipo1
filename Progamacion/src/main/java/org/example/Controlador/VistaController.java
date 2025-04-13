@@ -103,18 +103,11 @@ public class VistaController {
     public Jugador mostrarJugador(int CodigoJugador) throws SQLException {
         return modeloController.mostrarJugador(CodigoJugador);
     }
-    public void EditarJugador(int codigo,String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nikcname, String roless, Double sueldo, int codEquipo) throws SQLException {
+    public void EditarJugador(int codigo, String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
+                              String nikcname, String roless, Double sueldo, int codEquipo) throws SQLException {
         Roles rol = Roles.valueOf(roless);
 
-        Jugador j = new Jugador();
-        j.setNombre(nombre);
-        j.setApellidos(apellido);
-        j.setNacionalidad(nacionalidad);
-        j.setFechaNacimiento(fechaNacimiento);
-        j.setNickname(nikcname);
-        j.setRol(rol);
-        j.setSueldo(sueldo);
-        j.setCodEquipo(codEquipo);
+        Jugador j = new Jugador(nombre, apellido, nacionalidad, fechaNacimiento, nikcname, rol, sueldo, codEquipo);
 
         modeloController.modificarJugador(j,codigo);
     }
@@ -123,5 +116,13 @@ public class VistaController {
         Equipo equipo = new Equipo(nombreEquipo, fechaFundacion);
 
         modeloController.nuevoEquipo(equipo);
+    }
+
+    public void eliminarEquipo(int codEquipo) throws SQLException {
+        modeloController.eliminarEquipo(codEquipo);
+    }
+
+    public List<Equipo> getEquipos() throws SQLException{
+        return modeloController.getEquipos();
     }
 }

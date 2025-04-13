@@ -119,7 +119,7 @@
               <font size="14"/>
               <foreground color="-1"/>
               <icon value="Images/logOut.png"/>
-              <text value="Volver"/>
+              <text value="Cerrar Sesion"/>
             </properties>
           </component>
           <hspacer id="a62ca">

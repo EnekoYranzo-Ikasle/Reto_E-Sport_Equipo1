@@ -11,27 +11,22 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class JornadaDAO {
-<<<<<<< Updated upstream
     private final Connection conn;
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
-=======
     private static PreparedStatement ps;
     private static ResultSet rs;
->>>>>>> origin/main
     private final List<Jornada> listaJornadas;
     private final Random rand = new Random();
 
-    public JornadaDAO() {
+    public JornadaDAO(Connection conn) {
+        this.conn = conn;
         this.listaJornadas = new ArrayList<Jornada>();
     }
 
     public void generarJornadas(int numJornadas, List<Equipo> equipos, EnfrentamientoDAO enfrentamientoDAO) {
-        if (equipos.size()%2==0){
+        if (equipos.size() % 2 == 0) {
             for (int i = 1; i <= numJornadas; i++) {
                 LocalDate fechaJornada = LocalDate.now().plusDays(i); // Generara jornadas a partir del dia siguiente que se genere la jornada
-                String codJornada = String.format("J-%04d", i);
+                int codJornada = i;
 
                 Jornada jornada = new Jornada(codJornada, fechaJornada);
                 Set<String> enfrentados = new HashSet<>();
@@ -59,16 +54,9 @@ public class JornadaDAO {
                 }
                 listaJornadas.add(jornada);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No se puede generar la jornada si no hay equipos pares");
         }
-
-<<<<<<< Updated upstream
-    public JornadaDAO(Connection conn) {
-        this.conn = conn;
-        this.listaJornadas = new ArrayList<>();
-=======
->>>>>>> Stashed changes
     }
 
     public void eliminarJornadaPorCod(int codJornada) {

@@ -28,7 +28,7 @@ public class VInicioUser extends JFrame {
         setContentPane(pPrincipal);
         setTitle("Vista Inicio");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
+        setSize(550, 300);
         setLocationRelativeTo(null);
 
         bLogOut.addActionListener(new ActionListener() {

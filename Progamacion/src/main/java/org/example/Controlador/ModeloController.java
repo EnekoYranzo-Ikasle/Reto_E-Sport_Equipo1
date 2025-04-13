@@ -44,7 +44,7 @@ public class ModeloController {
     }
 
     public List<Equipo> mostrar() throws SQLException {
-        return  equipoController.mostrar();
+        return  equipoController.getEquipos();
     }
 
     public List<Jugador> mostraJugs(int codEquip)throws SQLException {
@@ -85,5 +85,13 @@ public class ModeloController {
 
     public void nuevoEquipo(Equipo equipo) throws SQLException {
         equipoController.nuevoEquipo(equipo);
+    }
+
+    public void eliminarEquipo(int codEquipo) throws SQLException {
+        equipoController.eliminarEquipo(codEquipo);
+    }
+
+    public List<Equipo> getEquipos() throws SQLException{
+        return equipoController.getEquipos();
     }
 }

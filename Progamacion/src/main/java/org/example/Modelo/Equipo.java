@@ -18,6 +18,11 @@ public class Equipo {
         this.fechaFund = fechaFund;
     }
 
+    public Equipo(int codEquipo, String nombreEquipo) {
+        this.codEquipo = codEquipo;
+        this.nombreEquipo = nombreEquipo;
+    }
+
     public Equipo() {
     }
 

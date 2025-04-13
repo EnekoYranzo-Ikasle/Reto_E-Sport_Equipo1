@@ -42,7 +42,7 @@
               <focusPainted value="false"/>
               <font size="14"/>
               <foreground color="-1"/>
-              <icon value="Images/logOut.png"/>
+              <icon value="Images/back.png"/>
               <text value="Volver"/>
             </properties>
           </component>

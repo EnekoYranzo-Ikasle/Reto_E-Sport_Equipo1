@@ -3,7 +3,7 @@
   <grid id="cbd77" binding="pPrincipal" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="48" y="54" width="562" height="519"/>
+      <xy x="48" y="54" width="562" height="535"/>
     </constraints>
     <properties>
       <background color="-14800328"/>
@@ -21,6 +21,7 @@
           <background color="-1"/>
           <font size="16" style="1"/>
           <foreground color="-16777216"/>
+          <tabLayoutPolicy value="0"/>
           <tabPlacement value="1"/>
         </properties>
         <border type="none"/>
@@ -116,7 +117,7 @@
                   </grid>
                 </constraints>
               </vspacer>
-              <component id="290a0" class="javax.swing.JButton" binding="aceptarButton" default-binding="true">
+              <component id="290a0" class="javax.swing.JButton" binding="bCrearAlta">
                 <constraints>
                   <grid row="3" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -144,8 +145,7 @@
               </vspacer>
             </children>
           </grid>
-          <grid id="a54cd" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="20" left="20" bottom="20" right="20"/>
+          <grid id="a54cd" binding="pBorrar" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
               <tabbedpane title="Borrar equipo"/>
             </constraints>
@@ -153,41 +153,7 @@
               <background color="-14800328"/>
             </properties>
             <border type="none"/>
-            <children>
-              <component id="b424a" class="javax.swing.JTextField" binding="codigo">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="200" height="34"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
-              <vspacer id="c2390">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
-              <component id="a64ec" class="javax.swing.JButton" binding="aceptarButton11">
-                <constraints>
-                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <background color="-1"/>
-                  <text value="Aceptar"/>
-                </properties>
-              </component>
-              <component id="49a27" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <background color="-1029"/>
-                  <font size="14"/>
-                  <foreground color="-1029"/>
-                  <text value="Codigo de identificacion del jugador:"/>
-                </properties>
-              </component>
-            </children>
+            <children/>
           </grid>
           <grid id="b2e07" layout-manager="GridLayoutManager" row-count="5" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>

@@ -33,21 +33,21 @@ public class EquipoDAO {
         ps.executeUpdate();
     }
 
-    public void bajaEquipo(Equipo equipo) throws SQLException {
-        ps = conn.prepareStatement("delete from equipos where cod_equipo = ?");
-        ps.setInt(1, equipo.getCodEquipo());
+    public void eliminarEquipo(int codEquipo) throws SQLException {
+        ps = conn.prepareStatement("delete from equipos where codEquipo = ?");
+        ps.setInt(1, codEquipo);
         ps.executeUpdate();
     }
 
     public void actualizarEquipo(Equipo equipo, String campo) throws SQLException {
         switch (campo.toLowerCase()) {
             case "nombre": {
-                ps = conn.prepareStatement("UPDATE equipos SET nombre = ? WHERE cod_equipo = ?");
+                ps = conn.prepareStatement("UPDATE equipos SET nombre = ? WHERE codEquipo = ?");
                 ps.setString(1, equipo.getNombreEquipo());
                 ps.setInt(2, equipo.getCodEquipo());
             }break;
             case "ciudad": {
-                ps = conn.prepareStatement("UPDATE equipos SET fechaFundacion = ? WHERE cod_equipo = ?");
+                ps = conn.prepareStatement("UPDATE equipos SET fechaFundacion = ? WHERE codEquipo = ?");
                 ps.setDate(1, parsearFecha(equipo.getFechaFund()));
                 ps.setInt(2, equipo.getCodEquipo());
             }break;
@@ -61,7 +61,7 @@ public class EquipoDAO {
     public Equipo buscarEquipoPorCod(int idEquipo) throws SQLException {
         Equipo equipo = new Equipo();
 
-        ps = conn.prepareStatement("select * from equipos where cod_equipo = ?");
+        ps = conn.prepareStatement("select * from equipos where codEquipo = ?");
         ps.setInt(1, idEquipo);
         rs = ps.executeQuery();
 
@@ -83,13 +83,14 @@ public class EquipoDAO {
         }
         return equipo;
     }
+
     public void eliminarJugador(int codEquip, int codJug) throws SQLException {
-        ps = conn.prepareStatement("update jugadores set codEquipo= null where codJug=?");
+        ps = conn.prepareStatement("update jugadores set codEquipo= null where codJugador = ?");
         ps.setInt(1, codJug);
         ps.executeUpdate();
     }
     public void agregarJugador(Jugador jugador, int codEquip) throws SQLException {
-        ps = conn.prepareStatement("UPDATE jugadores SET cod_equipo = ? WHERE cod_jugador = ?");
+        ps = conn.prepareStatement("UPDATE jugadores SET cod_equipo = ? WHERE codJugador = ?");
         ps.setInt(1, codEquip);
         ps.setInt(2, jugador.getCodJugador());
         ps.executeUpdate();

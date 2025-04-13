@@ -32,7 +32,7 @@ public class JornadaController {
 
     public void borrarJornada() {
         try {
-            String codJornada = JOptionPane.showInputDialog(null, "Escribe el código de jornada que deseas borrar");
+            String codJornada = JOptionPane.showInputDialog(null, "Escribe el código de jornada que deseas eliminarEquipo");
             int codigo = Integer.parseInt(codJornada);
             jornadaDAO.eliminarJornadaPorCod(codigo);
             
