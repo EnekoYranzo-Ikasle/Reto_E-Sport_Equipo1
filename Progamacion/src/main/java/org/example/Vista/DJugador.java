@@ -18,40 +18,50 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Diálogo para la gestión de jugadores (alta, edición y eliminación)
+ */
 public class DJugador extends JDialog {
     private final VistaController vistaController;
     private List<Jugador> listaJugadores;
-    private JTable tablaJugadores;
-    private DefaultTableModel modeloTabla;
-    private JButton btnEliminar;
 
     private JPanel pPrincipal;
     private JTabbedPane tabbedPane1;
+
+    // Componentes panel Alta
     private JPanel pTextAlta;
     private JPanel pInputsAlta;
     private JTextField tfNombre;
-    private JTextField tfNacimiento;
-    private JTextField tfNickname;
-    private JTextField tfSueldo;
-    private JButton aceptarButton;
     private JTextField tfApellido;
     private JTextField tfNacionalidad;
-    private JComboBox cbRol;
+    private JTextField tfNacimiento;
+    private JTextField tfNickname;
     private JTextField tfNombreEquipo;
+    private JTextField tfSueldo;
+    private JComboBox cbRol;
+    private JButton aceptarButton;
+
+    // Componentes panel Modificar
     private JTextField codigoJugad;
-    private JButton botonsico;
     private JTextField Nombre;
     private JTextField apellido;
     private JTextField Nacionalidad;
     private JTextField fechaNacimiento;
     private JTextField Nickname;
-    private JComboBox Rolesss;
     private JTextField Sueldio;
     private JTextField NombrEquip;
-    private JPanel pBorrar;
+    private JComboBox Rolesss;
+    private JButton botonsico;
 
+    // Componentes panel Borrar
+    private JPanel pBorrar;
+    private JTable tablaJugadores;
+    private DefaultTableModel modeloTabla;
+    private JButton btnEliminar;
+
+    // Variables auxiliares
     private Boolean correcto;
-    private  LocalDate feca;
+    private LocalDate feca;
     private int CodEquip;
 
     public DJugador(VistaController vistaController) {
@@ -63,180 +73,256 @@ public class DJugador extends JDialog {
         setSize(600, 450);
         setLocationRelativeTo(null);
 
-        cbRol.setModel(new DefaultComboBoxModel(Roles.values()));
-        Rolesss.setModel(new DefaultComboBoxModel(Roles.values()));
-        
-        aceptarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String nombre = tfNombre.getText();
-                    String apellido = tfApellido.getText();
-                    String nacionalidad = tfNacionalidad.getText();
-                    LocalDate fechaNacimiento = parsearFecha(tfNacimiento.getText());
-                    String nickname = tfNickname.getText();
-                    String nombreEquipo = tfNombreEquipo.getText();
-                    double sueldo = Double.parseDouble(tfSueldo.getText());
-                    String rol = cbRol.getSelectedItem().toString();
-
-                    vistaController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, rol, nombreEquipo);
-
-                    JOptionPane.showMessageDialog(null, "Jugador dado de alta correctamente");
-                    dispose();
-
-                }catch (Exception ex) {
-                    JOptionPane.showMessageDialog(DJugador.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-
-        
-        codigoJugad.addFocusListener(new FocusAdapter() {
-             @Override
-             public void focusLost(FocusEvent e) {
-                 super.focusLost(e);
-                 int entrada;
-                 if (codigoJugad.getText().isEmpty()) {
-                     entrada = 0;
-                     JOptionPane.showMessageDialog(null, "Ese codigo no pertenece a ningun jugador");
-                 } else {
-                     entrada = Integer.parseInt(codigoJugad.getText());
-                     try {
-                         boolean existe = vistaController.jugadorExiste(entrada);
-                         if (!existe) {
-                             JOptionPane.showMessageDialog(null, "Ese codigo no pertenece a ningun jugador");
-                         }
-
-                     } catch (SQLException ex) {
-                         throw new RuntimeException(ex);
-                     }
-                 }
-             }
-        });
-
-        botonsico.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    vistaController.EditarJugador(Integer.parseInt(codigoJugad.getText()), Nombre.getText(), apellido.getText(),Nacionalidad.getText(),feca, Nickname.getText(),Rolesss.getSelectedItem().toString(),Double.parseDouble(Sueldio.getText()), CodEquip);
-
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
-
-        Nombre.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                if (!parsearPatron(Nombre.getText(), Pattern.compile("^[a-zA-Z]*$"))){
-                    JOptionPane.showMessageDialog(null,"El nombre del jugador no cumple el patron correcto");
-                }
-            }
-        });
-
-        apellido.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                if (!parsearPatron(apellido.getText(), Pattern.compile("^[a-zA-Z]*$"))){
-                    JOptionPane.showMessageDialog(null,"El apellido del jugador no cumple el patron correcto");
-                }
-            }
-        });
-
-        Nacionalidad.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                if (!parsearPatron(Nacionalidad.getText(), Pattern.compile("^[a-zA-Z]*$"))){
-                    JOptionPane.showMessageDialog(null,"La nacionalidad esta mal escrita");
-                }
-            }
-        });
-
-        fechaNacimiento.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                try {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                     feca= parsearFecha(fechaNacimiento.getText());
-                }catch (Exception ex){
-                    JOptionPane.showMessageDialog(null, " la fecha esta mal insertada");
-                }
-
-            }
-        });
-
-        NombrEquip.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                try {
-                    Equipo equipo = vistaController.mostrarEquipo(NombrEquip.getText());
-                    if (e== null){
-                        JOptionPane.showMessageDialog(null,"No existe ese quipo");
-                    }else{
-                        CodEquip=equipo.getCodEquipo();
-                    }
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
-
-        Sueldio.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                if (!parsearPatron(Sueldio.getText(), Pattern.compile("[0-9]*"))){
-                    JOptionPane.showMessageDialog(null, " la sueldo esta mal insertada");
-                }else{
-
-                }
-            }
-        });
-
-//////////////////////////////////////////////
         try {
+//            Alta:
+            cbRol.setModel(new DefaultComboBoxModel(Roles.values()));
+
+            aceptarButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    crearNuevoJugador();
+                }
+            });
+
+//              Modificar:
+            Rolesss.setModel(new DefaultComboBoxModel(Roles.values()));
+
+            configurarValidacionesCampos();
+
+            botonsico.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    editarJugador();
+                }
+            });
+
+//            Borrar:
             listaJugadores = vistaController.getJugadores();
 
             pBorrar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             configurarTabla();
+            configurarBotones();
 
-//            Crear panel de botones
-            JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            panelBotones.setBackground(new Color(30, 42, 56)); // Color de fondo
-
-            btnEliminar = new JButton("");
-            btnEliminar.setIcon(new ImageIcon("src/main/resources/Images/trashBin.png"));
-            btnEliminar.setPreferredSize(new Dimension(50, 50));
-            btnEliminar.setBackground(Color.WHITE); // Cambiar color de fondo
-            btnEliminar.setForeground(Color.BLACK); // Cambiar color de la letra
-            btnEliminar.setBorderPainted(false); // Quitar borde pintado
-            btnEliminar.setFocusPainted(false); // Quitar diseño focus
-
-            btnEliminar.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    eliminarEquipoSeleccionado();
-                }
-            });
-
-            panelBotones.add(btnEliminar);
-
-//            Agregar los componentes al padre
             pBorrar.add(new JScrollPane(tablaJugadores), BorderLayout.CENTER);
-            pBorrar.add(panelBotones, BorderLayout.EAST);
+            pBorrar.add(crearPanelBotones(), BorderLayout.EAST);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(pPrincipal, e.getMessage());
         }
     }
 
-    //    Funciones para configurar la tabla de borrado.
+    /**
+     * Crea un nuevo jugador con los datos del formulario
+     */
+    private void crearNuevoJugador() {
+        try {
+            String nombre = tfNombre.getText();
+            String apellido = tfApellido.getText();
+            String nacionalidad = tfNacionalidad.getText();
+            LocalDate fechaNacimiento = parsearFecha(tfNacimiento.getText());
+            String nickname = tfNickname.getText();
+            String nombreEquipo = tfNombreEquipo.getText();
+            double sueldo = Double.parseDouble(tfSueldo.getText());
+            String rol = cbRol.getSelectedItem().toString();
+
+            vistaController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento,
+                    nickname, sueldo, rol, nombreEquipo);
+
+            JOptionPane.showMessageDialog(null, "Jugador dado de alta correctamente");
+            dispose();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(DJugador.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Configura las validaciones de los campos de edición
+     */
+    private void configurarValidacionesCampos() {
+        // Validación del código de jugador
+        codigoJugad.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validarCodigoJugador();
+            }
+        });
+
+        // Validación del nombre
+        Nombre.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validarCampoTexto(Nombre, "El nombre del jugador no cumple el patrón correcto");
+            }
+        });
+
+        // Validación del apellido
+        apellido.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validarCampoTexto(apellido, "El apellido del jugador no cumple el patrón correcto");
+            }
+        });
+
+        // Validación de la nacionalidad
+        Nacionalidad.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validarCampoTexto(Nacionalidad, "La nacionalidad está mal escrita");
+            }
+        });
+
+        // Validación de la fecha de nacimiento
+        fechaNacimiento.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validarFechaNacimiento();
+            }
+        });
+
+        // Validación del nombre de equipo
+        NombrEquip.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validarNombreEquipo();
+            }
+        });
+
+        // Validación del sueldo
+        Sueldio.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validarSueldo();
+            }
+        });
+    }
+
+    /**
+     * Valida el código de jugador introducido
+     */
+    private void validarCodigoJugador() {
+        if (codigoJugad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ese código no pertenece a ningún jugador");
+            return;
+        }
+
+        try {
+            int codigo = Integer.parseInt(codigoJugad.getText());
+            boolean existe = vistaController.jugadorExiste(codigo);
+
+            if (!existe) {
+                JOptionPane.showMessageDialog(null, "Ese código no pertenece a ningún jugador");
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Valida un campo de texto con un patrón de solo letras
+     * @param campo Campo de texto a validar
+     * @param mensaje Mensaje de error
+     */
+    private void validarCampoTexto(JTextField campo, String mensaje) {
+        if (!parsearPatron(campo.getText(), Pattern.compile("^[a-zA-Z]*$"))) {
+            JOptionPane.showMessageDialog(null, mensaje);
+        }
+    }
+
+    /**
+     * Valida la fecha de nacimiento
+     */
+    private void validarFechaNacimiento() {
+        try {
+            feca = parsearFecha(fechaNacimiento.getText());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "La fecha está mal insertada");
+        }
+    }
+
+    /**
+     * Valida el nombre del equipo
+     */
+    private void validarNombreEquipo() {
+        try {
+            Equipo equipo = vistaController.mostrarEquipo(NombrEquip.getText());
+            if (equipo == null) {
+                JOptionPane.showMessageDialog(null, "No existe ese equipo");
+            } else {
+                CodEquip = equipo.getCodEquipo();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Valida el sueldo
+     */
+    private void validarSueldo() {
+        if (!parsearPatron(Sueldio.getText(), Pattern.compile("[0-9]*"))) {
+            JOptionPane.showMessageDialog(null, "El sueldo está mal insertado");
+        }
+    }
+
+    /**
+     * Edita un jugador con los datos del formulario
+     */
+    private void editarJugador() {
+        try {
+            vistaController.EditarJugador(
+                    Integer.parseInt(codigoJugad.getText()),
+                    Nombre.getText(),
+                    apellido.getText(),
+                    Nacionalidad.getText(),
+                    feca,
+                    Nickname.getText(),
+                    Rolesss.getSelectedItem().toString(),
+                    Double.parseDouble(Sueldio.getText()),
+                    CodEquip
+            );
+
+            JOptionPane.showMessageDialog(null, "Jugador editado correctamente");
+            actualizarListaJugadores();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al editar el jugador: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * Crea el panel de botones para el panel de borrado
+     * @return Panel con los botones
+     */
+    private JPanel crearPanelBotones() {
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelBotones.setBackground(new Color(30, 42, 56));
+        panelBotones.add(btnEliminar);
+        return panelBotones;
+    }
+
+    /**
+     * Configura los botones de acción
+     */
+    private void configurarBotones() {
+        btnEliminar = new JButton("");
+        btnEliminar.setIcon(new ImageIcon("src/main/resources/Images/trashBin.png"));
+        btnEliminar.setPreferredSize(new Dimension(50, 50));
+        btnEliminar.setBackground(Color.WHITE);
+        btnEliminar.setForeground(Color.BLACK);
+        btnEliminar.setBorderPainted(false);
+        btnEliminar.setFocusPainted(false);
+
+        btnEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eliminarEquipoSeleccionado();
+            }
+        });
+    }
+
+    /**
+     * Configura la tabla de jugadores
+     */
     private void configurarTabla() {
         modeloTabla = new DefaultTableModel() {
             @Override
@@ -249,13 +335,15 @@ public class DJugador extends JDialog {
         modeloTabla.addColumn("Nombre");
 
         tablaJugadores = new JTable(modeloTabla);
-
         tablaJugadores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaJugadores.getTableHeader().setReorderingAllowed(false);
 
         actualizarTabla();
     }
 
+    /**
+     * Actualiza los datos de la tabla
+     */
     private void actualizarTabla() {
         modeloTabla.setRowCount(0);
 
@@ -268,13 +356,28 @@ public class DJugador extends JDialog {
         }
     }
 
+    /**
+     * Actualiza la lista de jugadores desde el controlador
+     */
+    private void actualizarListaJugadores() {
+        try {
+            listaJugadores = vistaController.getJugadores();
+            actualizarTabla();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar la lista: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Elimina el jugador seleccionado en la tabla
+     */
     private void eliminarEquipoSeleccionado() {
         int filaSeleccionada = tablaJugadores.getSelectedRow();
 
         if (filaSeleccionada >= 0) {
             int confirmacion = JOptionPane.showConfirmDialog(
                     this,
-                    "¿Estás seguro de que deseas eliminar el equipo " +
+                    "¿Estás seguro de que deseas eliminar el jugador " +
                             listaJugadores.get(filaSeleccionada).getNombre() + "?",
                     "Confirmar Eliminación",
                     JOptionPane.YES_NO_OPTION);
@@ -283,36 +386,42 @@ public class DJugador extends JDialog {
                 try {
                     vistaController.EliminarJugador(listaJugadores.get(filaSeleccionada).getCodJugador());
                     listaJugadores.remove(filaSeleccionada);
-
                     actualizarTabla();
 
                     JOptionPane.showMessageDialog(
                             this,
-                            "Equipo eliminado con éxito",
+                            "Jugador eliminado con éxito",
                             "Eliminación Completada",
                             JOptionPane.INFORMATION_MESSAGE);
 
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, ex.getMessage());
                 }
             }
         } else {
             JOptionPane.showMessageDialog(
                     this,
-                    "Por favor, selecciona un equipo para eliminar",
+                    "Por favor, selecciona un jugador para eliminar",
                     "Error",
                     JOptionPane.WARNING_MESSAGE);
         }
     }
 
-    private boolean parsearPatron(String frase, Pattern patron){
-        if (frase.matches(patron.pattern())){
-            return true;
-        }else{
-            return false;
-        }
+    /**
+     * Comprueba si una cadena cumple con un patrón dado
+     * @param frase Cadena a comprobar
+     * @param patron Patrón a aplicar
+     * @return true si la cadena cumple el patrón, false en caso contrario
+     */
+    private boolean parsearPatron(String frase, Pattern patron) {
+        return frase.matches(patron.pattern());
     }
 
+    /**
+     * Convierte una cadena de texto a un objeto LocalDate
+     * @param fechaStr Cadena de texto con formato dd/MM/yyyy
+     * @return Objeto LocalDate
+     */
     private LocalDate parsearFecha(String fechaStr) {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(fechaStr, formatoFecha);

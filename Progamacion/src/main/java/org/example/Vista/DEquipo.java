@@ -225,9 +225,6 @@ public class DEquipo extends JDialog {
         }
     }
 
-    /**
-     * Convierte una cadena de texto a un objeto LocalDate
-     */
     private LocalDate parsearFecha(String fechaStr) {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(fechaStr, formato);
