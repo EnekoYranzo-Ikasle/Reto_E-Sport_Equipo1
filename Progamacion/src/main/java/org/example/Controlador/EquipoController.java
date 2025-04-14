@@ -24,9 +24,6 @@ public class EquipoController {
         equipoDAO.eliminarEquipo(codEquipo);
     }
 
-    public void modificar() throws SQLException {
-
-    }
 
     public List<Equipo> getEquipos() throws SQLException {
         return  equipoDAO.obtenerEquipos();
