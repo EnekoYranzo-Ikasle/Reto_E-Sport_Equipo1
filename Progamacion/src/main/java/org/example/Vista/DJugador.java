@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class DJugador extends JDialog {
-    private VistaController vistaController;
+    private final VistaController vistaController;
     private List<Jugador> listaJugadores;
     private JTable tablaJugadores;
     private DefaultTableModel modeloTabla;
@@ -34,8 +34,6 @@ public class DJugador extends JDialog {
     private JTextField tfNickname;
     private JTextField tfSueldo;
     private JButton aceptarButton;
-    private JTextField codigo;
-    private JButton aceptarButton11;
     private JTextField tfApellido;
     private JTextField tfNacionalidad;
     private JComboBox cbRol;
@@ -51,9 +49,11 @@ public class DJugador extends JDialog {
     private JTextField Sueldio;
     private JTextField NombrEquip;
     private JPanel pBorrar;
+
     private Boolean correcto;
     private  LocalDate feca;
     private int CodEquip;
+
     public DJugador(VistaController vistaController) {
         this.vistaController = vistaController;
 
@@ -65,8 +65,6 @@ public class DJugador extends JDialog {
 
         cbRol.setModel(new DefaultComboBoxModel(Roles.values()));
         Rolesss.setModel(new DefaultComboBoxModel(Roles.values()));
-
-
         
         aceptarButton.addActionListener(new ActionListener() {
             @Override
@@ -94,40 +92,37 @@ public class DJugador extends JDialog {
 
         
         codigoJugad.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                int entrada;
-                if (codigoJugad.getText().isEmpty()){
-                    entrada = 0;
-                    JOptionPane.showMessageDialog(null,"Ese codigo no pertenece a ningun jugador");
-                }else{
-                    entrada = Integer.parseInt(codigoJugad.getText());
-                    try {
-                      boolean existe = vistaController.jugadorExiste(entrada);
-                        if (!existe){
-                            JOptionPane.showMessageDialog(null,"Ese codigo no pertenece a ningun jugador");
-                        }
+             @Override
+             public void focusLost(FocusEvent e) {
+                 super.focusLost(e);
+                 int entrada;
+                 if (codigoJugad.getText().isEmpty()) {
+                     entrada = 0;
+                     JOptionPane.showMessageDialog(null, "Ese codigo no pertenece a ningun jugador");
+                 } else {
+                     entrada = Integer.parseInt(codigoJugad.getText());
+                     try {
+                         boolean existe = vistaController.jugadorExiste(entrada);
+                         if (!existe) {
+                             JOptionPane.showMessageDialog(null, "Ese codigo no pertenece a ningun jugador");
+                         }
 
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
-
-                }
-
-
+                     } catch (SQLException ex) {
+                         throw new RuntimeException(ex);
+                     }
+                 }
+             }
+        });
 
         botonsico.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 try {
                     vistaController.EditarJugador(Integer.parseInt(codigoJugad.getText()), Nombre.getText(), apellido.getText(),Nacionalidad.getText(),feca, Nickname.getText(),Rolesss.getSelectedItem().toString(),Double.parseDouble(Sueldio.getText()), CodEquip);
+
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-
-
             }
         });
 
@@ -311,7 +306,6 @@ public class DJugador extends JDialog {
     }
 
     private boolean parsearPatron(String frase, Pattern patron){
-
         if (frase.matches(patron.pattern())){
             return true;
         }else{
