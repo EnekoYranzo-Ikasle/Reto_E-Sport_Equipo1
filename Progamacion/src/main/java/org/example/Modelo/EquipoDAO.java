@@ -90,7 +90,7 @@ public class EquipoDAO {
         ps.executeUpdate();
     }
     public void agregarJugador(Jugador jugador, int codEquip) throws SQLException {
-        ps = conn.prepareStatement("UPDATE jugadores SET cod_equipo = ? WHERE codJugador = ?");
+        ps = conn.prepareStatement("UPDATE jugadores SET codEquipo = ? WHERE codJugador = ?");
         ps.setInt(1, codEquip);
         ps.setInt(2, jugador.getCodJugador());
         ps.executeUpdate();
