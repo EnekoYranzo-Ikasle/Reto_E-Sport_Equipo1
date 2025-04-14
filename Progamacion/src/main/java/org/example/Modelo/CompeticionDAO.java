@@ -23,14 +23,14 @@ public class CompeticionDAO {
         ps.executeUpdate();
     }
     public void modificarCompeticion(Competicion c) throws SQLException {
-        ps = conn.prepareStatement("UPDATE competiciones SET nombre = ?, fechaInicio = ?, fechaFin = ? WHERE cod_comp = ?");
+        ps = conn.prepareStatement("UPDATE competiciones SET nombre = ?, fechaInicio = ?, fechaFin = ? WHERE codCompeticion = ?");
         ps.setString(1,c.getNombre());
         ps.setDate(2,parsearFecha(c.getFechaInicio()));
         ps.setDate(3,parsearFecha(c.getFecha_fin()));
         ps.executeUpdate();
     }
     public void eliminarCompeticion(Competicion c) throws SQLException {
-        ps = conn.prepareStatement("DELETE FROM competiciones WHERE cod_comp = ?");
+        ps = conn.prepareStatement("DELETE FROM competiciones WHERE codCompeticion = ?");
         ps.setString(1, c.getNombre());
         ps.executeUpdate();
     }

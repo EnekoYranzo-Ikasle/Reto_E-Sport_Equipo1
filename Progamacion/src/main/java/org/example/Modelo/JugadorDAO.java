@@ -49,7 +49,7 @@ public class JugadorDAO {
     }
 
     public void eliminarJugador(int codJugador) throws SQLException {
-        ps = conn.prepareStatement("delete from jugadores where cod_jugador = ?");
+        ps = conn.prepareStatement("delete from jugadores where codJugador = ?");
         ps.setInt(1, codJugador);
         ps.executeUpdate();
     }
@@ -57,7 +57,7 @@ public class JugadorDAO {
     public Jugador mostrarJugador(int codJugador) throws SQLException {
         Jugador jugador = new Jugador();
 
-        ps = conn.prepareStatement("select from jugadores where cod_jugador =?");
+        ps = conn.prepareStatement("select from jugadores where codJugador =?");
         ps.setInt(1, codJugador);
         rs = ps.executeQuery();
 
@@ -84,7 +84,7 @@ public class JugadorDAO {
     }
 
     public List<Jugador> jugadorPorEquipo(int codEquip) throws SQLException {
-        ps = conn.prepareStatement("select * from jugadores where cod_equipo = ?");
+        ps = conn.prepareStatement("select * from jugadores where codEquipo = ?");
         ps.setInt(1, codEquip);
         rs = ps.executeQuery();
         List<Jugador> Jugadores = new ArrayList<>();
@@ -99,7 +99,7 @@ public class JugadorDAO {
         return Date.valueOf(fecha1);
     }
     public void EditarJugador(int codJugador, Jugador jugador) throws SQLException {
-        ps=conn.prepareStatement("update jugadores set nombre=?, apellidos=?, nacionalidad=?, fechaNacimiento=?, nickname=?, rol=?, sueldo=?, codEquipo=? where cod_jugador = ?");
+        ps=conn.prepareStatement("update jugadores set nombre=?, apellidos=?, nacionalidad=?, fechaNacimiento=?, nickname=?, rol=?, sueldo=?, codEquipo=? where codJugador = ?");
         ps.setString(1, jugador.getNombre());
         ps.setString(2, jugador.getApellidos());
         ps.setString(3, jugador.getNacionalidad());
