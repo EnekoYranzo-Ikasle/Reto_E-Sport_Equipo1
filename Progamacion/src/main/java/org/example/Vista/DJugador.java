@@ -270,7 +270,7 @@ public class DJugador extends JDialog {
      */
     private void editarJugador() {
         try {
-            vistaController.EditarJugador(
+            vistaController.editarJugador(
                     Integer.parseInt(codigoJugad.getText()),
                     Nombre.getText(),
                     apellido.getText(),

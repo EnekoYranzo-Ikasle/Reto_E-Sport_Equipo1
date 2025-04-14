@@ -1,10 +1,7 @@
 package org.example.Modelo;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -22,7 +19,7 @@ public class JornadaDAO {
         this.listaJornadas = new ArrayList<Jornada>();
     }
 
-    public void generarJornadas(int numJornadas, List<Equipo> equipos, EnfrentamientoDAO enfrentamientoDAO) {
+    public void generarJornadas(int numJornadas, List<Equipo> equipos, EnfrentamientoDAO enfrentamientoDAO) throws Exception {
         if (equipos.size() % 2 == 0) {
             for (int i = 1; i <= numJornadas; i++) {
                 LocalDate fechaJornada = LocalDate.now().plusDays(i); // Generara jornadas a partir del dia siguiente que se genere la jornada
@@ -41,7 +38,7 @@ public class JornadaDAO {
                     if (!e1.equals(e2) && !enfrentados.contains(e1.getNombreEquipo() + e2.getNombreEquipo()) &&
                             !enfrentados.contains(e2.getNombreEquipo() + e1.getNombreEquipo())) {
                         // Creamos los objetos y los añadimos al ArrayList
-                        Enfrentamiento enf = new Enfrentamiento("E" + i + jornada.getListaEnfrentamientos().size(), e1, e2, horaInicial);
+                        Enfrentamiento enf = new Enfrentamiento( i + jornada.getListaEnfrentamientos().size(), e1, e2, horaInicial);
 
                         jornada.addEnfrentamiento(enf);
                         enfrentamientoDAO.guardarEnfrentamientos(enf);
@@ -53,10 +50,25 @@ public class JornadaDAO {
                     }
                 }
                 listaJornadas.add(jornada);
+                guardarJornada(jornada);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No se puede generar la jornada si no hay equipos pares");
+            throw new IllegalStateException("No se puede generar la jornada si no hay equipos pares");
         }
+    }
+
+    private void guardarJornada(Jornada jornada) throws SQLException {
+        ps = conn.prepareStatement("INSERT INTO jornadas (codJornada, fechaJornada) VALUES (?, ?)");
+        ps.setInt(1, jornada.getCodJornada());
+        ps.setDate(2, java.sql.Date.valueOf(jornada.getFechaJornada()));
+        ps.executeUpdate();
+    }
+
+    private void guardarEnfrentamiento(Enfrentamiento enfrentamiento) throws SQLException {
+        ps = conn.prepareStatement("INSERT INTO enfrentamientos (hora, equipo1, equipo2) VALUES (?, ?, ?)");
+        ps.setTime(1, parsearHora(enfrentamiento.getHora()));
+        ps.setInt(2, enfrentamiento.getEquipo1().getCodEquipo());
+        ps.setInt(3, enfrentamiento.getEquipo2().getCodEquipo());
     }
 
     public void eliminarJornadaPorCod(int codJornada) {
@@ -109,6 +121,7 @@ public class JornadaDAO {
 
         JOptionPane.showMessageDialog(null, mensajeFinal.toString(), "Jornadas", JOptionPane.INFORMATION_MESSAGE);
     }
+
     public List<Integer> obtenercodjornada() throws SQLException {
         ps = conn.prepareStatement("select codJornada from jornadas");
         rs = ps.executeQuery();
@@ -132,5 +145,9 @@ public class JornadaDAO {
             }
         }
         return mensaje;
+    }
+
+    private Time parsearHora(LocalTime hora) {
+        return Time.valueOf(hora);
     }
 }
