@@ -57,7 +57,7 @@ public class JugadorDAO {
     public Jugador mostrarJugador(int codJugador) throws SQLException {
         Jugador jugador = new Jugador();
 
-        ps = conn.prepareStatement("select from jugadores where codJugador =?");
+        ps = conn.prepareStatement("select * from jugadores where codJugador =?");
         ps.setInt(1, codJugador);
         rs = ps.executeQuery();
 
