@@ -70,13 +70,13 @@ public class JugadorDAO {
     // Verificaciones:
     private Jugador crearJugador(ResultSet rs) throws SQLException {
         Jugador j = new Jugador(
-                rs.getInt("cod_jugador"),
+                rs.getInt("codJugador"),
                 rs.getString("nombre"),
                 rs.getString("apellidos"),
                 rs.getString("nacionalidad"),
                 rs.getDate("fechaNacimiento").toLocalDate(),
                 rs.getString("nickname"),
-                Roles.valueOf(rs.getString("rol")),
+                Roles.valueOf(rs.getString("rol").toUpperCase()),
                 rs.getDouble("sueldo"),
                 rs.getInt("codEquipo")
         );

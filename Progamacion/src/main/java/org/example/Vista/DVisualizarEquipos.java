@@ -38,9 +38,12 @@ public class DVisualizarEquipos extends JDialog {
                 taMostrar.append(" Alias: ");
                 taMostrar.append(jugadors.get(j).getNickname());
                 taMostrar.append("\n");
+                taMostrar.append(jugadors.get(j).getRol().toString());
+                taMostrar.append("\n");
             }
             taMostrar.append("\n \n \n");
             taMostrar.append("---------------------------------");
+            taMostrar.append("\n");
 
         }
 
