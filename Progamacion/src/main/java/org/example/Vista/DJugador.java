@@ -6,6 +6,8 @@ import org.example.Modelo.Jugador;
 import org.example.Modelo.Roles;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -13,10 +15,15 @@ import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class DJugador extends JDialog {
     private VistaController vistaController;
+    private List<Jugador> listaJugadores;
+    private JTable tablaJugadores;
+    private DefaultTableModel modeloTabla;
+    private JButton btnEliminar;
 
     private JPanel pPrincipal;
     private JTabbedPane tabbedPane1;
@@ -43,6 +50,7 @@ public class DJugador extends JDialog {
     private JComboBox Rolesss;
     private JTextField Sueldio;
     private JTextField NombrEquip;
+    private JPanel pBorrar;
     private Boolean correcto;
     private  LocalDate feca;
     private int CodEquip;
@@ -57,6 +65,8 @@ public class DJugador extends JDialog {
 
         cbRol.setModel(new DefaultComboBoxModel(Roles.values()));
         Rolesss.setModel(new DefaultComboBoxModel(Roles.values()));
+
+
         
         aceptarButton.addActionListener(new ActionListener() {
             @Override
@@ -81,34 +91,8 @@ public class DJugador extends JDialog {
                 }
             }
         });
-        aceptarButton11.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    if (correcto){
-                        vistaController.EliminarJugador(Integer.parseInt(codigo.getText()));
-                        dispose();
 
-                    }else{
-                        JOptionPane.showMessageDialog(null,"El codigo del jugador tiene que ser si o si 4 valores numericos");
-                    }
-
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
-        codigo.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                if (!codigo.getText().matches("[0-9]{4}")) {
-                    correcto = false;
-                }else{
-                    correcto = true;
-                }
-            }
-        });
+        
         codigoJugad.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -132,8 +116,7 @@ public class DJugador extends JDialog {
                 }
 
 
-            }
-        });
+
         botonsico.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -147,33 +130,37 @@ public class DJugador extends JDialog {
 
             }
         });
+
         Nombre.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
-                if (!parsearpatron(Nombre.getText(), Pattern.compile("^[a-zA-Z]*$"))){
+                if (!parsearPatron(Nombre.getText(), Pattern.compile("^[a-zA-Z]*$"))){
                     JOptionPane.showMessageDialog(null,"El nombre del jugador no cumple el patron correcto");
                 }
             }
         });
+
         apellido.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
-                if (!parsearpatron(apellido.getText(), Pattern.compile("^[a-zA-Z]*$"))){
+                if (!parsearPatron(apellido.getText(), Pattern.compile("^[a-zA-Z]*$"))){
                     JOptionPane.showMessageDialog(null,"El apellido del jugador no cumple el patron correcto");
                 }
             }
         });
+
         Nacionalidad.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
-                if (!parsearpatron(Nacionalidad.getText(), Pattern.compile("^[a-zA-Z]*$"))){
+                if (!parsearPatron(Nacionalidad.getText(), Pattern.compile("^[a-zA-Z]*$"))){
                     JOptionPane.showMessageDialog(null,"La nacionalidad esta mal escrita");
                 }
             }
         });
+
         fechaNacimiento.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -187,6 +174,7 @@ public class DJugador extends JDialog {
 
             }
         });
+
         NombrEquip.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -203,11 +191,12 @@ public class DJugador extends JDialog {
                 }
             }
         });
+
         Sueldio.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
-                if (!parsearpatron(Sueldio.getText(), Pattern.compile("[0-9]*"))){
+                if (!parsearPatron(Sueldio.getText(), Pattern.compile("[0-9]*"))){
                     JOptionPane.showMessageDialog(null, " la sueldo esta mal insertada");
                 }else{
 
@@ -215,8 +204,113 @@ public class DJugador extends JDialog {
             }
         });
 
+//////////////////////////////////////////////
+        try {
+            listaJugadores = vistaController.getJugadores();
+
+            pBorrar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            configurarTabla();
+
+//            Crear panel de botones
+            JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            panelBotones.setBackground(new Color(30, 42, 56)); // Color de fondo
+
+            btnEliminar = new JButton("");
+            btnEliminar.setIcon(new ImageIcon("src/main/resources/Images/trashBin.png"));
+            btnEliminar.setPreferredSize(new Dimension(50, 50));
+            btnEliminar.setBackground(Color.WHITE); // Cambiar color de fondo
+            btnEliminar.setForeground(Color.BLACK); // Cambiar color de la letra
+            btnEliminar.setBorderPainted(false); // Quitar borde pintado
+            btnEliminar.setFocusPainted(false); // Quitar diseño focus
+
+            btnEliminar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    eliminarEquipoSeleccionado();
+                }
+            });
+
+            panelBotones.add(btnEliminar);
+
+//            Agregar los componentes al padre
+            pBorrar.add(new JScrollPane(tablaJugadores), BorderLayout.CENTER);
+            pBorrar.add(panelBotones, BorderLayout.EAST);
+
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(pPrincipal, e.getMessage());
+        }
     }
-    private boolean parsearpatron(String frase, Pattern patron){
+
+    //    Funciones para configurar la tabla de borrado.
+    private void configurarTabla() {
+        modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hacer que la tabla no sea editable
+            }
+        };
+
+        modeloTabla.addColumn("ID");
+        modeloTabla.addColumn("Nombre");
+
+        tablaJugadores = new JTable(modeloTabla);
+
+        tablaJugadores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tablaJugadores.getTableHeader().setReorderingAllowed(false);
+
+        actualizarTabla();
+    }
+
+    private void actualizarTabla() {
+        modeloTabla.setRowCount(0);
+
+        for (Jugador jugador : listaJugadores) {
+            Object[] fila = new Object[2];
+            fila[0] = jugador.getCodJugador();
+            fila[1] = jugador.getNombre();
+
+            modeloTabla.addRow(fila);
+        }
+    }
+
+    private void eliminarEquipoSeleccionado() {
+        int filaSeleccionada = tablaJugadores.getSelectedRow();
+
+        if (filaSeleccionada >= 0) {
+            int confirmacion = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Estás seguro de que deseas eliminar el equipo " +
+                            listaJugadores.get(filaSeleccionada).getNombre() + "?",
+                    "Confirmar Eliminación",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                try {
+                    vistaController.EliminarJugador(listaJugadores.get(filaSeleccionada).getCodJugador());
+                    listaJugadores.remove(filaSeleccionada);
+
+                    actualizarTabla();
+
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Equipo eliminado con éxito",
+                            "Eliminación Completada",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                }catch (Exception ex){
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Por favor, selecciona un equipo para eliminar",
+                    "Error",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private boolean parsearPatron(String frase, Pattern patron){
 
         if (frase.matches(patron.pattern())){
             return true;
