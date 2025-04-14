@@ -32,7 +32,6 @@ public class EquipoDAO {
         ps.setDate(2, parsearFecha(equipo.getFechaFund()));
         ps.executeUpdate();
     }
-
     public void eliminarEquipo(int codEquipo) throws SQLException {
         ps = conn.prepareStatement("delete from equipos where codEquipo = ?");
         ps.setInt(1, codEquipo);
