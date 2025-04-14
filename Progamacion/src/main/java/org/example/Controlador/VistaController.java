@@ -115,6 +115,9 @@ public class VistaController {
 
         modeloController.modificarJugador(j,codigo);
     }
+    public boolean jugadorExiste(int codJugador) throws SQLException {
+        return modeloController.jugadorExiste(codJugador);
+    }
 
     public void nuevoEquipo(String nombreEquipo, LocalDate fechaFundacion) throws SQLException {
         Equipo equipo = new Equipo(nombreEquipo, fechaFundacion);

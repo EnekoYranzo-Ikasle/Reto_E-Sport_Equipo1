@@ -66,6 +66,14 @@ public class JugadorDAO {
         }
         return jugador;
     }
+    public boolean jugadorExiste(int codJugador) throws SQLException {
+        ps = conn.prepareStatement("select * from jugadores where codJugador =?");
+        ps.setInt(1, codJugador);
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            return true;
+        }else return false;
+    }
 
     // Verificaciones:
     private Jugador crearJugador(ResultSet rs) throws SQLException {

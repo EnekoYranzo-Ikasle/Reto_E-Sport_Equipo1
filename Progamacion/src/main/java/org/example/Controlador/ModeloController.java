@@ -82,6 +82,9 @@ public class ModeloController {
     public Jugador mostrarJugador(int codJugador) throws SQLException {
         return jugadorController.mostrarJugador(codJugador);
     }
+    public boolean jugadorExiste(int codJugador) throws SQLException {
+        return jugadorController.jugadorExiste(codJugador);
+    }
 
     public List<Jugador> getJugadores() throws SQLException{
         return jugadorController.getJugadores();

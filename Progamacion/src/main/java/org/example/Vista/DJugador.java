@@ -92,6 +92,31 @@ public class DJugador extends JDialog {
             }
         });
 
+        
+        codigoJugad.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                int entrada;
+                if (codigoJugad.getText().isEmpty()){
+                    entrada = 0;
+                    JOptionPane.showMessageDialog(null,"Ese codigo no pertenece a ningun jugador");
+                }else{
+                    entrada = Integer.parseInt(codigoJugad.getText());
+                    try {
+                      boolean existe = vistaController.jugadorExiste(entrada);
+                        if (!existe){
+                            JOptionPane.showMessageDialog(null,"Ese codigo no pertenece a ningun jugador");
+                        }
+
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                }
+
+
+
         botonsico.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
