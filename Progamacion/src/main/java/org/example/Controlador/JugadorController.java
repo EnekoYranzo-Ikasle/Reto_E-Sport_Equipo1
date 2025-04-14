@@ -38,6 +38,9 @@ public class JugadorController {
     public void editarJugador(Jugador jugador, int codigo) throws SQLException {
         jugadorDAO.EditarJugador(codigo, jugador);
     }
+    public boolean jugadorExiste(int codJugador) throws SQLException {
+        return jugadorDAO.jugadorExiste(codJugador);
+    }
 
     // Validaciones:
     public LocalDate formatearFecha(String fecha) {

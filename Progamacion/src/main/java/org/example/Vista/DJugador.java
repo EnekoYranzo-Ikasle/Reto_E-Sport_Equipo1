@@ -120,8 +120,8 @@ public class DJugador extends JDialog {
                 }else{
                     entrada = Integer.parseInt(codigoJugad.getText());
                     try {
-                        Jugador j = vistaController.mostrarJugador(entrada);
-                        if (j == null){
+                      boolean existe = vistaController.jugadorExiste(entrada);
+                        if (!existe){
                             JOptionPane.showMessageDialog(null,"Ese codigo no pertenece a ningun jugador");
                         }
 
