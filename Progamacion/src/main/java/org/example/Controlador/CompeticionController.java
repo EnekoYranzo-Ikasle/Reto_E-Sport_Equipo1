@@ -11,18 +11,6 @@ public class CompeticionController {
         this.competicionDAO = competicionDAO;
     }
 
-    public void agregarCompetcion(Competicion competicion) throws SQLException {
-        competicionDAO.agregarCompeticion(competicion);
-    }
-
-    public void modificarCompeticion(Competicion competicion) throws SQLException {
-        competicionDAO.modificarCompeticion(competicion);
-    }
-
-    public void eliminarCompeticion(Competicion competicion) throws SQLException {
-        competicionDAO.eliminarCompeticion(competicion);
-    }
-
     public void generarCalendario() throws Exception {
         competicionDAO.generarCalendario();
     }
