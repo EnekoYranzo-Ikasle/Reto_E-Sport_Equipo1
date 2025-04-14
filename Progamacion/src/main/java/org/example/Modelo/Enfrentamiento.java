@@ -3,7 +3,7 @@ package org.example.Modelo;
 import java.time.LocalTime;
 
 public class Enfrentamiento {
-    private String codEnfrentamiento;
+    private int codEnfrentamiento;
     private LocalTime hora;
     private String resultado;
     private Equipo equipo1;
@@ -12,7 +12,7 @@ public class Enfrentamiento {
     public Enfrentamiento() {
     }
 
-    public Enfrentamiento(String codEnfrentamiento, Equipo equipo1, Equipo equipo2, LocalTime hora) {
+    public Enfrentamiento(int codEnfrentamiento, Equipo equipo1, Equipo equipo2, LocalTime hora) {
         this.codEnfrentamiento = codEnfrentamiento;
         this.equipo1 = equipo1;
         this.equipo2 = equipo2;
@@ -25,11 +25,11 @@ public class Enfrentamiento {
         this.equipo2 = equipo2;
     }
 
-    public String getCodEnfrentamiento() {
+    public int getCodEnfrentamiento() {
         return codEnfrentamiento;
     }
 
-    public void setCodEnfrentamiento(String codEnfrentamiento) {
+    public void setCodEnfrentamiento(int codEnfrentamiento) {
         this.codEnfrentamiento = codEnfrentamiento;
     }
 

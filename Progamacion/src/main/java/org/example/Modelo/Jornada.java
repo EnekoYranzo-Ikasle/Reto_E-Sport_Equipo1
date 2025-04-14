@@ -6,24 +6,22 @@ import java.util.List;
 
 public class Jornada {
     private int codJornada;
-    private String codCompe;
     private LocalDate fechaJornada;
     private List<Enfrentamiento> listaEnfrentamientos;
 
     public Jornada() {
     }
   
-    public Jornada(int codJornada,String codCompe, LocalDate fechaJornada) {
+    public Jornada(int codJornada, LocalDate fechaJornada) {
         this.codJornada = codJornada;
-        this.codCompe = codCompe;
         this.fechaJornada = fechaJornada;
         this.listaEnfrentamientos = new ArrayList<>();
     }
 
-    public Jornada(int codJornada, LocalDate fechaJornada) {
-        this.codJornada = codJornada;
-        this.fechaJornada = fechaJornada;
-    }
+//    public Jornada(int codJornada, LocalDate fechaJornada) {
+//        this.codJornada = codJornada;
+//        this.fechaJornada = fechaJornada;
+//    }
 
     public void addEnfrentamiento(Enfrentamiento enfrentamiento) {
         listaEnfrentamientos.add(enfrentamiento);
@@ -36,14 +34,6 @@ public class Jornada {
 
     public void setCodJornada(int codJornada) {
         this.codJornada = codJornada;
-    }
-
-    public String getCodCompeticion() {
-        return codCompe;
-    }
-
-    public void setCodCompeticion(String codCompe) {
-        this.codCompe = codCompe;
     }
 
     public LocalDate getFechaJornada() {
