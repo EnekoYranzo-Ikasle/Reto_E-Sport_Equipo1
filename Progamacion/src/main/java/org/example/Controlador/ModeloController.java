@@ -5,6 +5,7 @@ import org.example.Modelo.Jugador;
 import org.example.Modelo.Persona;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ModeloController {
@@ -103,5 +104,8 @@ public class ModeloController {
     }
     public boolean existeEquipo(String nombreEquipo) throws SQLException {
         return equipoController.existeEquipo(nombreEquipo);
+    }
+    public void actualizarEquipo(String NombrEquipo, LocalDate fechaFundacion) throws SQLException {
+        equipoController.actualizarEquipo(NombrEquipo, fechaFundacion);
     }
 }

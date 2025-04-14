@@ -56,6 +56,12 @@ public class EquipoDAO {
         }
         ps.executeUpdate();
     }
+    public void modificarequipo(String nombreEquipo, LocalDate fechaFundacion) throws SQLException {
+        ps=conn.prepareStatement("update equipos set fechaFundacion = ? where nombre = ?");
+        ps.setDate(1, parsearFecha(fechaFundacion));
+        ps.setString(2, nombreEquipo);
+        ps.executeUpdate();
+    }
 
     public Equipo buscarEquipoPorCod(int idEquipo) throws SQLException {
         Equipo equipo = new Equipo();

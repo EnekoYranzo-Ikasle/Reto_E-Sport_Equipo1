@@ -57,12 +57,13 @@ public class DEquipo extends JDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     boolean error = false;
+                    LocalDate fechaFundacion = null;
                     if (NuevoNombreEquipo.getText().matches("^[a-zA-Z]*$")) {
                         JOptionPane.showMessageDialog(pPrincipal, "Nombre incorrecto");
                         error = true;
                     }
                     try {
-                        LocalDate fechaFundacion = parsearFecha(tfFechaFundacion.getText());
+                        fechaFundacion = parsearFecha(tfFechaFundacion.getText());
                     }catch (Exception ex){
                         JOptionPane.showMessageDialog(pPrincipal, "Fecha incorrecto");
                         error = true;
@@ -71,6 +72,7 @@ public class DEquipo extends JDialog {
                     try {
                         boolean existe2 = vistaController.existeEquipo(NombreEquipo.getText());
                         if (!error && existe2) {
+                            vistaController.actualizarEquipo(NombreEquipo.getText(),fechaFundacion);
 
 
                         }

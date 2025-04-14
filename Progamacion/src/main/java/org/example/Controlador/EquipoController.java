@@ -45,4 +45,7 @@ public class EquipoController {
     public boolean existeEquipo(String nombreEquipo) throws SQLException {
         return equipoDAO.Existe(nombreEquipo);
     }
+    public void actualizarEquipo(String NombrEquipo, LocalDate fechaFundacion) throws SQLException {
+        equipoDAO.modificarequipo(NombrEquipo, fechaFundacion);
+    }
 }
