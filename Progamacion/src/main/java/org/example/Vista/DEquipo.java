@@ -12,21 +12,28 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * Diálogo para la gestión de equipos (alta y eliminación)
+ */
 public class DEquipo extends JDialog {
     private VistaController vistaController;
     private List<Equipo> listaEquipos;
-    private JTable tablaEquipos;
-    private DefaultTableModel modeloTabla;
-    private JButton btnEliminar;
 
     private JPanel pPrincipal;
     private JTabbedPane tabbedPane1;
+
+    // Componentes panel Alta
     private JPanel pTextAlta;
     private JPanel pInputsAlta;
     private JTextField tfNombre;
     private JTextField tfFechaFundacion;
     private JButton bCrearAlta;
+
+    // Componentes panel Borrar
     private JPanel pBorrar;
+    private JTable tablaEquipos;
+    private DefaultTableModel modeloTabla;
+    private JButton btnEliminar;
 
     public DEquipo(VistaController vistaController) {
         this.vistaController = vistaController;
@@ -39,60 +46,101 @@ public class DEquipo extends JDialog {
         setLocationRelativeTo(null);
 
         try {
-//            Boton aceptar AltaJugador
+            /**
+             * Configura el panel de alta de equipos
+             */
             bCrearAlta.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    try {
-                        String nombre = tfNombre.getText();
-                        LocalDate fechaFundacion = parsearFecha(tfFechaFundacion.getText());
-
-                        vistaController.nuevoEquipo(nombre, fechaFundacion);
-
-                        JOptionPane.showMessageDialog(null, "Nuevo Equipo creado correctamente");
-
-                    }catch (Exception ex){
-                        JOptionPane.showMessageDialog(null, ex.getMessage());
-                    }
+                    crearNuevoEquipo();
                 }
             });
 
-            listaEquipos = vistaController.getEquipos();
+            // Configurar componentes
+            configurarPanelBorrar();
 
-            pBorrar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            configurarTabla();
-
-//            Crear panel de botones
-            JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            panelBotones.setBackground(new Color(30, 42, 56)); // Color de fondo
-
-            btnEliminar = new JButton("");
-            btnEliminar.setIcon(new ImageIcon("src/main/resources/Images/trashBin.png"));
-            btnEliminar.setPreferredSize(new Dimension(50, 50));
-            btnEliminar.setBackground(Color.WHITE); // Cambiar color de fondo
-            btnEliminar.setForeground(Color.BLACK); // Cambiar color de la letra
-            btnEliminar.setBorderPainted(false); // Quitar borde pintado
-            btnEliminar.setFocusPainted(false); // Quitar diseño focus
-
-            btnEliminar.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    eliminarEquipoSeleccionado();
-                }
-            });
-
-            panelBotones.add(btnEliminar);
-
-//            Agregar los componentes al padre
-            pBorrar.add(new JScrollPane(tablaEquipos), BorderLayout.CENTER);
-            pBorrar.add(panelBotones, BorderLayout.EAST);
-
-        }catch (Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(pPrincipal, e.getMessage());
         }
     }
 
-//    Funciones para configurar la tabla de borrado.
+    /**
+     * Crea un nuevo equipo con los datos del formulario
+     */
+    private void crearNuevoEquipo() {
+        try {
+            String nombre = tfNombre.getText();
+            LocalDate fechaFundacion = parsearFecha(tfFechaFundacion.getText());
+
+            vistaController.nuevoEquipo(nombre, fechaFundacion);
+
+            JOptionPane.showMessageDialog(null, "Nuevo Equipo creado correctamente");
+            limpiarFormularioAlta();
+            actualizarListaEquipos();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    private void limpiarFormularioAlta() {
+        tfNombre.setText("");
+        tfFechaFundacion.setText("");
+    }
+
+    /**
+     * Configura el panel de borrado de equipos
+     */
+    private void configurarPanelBorrar() {
+        try {
+            listaEquipos = vistaController.getEquipos();
+
+            pBorrar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            configurarTabla();
+            configurarBotones();
+
+            // Agregar los componentes al panel
+            pBorrar.add(new JScrollPane(tablaEquipos), BorderLayout.CENTER);
+            pBorrar.add(crearPanelBotones(), BorderLayout.EAST);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(pPrincipal, e.getMessage());
+        }
+    }
+
+    /**
+     * Crea el panel de botones para el panel de borrado
+     * @return Panel con los botones
+     */
+    private JPanel crearPanelBotones() {
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelBotones.setBackground(new Color(30, 42, 56));
+        panelBotones.add(btnEliminar);
+        return panelBotones;
+    }
+
+    /**
+     * Configura los botones
+     */
+    private void configurarBotones() {
+        btnEliminar = new JButton("");
+        btnEliminar.setIcon(new ImageIcon("src/main/resources/Images/trashBin.png"));
+        btnEliminar.setPreferredSize(new Dimension(50, 50));
+        btnEliminar.setBackground(Color.WHITE);
+        btnEliminar.setForeground(Color.BLACK);
+        btnEliminar.setBorderPainted(false);
+        btnEliminar.setFocusPainted(false);
+
+        btnEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eliminarEquipoSeleccionado();
+            }
+        });
+    }
+
+    /**
+     * Configura la tabla de equipos
+     */
     private void configurarTabla() {
         modeloTabla = new DefaultTableModel() {
             @Override
@@ -105,13 +153,15 @@ public class DEquipo extends JDialog {
         modeloTabla.addColumn("Nombre");
 
         tablaEquipos = new JTable(modeloTabla);
-
         tablaEquipos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaEquipos.getTableHeader().setReorderingAllowed(false);
 
         actualizarTabla();
     }
 
+    /**
+     * Actualiza los datos de la tabla
+     */
     private void actualizarTabla() {
         modeloTabla.setRowCount(0);
 
@@ -124,6 +174,21 @@ public class DEquipo extends JDialog {
         }
     }
 
+    /**
+     * Actualiza la lista de equipos desde el controlador
+     */
+    private void actualizarListaEquipos() {
+        try {
+            listaEquipos = vistaController.getEquipos();
+            actualizarTabla();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar la lista: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Elimina el equipo seleccionado en la tabla
+     */
     private void eliminarEquipoSeleccionado() {
         int filaSeleccionada = tablaEquipos.getSelectedRow();
 
@@ -139,7 +204,6 @@ public class DEquipo extends JDialog {
                 try {
                     vistaController.eliminarEquipo(listaEquipos.get(filaSeleccionada).getCodEquipo());
                     listaEquipos.remove(filaSeleccionada);
-
                     actualizarTabla();
 
                     JOptionPane.showMessageDialog(
@@ -148,7 +212,7 @@ public class DEquipo extends JDialog {
                             "Eliminación Completada",
                             JOptionPane.INFORMATION_MESSAGE);
 
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, ex.getMessage());
                 }
             }
@@ -161,7 +225,9 @@ public class DEquipo extends JDialog {
         }
     }
 
-//    Parsear Fecha
+    /**
+     * Convierte una cadena de texto a un objeto LocalDate
+     */
     private LocalDate parsearFecha(String fechaStr) {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(fechaStr, formato);
