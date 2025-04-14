@@ -33,7 +33,7 @@ public class DJugador extends JDialog {
     private JTextField tfNacionalidad;
     private JComboBox cbRol;
     private JTextField tfNombreEquipo;
-    private JTextField textField1;
+    private JTextField codigoJugad;
     private JButton botonsico;
     private JTextField Nombre;
     private JTextField apellido;
@@ -109,20 +109,29 @@ public class DJugador extends JDialog {
                 }
             }
         });
-        textField1.addFocusListener(new FocusAdapter() {
+        codigoJugad.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
+                int entrada;
+                if (codigoJugad.getText().isEmpty()){
+                    entrada = 0;
+                    JOptionPane.showMessageDialog(null,"Ese codigo no pertenece a ningun jugador");
+                }else{
+                    entrada = Integer.parseInt(codigoJugad.getText());
+                    try {
+                        Jugador j = vistaController.mostrarJugador(entrada);
+                        if (j == null){
+                            JOptionPane.showMessageDialog(null,"Ese codigo no pertenece a ningun jugador");
+                        }
 
-                try {
-                    Jugador j = vistaController.mostrarJugador(Integer.parseInt(textField1.getText()));
-                    if (j == null){
-                        JOptionPane.showMessageDialog(null,"Ese codigo no pertenece a ningun jugador");
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
                     }
 
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
                 }
+
+
             }
         });
         botonsico.addActionListener(new ActionListener() {
@@ -130,7 +139,7 @@ public class DJugador extends JDialog {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    vistaController.EditarJugador(Integer.parseInt(textField1.getText()), Nombre.getText(), apellido.getText(),Nacionalidad.getText(),feca, Nickname.getText(),Rolesss.getSelectedItem().toString(),Double.parseDouble(Sueldio.getText()), CodEquip);
+                    vistaController.EditarJugador(Integer.parseInt(codigoJugad.getText()), Nombre.getText(), apellido.getText(),Nacionalidad.getText(),feca, Nickname.getText(),Rolesss.getSelectedItem().toString(),Double.parseDouble(Sueldio.getText()), CodEquip);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
