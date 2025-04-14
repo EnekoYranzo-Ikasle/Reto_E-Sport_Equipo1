@@ -83,6 +83,10 @@ public class ModeloController {
         return jugadorController.mostrarJugador(codJugador);
     }
 
+    public List<Jugador> getJugadores() throws SQLException{
+        return jugadorController.getJugadores();
+    }
+
     public void nuevoEquipo(Equipo equipo) throws SQLException {
         equipoController.nuevoEquipo(equipo);
     }

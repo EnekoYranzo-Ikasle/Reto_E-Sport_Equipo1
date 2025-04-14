@@ -35,8 +35,13 @@ public class JugadorController {
     public Jugador  mostrarJugador(int CodigoJugador) throws SQLException {
         return jugadorDAO.mostrarJugador(CodigoJugador);
     }
+
     public void editarJugador(Jugador jugador, int codigo) throws SQLException {
         jugadorDAO.EditarJugador(codigo, jugador);
+    }
+
+    public List<Jugador> getJugadores() throws SQLException {
+        return jugadorDAO.getListaJugadores();
     }
 
     public void modificarJugador() throws SQLException {
