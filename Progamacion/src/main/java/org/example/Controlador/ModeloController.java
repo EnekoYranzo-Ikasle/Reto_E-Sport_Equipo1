@@ -101,4 +101,7 @@ public class ModeloController {
     public List<Equipo> getEquipos() throws SQLException{
         return equipoController.getEquipos();
     }
+    public boolean existeEquipo(String nombreEquipo) throws SQLException {
+        return equipoController.existeEquipo(nombreEquipo);
+    }
 }

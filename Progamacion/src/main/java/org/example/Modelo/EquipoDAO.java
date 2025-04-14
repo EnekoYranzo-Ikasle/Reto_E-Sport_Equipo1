@@ -83,6 +83,14 @@ public class EquipoDAO {
         }
         return equipo;
     }
+    public boolean Existe(String Codequipo) throws SQLException {
+        ps = conn.prepareStatement("select * from equipos where nombre = ?");
+        ps.setString(1, Codequipo);
+        rs = ps.executeQuery();
+        if(rs.next()) {
+            return true;
+        }else return false;
+    }
 
     public void eliminarJugador(int codEquip, int codJug) throws SQLException {
         ps = conn.prepareStatement("update jugadores set codEquipo= null where codJugador = ?");
