@@ -134,4 +134,7 @@ public class VistaController {
     public List<Equipo> getEquipos() throws SQLException{
         return modeloController.getEquipos();
     }
+    public boolean existeEquipo(String nombreEquipo) throws SQLException {
+        return modeloController.existeEquipo(nombreEquipo);
+    }
 }

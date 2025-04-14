@@ -42,4 +42,7 @@ public class EquipoController {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(fecha, formato);
     }
+    public boolean existeEquipo(String nombreEquipo) throws SQLException {
+        return equipoDAO.Existe(nombreEquipo);
+    }
 }

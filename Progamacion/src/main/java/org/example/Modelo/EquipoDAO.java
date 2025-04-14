@@ -32,7 +32,6 @@ public class EquipoDAO {
         ps.setDate(2, parsearFecha(equipo.getFechaFund()));
         ps.executeUpdate();
     }
-
     public void eliminarEquipo(int codEquipo) throws SQLException {
         ps = conn.prepareStatement("delete from equipos where codEquipo = ?");
         ps.setInt(1, codEquipo);
@@ -82,6 +81,14 @@ public class EquipoDAO {
             equipo = crearEquipo(rs);
         }
         return equipo;
+    }
+    public boolean Existe(String Codequipo) throws SQLException {
+        ps = conn.prepareStatement("select * from equipos where nombre = ?");
+        ps.setString(1, Codequipo);
+        rs = ps.executeQuery();
+        if(rs.next()) {
+            return true;
+        }else return false;
     }
 
     public void eliminarJugador(int codEquip, int codJug) throws SQLException {

@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -31,9 +32,15 @@ public class DEquipo extends JDialog {
 
     // Componentes panel Borrar
     private JPanel pBorrar;
+
     private JTable tablaEquipos;
     private DefaultTableModel modeloTabla;
     private JButton btnEliminar;
+    private JTextField NombreEquipo;
+    private JTextField NuevoNombreEquipo;
+    private JTextField FechaFundacion;
+    private JButton ModificarButton;
+
 
     public DEquipo(VistaController vistaController) {
         this.vistaController = vistaController;
@@ -46,6 +53,37 @@ public class DEquipo extends JDialog {
         setLocationRelativeTo(null);
 
         try {
+            ModificarButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    boolean error = false;
+                    if (NuevoNombreEquipo.getText().matches("^[a-zA-Z]*$")) {
+                        JOptionPane.showMessageDialog(pPrincipal, "Nombre incorrecto");
+                        error = true;
+                    }
+                    try {
+                        LocalDate fechaFundacion = parsearFecha(tfFechaFundacion.getText());
+                    }catch (Exception ex){
+                        JOptionPane.showMessageDialog(pPrincipal, "Fecha incorrecto");
+                        error = true;
+
+                    }
+                    try {
+                        boolean existe2 = vistaController.existeEquipo(NombreEquipo.getText());
+                        if (!error && existe2) {
+
+
+                        }
+
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+
+
+
+                }
+            });
             /**
              * Configura el panel de alta de equipos
              */
@@ -62,6 +100,8 @@ public class DEquipo extends JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(pPrincipal, e.getMessage());
         }
+
+        
     }
 
     /**
@@ -86,6 +126,7 @@ public class DEquipo extends JDialog {
         tfNombre.setText("");
         tfFechaFundacion.setText("");
     }
+
 
     /**
      * Configura el panel de borrado de equipos
@@ -224,7 +265,7 @@ public class DEquipo extends JDialog {
                     JOptionPane.WARNING_MESSAGE);
         }
     }
-
+  
     private LocalDate parsearFecha(String fechaStr) {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(fechaStr, formato);
