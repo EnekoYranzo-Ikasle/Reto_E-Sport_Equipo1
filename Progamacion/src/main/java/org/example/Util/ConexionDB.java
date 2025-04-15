@@ -18,7 +18,7 @@ public class ConexionDB {
 //            String url = "jdbc:oracle:thin:@127.0.0.1:1521:orclcdb";
 //            String user = "system";
 //            String password = "oracle";
-//            conn = DriverManager.getConnection(url, user, password);
+            conn = DriverManager.getConnection(url, user, password);
 
         }catch (ClassNotFoundException e) {
             System.out.println("Error en Class.forName " + e.getMessage());
