@@ -61,12 +61,13 @@ public class VistaController {
     public List<Equipo> mostrar() throws SQLException {
         return  modeloController.mostrar();
     }
+
     public List <Jugador> mostrarJugadores(int codEquipo) throws SQLException{
         return modeloController.mostraJugs(codEquipo);
     }
 
-    public void generarCalendario() throws Exception {
-        modeloController.generarCalendario();
+    public void generarCalendario(int numJornadas) throws Exception {
+        modeloController.generarCalendario(numJornadas);
     }
 
     public void altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
@@ -107,7 +108,8 @@ public class VistaController {
     public Jugador mostrarJugador(int CodigoJugador) throws SQLException {
         return modeloController.mostrarJugador(CodigoJugador);
     }
-    public void EditarJugador(int codigo, String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
+
+    public void editarJugador(int codigo, String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
                               String nikcname, String roless, Double sueldo, int codEquipo) throws SQLException {
         Roles rol = Roles.valueOf(roless);
 

@@ -52,6 +52,20 @@ public class VInicioAdmin extends JFrame {
             }
         });
 
+        bGenerarCalendario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int numJornadas = Integer.parseInt(JOptionPane.showInputDialog(pPrincipal, "¿Cuantas jornadas quieres generar?"));
+
+                    vistaController.generarCalendario(numJornadas);
+
+                }catch (Exception ex) {
+                    JOptionPane.showMessageDialog(pPrincipal, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
         bVerInforme.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

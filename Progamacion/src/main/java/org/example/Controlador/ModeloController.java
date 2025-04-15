@@ -40,8 +40,10 @@ public class ModeloController {
         return personaController.getPersona(email);
     }
 
-    public void generarCalendario() throws Exception {
-        competicionController.generarCalendario();
+    public void generarCalendario(int numJornadas) throws Exception {
+        List<Equipo> listaEquipos = getEquipos();
+
+        jornadaController.generarCalendario(numJornadas, listaEquipos);
     }
 
     public List<Equipo> mostrar() throws SQLException {

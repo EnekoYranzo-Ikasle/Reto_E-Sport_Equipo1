@@ -42,6 +42,7 @@ public class EnfrentamientoDAO {
             }
         }
     }
+
     public List<Integer> obtenerGanadores(int codjornada) throws SQLException {
         ps=conn.prepareStatement("select ganador from enfrentamientos where jornada=?");
         ps.setInt(1, codjornada);

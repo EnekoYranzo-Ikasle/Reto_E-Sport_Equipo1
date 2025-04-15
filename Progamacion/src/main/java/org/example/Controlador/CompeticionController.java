@@ -10,8 +10,4 @@ public class CompeticionController {
     public CompeticionController(CompeticionDAO competicionDAO) {
         this.competicionDAO = competicionDAO;
     }
-
-    public void generarCalendario() throws Exception {
-        competicionDAO.generarCalendario();
-    }
 }
