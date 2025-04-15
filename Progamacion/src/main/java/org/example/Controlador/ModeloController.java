@@ -110,4 +110,10 @@ public class ModeloController {
     public void actualizarEquipo(String NombrEquipo, LocalDate fechaFundacion) throws SQLException {
         equipoController.actualizarEquipo(NombrEquipo, fechaFundacion);
     }
+    public void agregarJugador(String nombreEquipo, int codJug) throws SQLException {
+        equipoController.agregarJugador(nombreEquipo, codJug);
+    }
+    public boolean EquipoDeJugador(int codJugador) throws SQLException {
+        return jugadorController.EquipoDeJugador(codJugador);
+    }
 }

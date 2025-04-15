@@ -8,6 +8,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -40,6 +42,11 @@ public class DEquipo extends JDialog {
     private JTextField NuevoNombreEquipo;
     private JTextField FechaFundacion;
     private JButton ModificarButton;
+    private JButton añadirButton;
+    private JButton despedirButton;
+    private JTextField textField1;
+    private JTextField CodigoJuegador1;
+    private JTextField CodigoEquip3;
 
 
     public DEquipo(VistaController vistaController) {
@@ -103,7 +110,42 @@ public class DEquipo extends JDialog {
             JOptionPane.showMessageDialog(pPrincipal, e.getMessage());
         }
 
-        
+
+        añadirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    boolean errorEqip=vistaController.existeEquipo(CodigoEquip3.getText());
+                    boolean errorJug= vistaController.jugadorExiste(Integer.parseInt(CodigoJuegador1.getText()));
+
+                    if (errorEqip && errorJug && !vistaController.EquipoDeJugador(Integer.parseInt(CodigoJuegador1.getText()))) {
+
+                        vistaController.agregarJugador(CodigoEquip3.getText(),Integer.parseInt(CodigoJuegador1.getText()));
+                    }else if (!errorEqip) {
+                        JOptionPane.showMessageDialog(pPrincipal, "El Equipo no existe");
+                    }else if (!errorJug) {
+                        JOptionPane.showMessageDialog(pPrincipal, "El jugador no existe");
+                    }else if (!errorEqip) {
+                        JOptionPane.showMessageDialog(pPrincipal, "Jugador ya tiene un equipo asignado");
+                    }
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+
+            }
+        });
+        CodigoJuegador1.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+
+                if (!CodigoJuegador1.getText().matches("[0-9]*")) {
+                    JOptionPane.showMessageDialog(pPrincipal, "Ese codigo no ha sido insertado correctamente");
+                }
+            }
+        });
     }
 
     /**

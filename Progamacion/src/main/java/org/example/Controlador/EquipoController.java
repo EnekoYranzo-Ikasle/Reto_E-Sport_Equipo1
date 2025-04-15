@@ -48,4 +48,7 @@ public class EquipoController {
     public void actualizarEquipo(String NombrEquipo, LocalDate fechaFundacion) throws SQLException {
         equipoDAO.modificarequipo(NombrEquipo, fechaFundacion);
     }
+    public void agregarJugador(String nombreEquipo, int codJugador) throws SQLException {
+        equipoDAO.agregarJugador(codJugador,equipoDAO.buscarEquipoPorNombre(nombreEquipo).getCodEquipo());
+    }
 }
