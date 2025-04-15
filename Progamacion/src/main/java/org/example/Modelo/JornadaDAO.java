@@ -1,11 +1,14 @@
 package org.example.Modelo;
 
+import oracle.sql.TIMESTAMP;
+
 import javax.swing.*;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class JornadaDAO {
     private final Connection conn;
@@ -23,7 +26,9 @@ public class JornadaDAO {
         if (equipos.size() % 2 == 0) {
             for (int i = 1; i <= numJornadas; i++) {
                 LocalDate fechaJornada = LocalDate.now().plusDays(i); // Generara jornadas a partir del dia siguiente que se genere la jornada
-                int codJornada = i;
+                nuevaJornada(fechaJornada);
+
+                int codJornada = getJornadaPorFecha(fechaJornada).getCodJornada();
 
                 Jornada jornada = new Jornada(codJornada, fechaJornada);
                 Set<String> enfrentados = new HashSet<>();
@@ -38,10 +43,11 @@ public class JornadaDAO {
                     if (!e1.equals(e2) && !enfrentados.contains(e1.getNombreEquipo() + e2.getNombreEquipo()) &&
                             !enfrentados.contains(e2.getNombreEquipo() + e1.getNombreEquipo())) {
                         // Creamos los objetos y los añadimos al ArrayList
-                        Enfrentamiento enf = new Enfrentamiento( i + jornada.getListaEnfrentamientos().size(), e1, e2, horaInicial);
+                        Enfrentamiento enf = new Enfrentamiento( i + jornada.getListaEnfrentamientos().size(), e1, e2, horaInicial, jornada);
 
                         jornada.addEnfrentamiento(enf);
                         enfrentamientoDAO.guardarEnfrentamientos(enf);
+                        guardarEnfrentamiento(enf);
 
                         enfrentados.add(e1.getNombreEquipo() + e2.getNombreEquipo());
                         enfrentados.add(e2.getNombreEquipo() + e1.getNombreEquipo());
@@ -57,6 +63,12 @@ public class JornadaDAO {
         }
     }
 
+    private void nuevaJornada(LocalDate fechaJornada) throws Exception {
+        ps = conn.prepareStatement("INSERT INTO jornadas (fecha) VALUES (?)");
+        ps.setDate(1, parsearFechaSQL(fechaJornada));
+        ps.executeUpdate();
+    }
+
     private void guardarJornada(Jornada jornada) throws SQLException {
         ps = conn.prepareStatement("INSERT INTO jornadas (codJornada, fechaJornada) VALUES (?, ?)");
         ps.setInt(1, jornada.getCodJornada());
@@ -65,52 +77,28 @@ public class JornadaDAO {
     }
 
     private void guardarEnfrentamiento(Enfrentamiento enfrentamiento) throws SQLException {
-        ps = conn.prepareStatement("INSERT INTO enfrentamientos (hora, equipo1, equipo2) VALUES (?, ?, ?)");
-        ps.setTime(1, parsearHora(enfrentamiento.getHora()));
+        ps = conn.prepareStatement("INSERT INTO enfrentamientos (hora, equipo1, equipo2, jornada) VALUES ?, ?, ?, ?)");
+
+        // Creamo un LocalDateTime ficticio solo para poder parsear la hora a Timestamp.
+        LocalDate fechaFicticia = LocalDate.of(1970, 1, 1);
+        LocalDateTime fechaHora = LocalDateTime.of(fechaFicticia, enfrentamiento.getHora());
+        Timestamp timestamp = Timestamp.valueOf(fechaHora);
+
+        ps.setTimestamp(1, timestamp);
         ps.setInt(2, enfrentamiento.getEquipo1().getCodEquipo());
         ps.setInt(3, enfrentamiento.getEquipo2().getCodEquipo());
+        ps.setInt(4, enfrentamiento.getJornada().getCodJornada());
+
+        ps.executeUpdate();
     }
 
-    public void eliminarJornadaPorCod(int codJornada) {
-        Optional<Jornada> jornadaAEliminar = listaJornadas.stream()
-                .filter(j -> j.getCodJornada() == codJornada)
-                .findFirst();
+    private Jornada getJornadaPorFecha(LocalDate fecha) throws SQLException {
+        ps = conn.prepareStatement("SELECT * FROM jornadas WHERE fecha = ?");
+        ps.setDate(1, parsearFechaSQL(fecha));
+        rs = ps.executeQuery();
 
-        if (jornadaAEliminar.isPresent()) {
-            listaJornadas.remove(jornadaAEliminar.get());
-        }
-    }
-
-    public void modificarJornadaPorCod(Jornada jornada) {
-        int codJornada = jornada.getCodJornada();
-        LocalDate fechaJornada = jornada.getFechaJornada();
-
-        Optional<Jornada> jornadaAModificar = listaJornadas.stream()
-                .filter(j -> j.getCodJornada() == codJornada)
-                .findFirst();
-
-        if (jornadaAModificar.isPresent()) {
-            jornadaAModificar.get().setFechaJornada(fechaJornada);
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontró la jornada con código: " +
-                    codJornada, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    public Jornada buscarJornadaPorCod(int codJornada) {
-        
-        for (Jornada j : listaJornadas) {
-            if (j.getCodJornada() == codJornada) {
-                return j;
-            }
-        }
-        return null;
-    }
-
-    public List<Jornada> getJornadasPorEquipo(Equipo equipo) {
-        return listaJornadas.stream()
-                .filter(jornada -> jornada.contieneEquipo(equipo))
-                .collect(Collectors.toList());
+        rs.next();
+        return crearJornada(rs);
     }
 
     public void mostrarJornadas() {
@@ -132,22 +120,22 @@ public class JornadaDAO {
         return codjornada;
     }
 
-    public StringBuilder mostrarJornadasPorEquipo(Equipo equipo) {
-        StringBuilder mensaje = new StringBuilder();
-
-        if (listaJornadas.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El equipo " + equipo.getNombreEquipo() +
-                            " no tiene jornadas registradas.", "Información", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            mensaje = new StringBuilder(equipo.getNombreEquipo() + " participa en las siguientes jornadas" + ":\n");
-            for (Jornada jornada : listaJornadas) {
-                mensaje.append("- Jornada: ").append(jornada.getCodJornada()).append("\n");
-            }
-        }
-        return mensaje;
+    private Jornada crearJornada(ResultSet rs) throws SQLException {
+        return new Jornada(
+                rs.getInt("codJornada"),
+                parsearFecha(rs.getDate("fecha"))
+        );
     }
 
-    private Time parsearHora(LocalTime hora) {
-        return Time.valueOf(hora);
+    private Timestamp parsearHoraSQL(LocalTime hora) {
+        return Timestamp.valueOf(hora.toString());
+    }
+
+    private Date parsearFechaSQL(LocalDate fecha) {
+        return Date.valueOf(fecha);
+    }
+
+    private LocalDate parsearFecha(Date fecha) {
+        return fecha.toLocalDate();
     }
 }

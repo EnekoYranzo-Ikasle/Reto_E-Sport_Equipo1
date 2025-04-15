@@ -5,7 +5,6 @@ DROP TRIGGER sueldoMinimo;
 DROP TRIGGER minJugadoresPorEquipo;
 DROP TRIGGER fechaCompeticiones;
 DROP TRIGGER horaEnfrentamientosEquipos;
-DROP TRIGGER fechaJornada;
 DROP TRIGGER noModificarJugadores;
 DROP TRIGGER noModificarEquipos;
 
@@ -171,37 +170,7 @@ EXCEPTION
             || SQLERRM);
 END horaEnfrentamientosEquipos;
 
---------------------------------------------------
-/*
-TRIGGER PARA QUE AL INSERTAR O ACTUALIZAR LA FECHA DE JORNADAS, SEA ENTRE LA 
-FECHAINICIO Y LA FECHA FIN DE LA COMPETICION
-*/
-CREATE OR REPLACE TRIGGER fechaJornada
-BEFORE INSERT OR UPDATE OF fecha ON jornadas
-FOR EACH ROW
-DECLARE
-    v_fechaInicio competiciones.fechaInicio%TYPE;
-    v_fechaFin competiciones.fechaFin%TYPE;
-    e_fecha EXCEPTION;
-BEGIN
-    SELECT fechaInicio,fechaFin INTO v_fechaInicio,v_fechaFin
-    FROM competiciones
-    WHERE codCompeticion = :NEW.competicion;
-    
-    IF :NEW.fecha < v_fechaInicio OR :NEW.fecha > v_fechaFin THEN
-    RAISE e_fecha;
-    END IF;
-    
-EXCEPTION
-    WHEN e_fecha THEN
-    RAISE_APPLICATION_ERROR(-20001,'LA FECHA TIENE QUE ESTAR ENTRE LAS FECHAS '||
-                            TO_CHAR(v_fechaInicio)||' - '||TO_CHAR(v_fechaFin));
-    WHEN OTHERS THEN
-    RAISE_APPLICATION_ERROR(-20002,'ERROR ORACLE: '||SQLCODE||'-'||TO_CHAR(SQLERRM));
-END fechaJornada;
-
-
-/* Trigger para controlar que una vez generado el calendario de la competición, no se pueden
+/* Trigger para controlar que una vez generado el calendario de la competiciï¿½n, no se pueden
 modificar, ni los equipos, ni los jugadores de cada equipo*/
 CREATE OR REPLACE TRIGGER noModificarEquipos
 BEFORE INSERT OR UPDATE ON equipos

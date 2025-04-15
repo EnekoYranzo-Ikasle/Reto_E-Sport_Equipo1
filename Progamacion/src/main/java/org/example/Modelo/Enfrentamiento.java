@@ -8,15 +8,17 @@ public class Enfrentamiento {
     private String resultado;
     private Equipo equipo1;
     private Equipo equipo2;
+    private Jornada jornada;
 
     public Enfrentamiento() {
     }
 
-    public Enfrentamiento(int codEnfrentamiento, Equipo equipo1, Equipo equipo2, LocalTime hora) {
+    public Enfrentamiento(int codEnfrentamiento, Equipo equipo1, Equipo equipo2, LocalTime hora, Jornada jornada) {
         this.codEnfrentamiento = codEnfrentamiento;
         this.equipo1 = equipo1;
         this.equipo2 = equipo2;
         this.hora = hora;
+        this.jornada = jornada;
     }
 
     public Enfrentamiento(Equipo equipo1, String resultado, Equipo equipo2) {
@@ -67,6 +69,14 @@ public class Enfrentamiento {
 
     public boolean participaEquipo(Equipo equipo) {
         return equipo1.equals(equipo) || equipo2.equals(equipo);
+    }
+
+    public Jornada getJornada() {
+        return jornada;
+    }
+
+    public void setJornada(Jornada jornada) {
+        this.jornada = jornada;
     }
 
     public String toString(){
