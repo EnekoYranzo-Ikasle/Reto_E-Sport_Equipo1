@@ -137,4 +137,14 @@ public class VistaController {
     public boolean existeEquipo(String nombreEquipo) throws SQLException {
         return modeloController.existeEquipo(nombreEquipo);
     }
+    public void actualizarEquipo(String NombrEquipo, LocalDate fechaFundacion) throws SQLException {
+        modeloController.actualizarEquipo(NombrEquipo, fechaFundacion);
+    }
+    public void agregarJugador(String nombreEquip, int codJug)throws SQLException{
+        modeloController.agregarJugador(nombreEquip,codJug);
+
+    }
+    public boolean EquipoDeJugador(int codJugador) throws SQLException {
+        return modeloController.EquipoDeJugador(codJugador);
+    }
 }
