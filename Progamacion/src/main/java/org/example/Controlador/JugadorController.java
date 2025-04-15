@@ -46,6 +46,9 @@ public class JugadorController {
     public List<Jugador> getJugadores() throws SQLException {
         return jugadorDAO.getListaJugadores();
     }
+    public boolean EquipoDeJugador(int codJugador) throws SQLException {
+        return jugadorDAO.EquipoDeJugador(codJugador);
+    }
 
     // Validaciones:
     public LocalDate formatearFecha(String fecha) {

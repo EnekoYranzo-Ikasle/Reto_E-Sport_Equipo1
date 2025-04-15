@@ -56,6 +56,12 @@ public class EquipoDAO {
         }
         ps.executeUpdate();
     }
+    public void modificarequipo(String nombreEquipo, LocalDate fechaFundacion) throws SQLException {
+        ps=conn.prepareStatement("update equipos set fechaFundacion = ? where nombre = ?");
+        ps.setDate(1, parsearFecha(fechaFundacion));
+        ps.setString(2, nombreEquipo);
+        ps.executeUpdate();
+    }
 
     public Equipo buscarEquipoPorCod(int idEquipo) throws SQLException {
         Equipo equipo = new Equipo();
@@ -96,10 +102,10 @@ public class EquipoDAO {
         ps.setInt(1, codJug);
         ps.executeUpdate();
     }
-    public void agregarJugador(Jugador jugador, int codEquip) throws SQLException {
+    public void agregarJugador(int jugador, int CodEquip) throws SQLException {
         ps = conn.prepareStatement("UPDATE jugadores SET codEquipo = ? WHERE codJugador = ?");
-        ps.setInt(1, codEquip);
-        ps.setInt(2, jugador.getCodJugador());
+        ps.setInt(1, CodEquip);
+        ps.setInt(2, jugador);
         ps.executeUpdate();
 
         rs = ps.executeQuery();

@@ -74,6 +74,15 @@ public class JugadorDAO {
             return true;
         }else return false;
     }
+    public boolean EquipoDeJugador(int codJug)throws SQLException {
+        ps = conn.prepareStatement("select codEquipo from jugadores where codJugador =?");
+        ps.setInt(1, codJug);
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            return true;
+        }else return false;
+
+    }
 
     // Verificaciones:
     private Jugador crearJugador(ResultSet rs) throws SQLException {
