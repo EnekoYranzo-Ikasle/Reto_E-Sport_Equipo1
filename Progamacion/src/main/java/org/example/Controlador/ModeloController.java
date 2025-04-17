@@ -55,7 +55,7 @@ public class ModeloController {
     }
 
     public List<Integer> mostrarCodJornada() throws SQLException {
-        return jornadaController.obtenercodjornada();
+        return jornadaController.obtenerCodJornada();
     }
 
     public List<Integer> getGanador(int codigoJorn) throws SQLException {

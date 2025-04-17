@@ -12,19 +12,9 @@ public class EnfrentamientoDAO {
     private final Connection conn;
     private static PreparedStatement ps;
     private static ResultSet rs;
-    private final List<Enfrentamiento> ListaEnfrentamientos;
 
     public EnfrentamientoDAO(Connection conn) {
         this.conn = conn;
-        ListaEnfrentamientos = new ArrayList<Enfrentamiento>();
-    }
-
-    public void guardarEnfrentamientos(Enfrentamiento enfretamiento) {
-        ListaEnfrentamientos.add(enfretamiento);
-    }
-
-    public List<Enfrentamiento> getListaEnfrentamientos() {
-        return ListaEnfrentamientos;
     }
 
     public void agregarResultados(String seleccion, List<Enfrentamiento> lista, String resultado){

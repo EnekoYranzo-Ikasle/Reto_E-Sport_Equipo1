@@ -16,6 +16,7 @@ import java.util.List;
 public class VistaController {
     private ModeloController modeloController;
     private final Login login;
+    private boolean calendarioGenerado;
 
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
@@ -146,5 +147,13 @@ public class VistaController {
     }
     public boolean EquipoDeJugador(int codJugador) throws SQLException {
         return modeloController.EquipoDeJugador(codJugador);
+    }
+
+    public void bloquearGenerarCalendario(){
+        calendarioGenerado = true;
+    }
+
+    public boolean isCalendarioGenerado(){
+        return calendarioGenerado;
     }
 }

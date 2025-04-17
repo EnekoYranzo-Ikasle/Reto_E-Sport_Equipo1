@@ -34,6 +34,16 @@ public class VInicioAdmin extends JFrame {
         setSize(700, 400);
         setLocationRelativeTo(null);
 
+        bIntroducirResultados.setEnabled(false); // Hasta que no se cierre la etapa no se habilita.
+
+//        Cuando cambias de ventana para que se mantenga desabilitado los botones.
+        if (vistaController.isCalendarioGenerado()) {
+            bGenerarCalendario.setEnabled(false);
+            
+
+        }else
+            bGenerarCalendario.setEnabled(true);
+
         bLogOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,6 +69,9 @@ public class VInicioAdmin extends JFrame {
                     int numJornadas = Integer.parseInt(JOptionPane.showInputDialog(pPrincipal, "¿Cuantas jornadas quieres generar?"));
 
                     vistaController.generarCalendario(numJornadas);
+
+                    vistaController.bloquearGenerarCalendario();
+                    bGenerarCalendario.setEnabled(false);
 
                 }catch (Exception ex) {
                     JOptionPane.showMessageDialog(pPrincipal, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

@@ -18,11 +18,6 @@ public class Jornada {
         this.listaEnfrentamientos = new ArrayList<>();
     }
 
-//    public Jornada(int codJornada, LocalDate fechaJornada) {
-//        this.codJornada = codJornada;
-//        this.fechaJornada = fechaJornada;
-//    }
-
     public void addEnfrentamiento(Enfrentamiento enfrentamiento) {
         listaEnfrentamientos.add(enfrentamiento);
     }
