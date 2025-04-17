@@ -26,9 +26,7 @@ public class JornadaDAO {
         if (equipos.size() % 2 == 0) {
             for (int i = 1; i <= numJornadas; i++) {
                 LocalDate fechaJornada = LocalDate.now().plusDays(i); // Generara jornadas a partir del dia siguiente que se genere la jornada
-                nuevaJornada(fechaJornada);
-
-                int codJornada = getJornadaPorFecha(fechaJornada).getCodJornada();
+                int codJornada = nuevaJornada(fechaJornada);
 
                 Jornada jornada = new Jornada(codJornada, fechaJornada);
                 Set<String> enfrentados = new HashSet<>();
@@ -46,7 +44,7 @@ public class JornadaDAO {
                         Enfrentamiento enf = new Enfrentamiento( i + jornada.getListaEnfrentamientos().size(), e1, e2, horaInicial, jornada);
 
                         jornada.addEnfrentamiento(enf);
-                        enfrentamientoDAO.guardarEnfrentamientos(enf);
+//                        enfrentamientoDAO.guardarEnfrentamientos(enf);
                         guardarEnfrentamiento(enf);
 
                         enfrentados.add(e1.getNombreEquipo() + e2.getNombreEquipo());
@@ -56,35 +54,37 @@ public class JornadaDAO {
                     }
                 }
                 listaJornadas.add(jornada);
-                guardarJornada(jornada);
             }
         } else {
             throw new IllegalStateException("No se puede generar la jornada si no hay equipos pares");
         }
     }
 
-    private void nuevaJornada(LocalDate fechaJornada) throws Exception {
-        ps = conn.prepareStatement("INSERT INTO jornadas (fecha) VALUES (?)");
-        ps.setDate(1, parsearFechaSQL(fechaJornada));
-        ps.executeUpdate();
-    }
+    private int nuevaJornada(LocalDate fechaJornada) throws Exception {
+        int generatedId = -1;
 
-    private void guardarJornada(Jornada jornada) throws SQLException {
-        ps = conn.prepareStatement("INSERT INTO jornadas (codJornada, fechaJornada) VALUES (?, ?)");
-        ps.setInt(1, jornada.getCodJornada());
-        ps.setDate(2, java.sql.Date.valueOf(jornada.getFechaJornada()));
-        ps.executeUpdate();
+        // En Oracle, se necesita una sintaxis especial para RETURNING
+        String sql = "BEGIN " +
+                "INSERT INTO jornadas (fecha) VALUES (?) " +
+                "RETURNING codJornada INTO ?; " +
+                "END;";
+
+        CallableStatement cs = conn.prepareCall(sql);
+        cs.setDate(1, parsearFechaSQL(fechaJornada));
+        cs.registerOutParameter(2, Types.INTEGER);
+
+        cs.execute();
+
+        // Recuperar el ID generado
+        generatedId = cs.getInt(2);
+
+        cs.close();
+        return generatedId;
     }
 
     private void guardarEnfrentamiento(Enfrentamiento enfrentamiento) throws SQLException {
-        ps = conn.prepareStatement("INSERT INTO enfrentamientos (hora, equipo1, equipo2, jornada) VALUES ?, ?, ?, ?)");
-
-        // Creamo un LocalDateTime ficticio solo para poder parsear la hora a Timestamp.
-        LocalDate fechaFicticia = LocalDate.of(1970, 1, 1);
-        LocalDateTime fechaHora = LocalDateTime.of(fechaFicticia, enfrentamiento.getHora());
-        Timestamp timestamp = Timestamp.valueOf(fechaHora);
-
-        ps.setTimestamp(1, timestamp);
+        ps = conn.prepareStatement("INSERT INTO enfrentamientos (hora, equipo1, equipo2, jornada) VALUES (?, ?, ?, ?)");
+        ps.setTimestamp(1, parsearHoraSQL(enfrentamiento.getHora()));
         ps.setInt(2, enfrentamiento.getEquipo1().getCodEquipo());
         ps.setInt(3, enfrentamiento.getEquipo2().getCodEquipo());
         ps.setInt(4, enfrentamiento.getJornada().getCodJornada());
@@ -128,7 +128,11 @@ public class JornadaDAO {
     }
 
     private Timestamp parsearHoraSQL(LocalTime hora) {
-        return Timestamp.valueOf(hora.toString());
+        // Creamos un LocalDateTime ficticio solo para poder parsear la hora a Timestamp.
+        LocalDate fechaFicticia = LocalDate.of(1970, 1, 1);
+        LocalDateTime fechaHora = LocalDateTime.of(fechaFicticia, hora);
+
+        return Timestamp.valueOf(fechaHora);
     }
 
     private Date parsearFechaSQL(LocalDate fecha) {

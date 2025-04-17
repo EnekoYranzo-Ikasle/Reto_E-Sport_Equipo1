@@ -35,17 +35,6 @@ public class CompeticionDAO {
         ps.executeUpdate();
     }
 
-    public void generarCalendario() throws Exception {
-        try {
-            CallableStatement stmt = conn.prepareCall("{call generar_calendario}");
-            stmt.execute();
-            System.out.println("Calendario generado correctamente.");
-
-        } catch (SQLException ex) {
-            System.out.println("Error al generar el calendario: " + ex.getMessage());
-        }
-    }
-
     private Date parsearFecha(LocalDate fecha1){
         return Date.valueOf(fecha1);
     }
