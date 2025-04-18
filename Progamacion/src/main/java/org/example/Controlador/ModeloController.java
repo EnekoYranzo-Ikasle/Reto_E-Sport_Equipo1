@@ -1,5 +1,6 @@
 package org.example.Controlador;
 
+import org.example.Modelo.Competicion;
 import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
 import org.example.Modelo.Persona;
@@ -32,14 +33,17 @@ public class ModeloController {
         this.vistaController = vistaController;
     }
 
+//    Sign Up
     public void crearCuenta(String email, String pass) throws SQLException {
         personaController.crearCuenta(email, pass);
     }
 
+//    Login
     public Persona getPersona(String email) throws SQLException {
         return personaController.getPersona(email);
     }
 
+//    Extra
     public void generarCalendario(int numJornadas) throws Exception {
         List<Equipo> listaEquipos = getEquipos();
 
@@ -70,6 +74,7 @@ public class ModeloController {
         return equipoController.getEquipoPorNombre(nombre);
     }
 
+//    Jugadores
     public void altaJugador(Jugador jugador) throws SQLException {
         jugadorController.altaJugador(jugador);
     }
@@ -93,6 +98,7 @@ public class ModeloController {
         return jugadorController.getJugadores();
     }
 
+//    Equipo
     public void nuevoEquipo(Equipo equipo) throws SQLException {
         equipoController.nuevoEquipo(equipo);
     }
@@ -104,16 +110,25 @@ public class ModeloController {
     public List<Equipo> getEquipos() throws SQLException{
         return equipoController.getEquipos();
     }
+
     public boolean existeEquipo(String nombreEquipo) throws SQLException {
         return equipoController.existeEquipo(nombreEquipo);
     }
+
     public void actualizarEquipo(String NombrEquipo, LocalDate fechaFundacion) throws SQLException {
         equipoController.actualizarEquipo(NombrEquipo, fechaFundacion);
     }
+
     public void agregarJugador(String nombreEquipo, int codJug) throws SQLException {
         equipoController.agregarJugador(nombreEquipo, codJug);
     }
-    public boolean EquipoDeJugador(int codJugador) throws SQLException {
+
+    public boolean equipoDeJugador(int codJugador) throws SQLException {
         return jugadorController.EquipoDeJugador(codJugador);
+    }
+
+//    Competiciones:
+    public void nuevaCompeticion(Competicion competicion) throws SQLException {
+        competicionController.nuevaCompeticion(competicion);
     }
 }

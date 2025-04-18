@@ -10,4 +10,8 @@ public class CompeticionController {
     public CompeticionController(CompeticionDAO competicionDAO) {
         this.competicionDAO = competicionDAO;
     }
+
+    public void nuevaCompeticion(Competicion competicion) throws SQLException {
+        competicionDAO.nuevaCompeticion(competicion);
+    }
 }

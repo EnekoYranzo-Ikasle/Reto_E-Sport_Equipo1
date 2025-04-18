@@ -34,15 +34,14 @@ public class VInicioAdmin extends JFrame {
         setSize(700, 400);
         setLocationRelativeTo(null);
 
-        bIntroducirResultados.setEnabled(false); // Hasta que no se cierre la etapa no se habilita.
-
-//        Cuando cambias de ventana para que se mantenga desabilitado los botones.
-        if (vistaController.isCalendarioGenerado()) {
-            bGenerarCalendario.setEnabled(false);
-            
-
-        }else
+//        Cuando cambias de ventana para que se mantenga deshabilitado los botones.
+        if (vistaController.isCompeticionCreada()) {
             bGenerarCalendario.setEnabled(true);
+
+        }else if (vistaController.isCalendarioGenerado()) {
+            bGenerarCalendario.setEnabled(false);
+            vistaController.bloquearCrud();
+        }
 
         bLogOut.addActionListener(new ActionListener() {
             @Override
@@ -72,6 +71,7 @@ public class VInicioAdmin extends JFrame {
 
                     vistaController.bloquearGenerarCalendario();
                     bGenerarCalendario.setEnabled(false);
+                    vistaController.bloquearCrud();
 
                 }catch (Exception ex) {
                     JOptionPane.showMessageDialog(pPrincipal, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

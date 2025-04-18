@@ -119,7 +119,7 @@ public class DEquipo extends JDialog {
                     boolean errorEqip=vistaController.existeEquipo(CodigoEquip3.getText());
                     boolean errorJug= vistaController.jugadorExiste(Integer.parseInt(CodigoJuegador1.getText()));
 
-                    if (errorEqip && errorJug && !vistaController.EquipoDeJugador(Integer.parseInt(CodigoJuegador1.getText()))) {
+                    if (errorEqip && errorJug && !vistaController.equipoDeJugador(Integer.parseInt(CodigoJuegador1.getText()))) {
 
                         vistaController.agregarJugador(CodigoEquip3.getText(),Integer.parseInt(CodigoJuegador1.getText()));
                     }else if (!errorEqip) {

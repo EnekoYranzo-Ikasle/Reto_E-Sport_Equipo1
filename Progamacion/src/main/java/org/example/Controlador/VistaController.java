@@ -1,9 +1,6 @@
 package org.example.Controlador;
 
-import org.example.Modelo.Equipo;
-import org.example.Modelo.Jugador;
-import org.example.Modelo.Persona;
-import org.example.Modelo.Roles;
+import org.example.Modelo.*;
 import org.example.Vista.Login;
 import org.example.Vista.VInicioAdmin;
 import org.example.Vista.VInicioUser;
@@ -16,7 +13,10 @@ import java.util.List;
 public class VistaController {
     private ModeloController modeloController;
     private final Login login;
+
     private boolean calendarioGenerado;
+    private boolean crudBloqueado;
+    private boolean competicionCreada;
 
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
@@ -135,25 +135,50 @@ public class VistaController {
     public List<Equipo> getEquipos() throws SQLException{
         return modeloController.getEquipos();
     }
+
     public boolean existeEquipo(String nombreEquipo) throws SQLException {
         return modeloController.existeEquipo(nombreEquipo);
     }
+
     public void actualizarEquipo(String NombrEquipo, LocalDate fechaFundacion) throws SQLException {
         modeloController.actualizarEquipo(NombrEquipo, fechaFundacion);
     }
+
     public void agregarJugador(String nombreEquip, int codJug)throws SQLException{
         modeloController.agregarJugador(nombreEquip,codJug);
-
-    }
-    public boolean EquipoDeJugador(int codJugador) throws SQLException {
-        return modeloController.EquipoDeJugador(codJugador);
     }
 
+    public boolean equipoDeJugador(int codJugador) throws SQLException {
+        return modeloController.equipoDeJugador(codJugador);
+    }
+
+    public void nuevaCompeticion(String nombre, LocalDate fechaInicio, LocalDate fechaFin) throws SQLException {
+        Competicion competicion = new Competicion(nombre, fechaInicio, fechaFin);
+        modeloController.nuevaCompeticion(competicion);
+    }
+
+//    Funciones para bloquear botones
     public void bloquearGenerarCalendario(){
         calendarioGenerado = true;
     }
 
     public boolean isCalendarioGenerado(){
         return calendarioGenerado;
+    }
+
+    public void bloquearCrud(){
+        crudBloqueado = true;
+    }
+
+    public  boolean isCrudBloqueado(){
+        return crudBloqueado;
+    }
+
+    public void competicionCreada(){
+        competicionCreada = true;
+    }
+
+    public boolean isCompeticionCreada(){
+        return competicionCreada;
     }
 }

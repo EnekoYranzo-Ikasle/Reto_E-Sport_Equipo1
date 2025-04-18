@@ -31,6 +31,11 @@ public class VAdministrarAdmin extends JFrame {
         setSize(700, 300);
         setLocationRelativeTo(null);
 
+        if (vistaController.isCrudBloqueado()) {
+            bJugador.setEnabled(false);
+            bEquipos.setEnabled(false);
+        }
+
         bVolver.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -73,7 +78,8 @@ public class VAdministrarAdmin extends JFrame {
         bCompeticion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                DCompeticion dCompeticion = new DCompeticion(vistaController);
+                dCompeticion.setVisible(true);
             }
         });
     }

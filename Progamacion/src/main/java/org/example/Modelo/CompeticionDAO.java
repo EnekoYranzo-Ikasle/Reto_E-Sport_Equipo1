@@ -13,13 +13,14 @@ public class CompeticionDAO {
         this.conn = conn;
     }
 
-    public void agregarCompeticion(Competicion c) throws SQLException {
-        ps = conn.prepareStatement("INSERT INTO competiciones VALUES(?,?,?)");
-        ps.setString(1, c.getNombre());
-        ps.setDate(2, parsearFecha(c.getFechaInicio()));
-        ps.setDate(3, parsearFecha(c.getFecha_fin()));
+    public void nuevaCompeticion(Competicion competicion) throws SQLException {
+        ps = conn.prepareStatement("INSERT INTO competiciones (nombre, fechaInicio, fechaFin) VALUES(?,?,?)");
+        ps.setString(1, competicion.getNombre());
+        ps.setDate(2, parsearFecha(competicion.getFechaInicio()));
+        ps.setDate(3, parsearFecha(competicion.getFecha_fin()));
         ps.executeUpdate();
     }
+
     public void modificarCompeticion(Competicion c) throws SQLException {
         ps = conn.prepareStatement("UPDATE competiciones SET nombre = ?, fechaInicio = ?, fechaFin = ? WHERE codCompeticion = ?");
         ps.setString(1,c.getNombre());
@@ -27,6 +28,7 @@ public class CompeticionDAO {
         ps.setDate(3,parsearFecha(c.getFecha_fin()));
         ps.executeUpdate();
     }
+
     public void eliminarCompeticion(Competicion c) throws SQLException {
         ps = conn.prepareStatement("DELETE FROM competiciones WHERE codCompeticion = ?");
         ps.setString(1, c.getNombre());

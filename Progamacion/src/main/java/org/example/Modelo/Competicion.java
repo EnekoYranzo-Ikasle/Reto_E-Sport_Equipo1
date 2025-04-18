@@ -9,24 +9,15 @@ public class Competicion {
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private String estado;
-    private ArrayList<Jornada> listaJornadas;
 
-
-    public Competicion(int codCompe, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String estado) {
-        this.codCompe = codCompe;
+    public Competicion(String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.estado = estado;
-        this.listaJornadas = new ArrayList<>();
     }
 
     public Competicion() {
 
-    }
-
-    public void agregarJornada(Jornada jornada) {
-        listaJornadas.add(jornada);
     }
 
 //    Getter and Setter
@@ -68,13 +59,5 @@ public class Competicion {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public ArrayList<Jornada> getListaJornadas() {
-        return listaJornadas;
-    }
-
-    public void setListaJornadas(ArrayList<Jornada> listaJornadas) {
-        this.listaJornadas = listaJornadas;
     }
 }
