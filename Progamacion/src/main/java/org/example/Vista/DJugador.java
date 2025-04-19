@@ -107,7 +107,7 @@ public class DJugador extends JDialog {
             pBorrar.add(crearPanelBotones(), BorderLayout.EAST);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(pPrincipal, e.getMessage());
+            JOptionPane.showMessageDialog(pPrincipal, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -241,7 +241,7 @@ public class DJugador extends JDialog {
     }
 
     /**
-     * Valida el nombre del equipo
+     * Válida el nombre del equipo
      */
     private void validarNombreEquipo() {
         try {
@@ -384,7 +384,7 @@ public class DJugador extends JDialog {
 
             if (confirmacion == JOptionPane.YES_OPTION) {
                 try {
-                    vistaController.EliminarJugador(listaJugadores.get(filaSeleccionada).getCodJugador());
+                    vistaController.eliminarJugador(listaJugadores.get(filaSeleccionada).getCodJugador());
                     listaJugadores.remove(filaSeleccionada);
                     actualizarTabla();
 

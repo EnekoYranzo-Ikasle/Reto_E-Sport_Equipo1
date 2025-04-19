@@ -11,7 +11,6 @@ public class VAdministrarAdmin extends JFrame {
     private Login login;
 
     private JPanel pPrincipal;
-    private JButton buttonOK;
     private JPanel pHeader;
     private JButton bVolver;
     private JPanel pBody;
@@ -71,7 +70,8 @@ public class VAdministrarAdmin extends JFrame {
         bJornada.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                DJornada dJornada = new DJornada(vistaController);
+                dJornada.setVisible(true);
             }
         });
 

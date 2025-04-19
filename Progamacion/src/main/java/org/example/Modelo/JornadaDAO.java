@@ -1,6 +1,5 @@
 package org.example.Modelo;
 
-import javax.swing.*;
 import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -91,15 +90,6 @@ public class JornadaDAO {
         ps.executeUpdate();
     }
 
-    public void mostrarJornadas() {
-        StringBuilder mensajeFinal = new StringBuilder("JORNADAS\n");
-        for (Jornada j : listaJornadas) {
-            mensajeFinal.append(j.mostrarJornada()).append("\n");
-        }
-
-        JOptionPane.showMessageDialog(null, mensajeFinal.toString(), "Jornadas", JOptionPane.INFORMATION_MESSAGE);
-    }
-
     public List<Integer> obtenerCodJornada() throws SQLException {
         ps = conn.prepareStatement("select codJornada from jornadas");
         rs = ps.executeQuery();
@@ -112,6 +102,28 @@ public class JornadaDAO {
         return codJornada;
     }
 
+    public List<Jornada> getJornadas() throws SQLException {
+        ps = conn.prepareStatement("SELECT * FROM jornadas");
+        rs = ps.executeQuery();
+
+        List<Jornada> listaJornadas = new ArrayList<>();
+
+        while(rs.next()) {
+            listaJornadas.add(new Jornada(
+                    rs.getInt("codJornada"),
+                    rs.getDate("fechaJornada").toLocalDate()
+            ));
+        }
+        return listaJornadas;
+    }
+
+    public void eliminarJornada(int codJornada) throws SQLException {
+        ps = conn.prepareStatement("DELETE FROM jornadas WHERE codJornada = ?");
+        ps.setInt(1, codJornada);
+        ps.executeUpdate();
+    }
+
+//    Funciones privadas:
     private Timestamp parsearHoraSQL(LocalTime hora) {
         LocalDate fechaFicticia = LocalDate.of(2000, 1, 1);
         LocalDateTime fechaHora = LocalDateTime.of(fechaFicticia, hora);

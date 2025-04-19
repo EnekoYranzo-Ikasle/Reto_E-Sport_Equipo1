@@ -1,9 +1,6 @@
 package org.example.Controlador;
 
-import org.example.Modelo.Competicion;
-import org.example.Modelo.Equipo;
-import org.example.Modelo.Jugador;
-import org.example.Modelo.Persona;
+import org.example.Modelo.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -130,5 +127,14 @@ public class ModeloController {
 //    Competiciones:
     public void nuevaCompeticion(Competicion competicion) throws SQLException {
         competicionController.nuevaCompeticion(competicion);
+    }
+
+//    Jornadas:
+    public List<Jornada> getJornadas() throws SQLException {
+        return jornadaController.getJornadas();
+    }
+
+    public void eliminarJornada(int codJornada) throws SQLException {
+        jornadaController.eliminarJornada(codJornada);
     }
 }

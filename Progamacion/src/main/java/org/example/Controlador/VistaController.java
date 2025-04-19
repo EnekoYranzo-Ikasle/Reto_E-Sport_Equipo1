@@ -102,7 +102,7 @@ public class VistaController {
         return modeloController.getGanadorEquipo(codEquip);
     }
 
-    public void EliminarJugador(int CodJugador) throws SQLException {
+    public void eliminarJugador(int CodJugador) throws SQLException {
         modeloController.eliminarJugador(CodJugador);
     }
 
@@ -155,6 +155,14 @@ public class VistaController {
     public void nuevaCompeticion(String nombre, LocalDate fechaInicio, LocalDate fechaFin) throws SQLException {
         Competicion competicion = new Competicion(nombre, fechaInicio, fechaFin);
         modeloController.nuevaCompeticion(competicion);
+    }
+
+    public List<Jornada> getJornadas() throws SQLException{
+        return modeloController.getJornadas();
+    }
+
+    public void eliminarJornada(int codJornada) throws SQLException {
+        modeloController.eliminarJornada(codJornada);
     }
 
 //    Funciones para bloquear botones

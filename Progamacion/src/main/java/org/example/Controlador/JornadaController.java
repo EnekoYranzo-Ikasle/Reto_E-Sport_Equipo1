@@ -16,15 +16,19 @@ public class JornadaController {
         this.enfrentamientoDAO = enfrentamientoDAO;
     }
 
-    public void mostrarJornadas() {
-        jornadaDAO.mostrarJornadas();
-    }
-
     public List<Integer> obtenerCodJornada() throws SQLException {
         return jornadaDAO.obtenerCodJornada();
     }
 
     public void generarCalendario(int numJornadas, List<Equipo> listaEquipos) throws Exception {
         jornadaDAO.generarJornadas(numJornadas, listaEquipos);
+    }
+
+    public List<Jornada> getJornadas() throws SQLException {
+        return jornadaDAO.getJornadas();
+    }
+
+    public void eliminarJornada(int codJornada) throws SQLException {
+        jornadaDAO.eliminarJornada(codJornada);
     }
 }
