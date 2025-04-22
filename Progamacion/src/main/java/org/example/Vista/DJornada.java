@@ -11,21 +11,24 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class DJornada extends JDialog {
-    private VistaController vistaController;
+    private final VistaController vistaController;
     private List<Jornada> listaJornadas;
 
     private JTable tablaJornada;
     private DefaultTableModel modeloTabla;
     private JButton btnEliminar;
 
-    private JPanel contentPane;
+    private JPanel pPrincipal;
     private JPanel pBorrar;
 
     public DJornada(VistaController vistaController) {
         this.vistaController = vistaController;
 
-        setContentPane(contentPane);
+        setContentPane(pPrincipal);
         setModal(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setSize(600, 450);
+        setLocationRelativeTo(null);
 
         try {
             listaJornadas = vistaController.getJornadas();
@@ -38,7 +41,7 @@ public class DJornada extends JDialog {
             pBorrar.add(crearPanelBotones(), BorderLayout.EAST);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(contentPane, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(pPrincipal, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -74,7 +77,7 @@ public class DJornada extends JDialog {
     }
 
     /**
-     * Configura la tabla de jugadores
+     * Configura la tabla de las jornadas
      */
     private void configurarTabla() {
         modeloTabla = new DefaultTableModel() {
@@ -110,7 +113,7 @@ public class DJornada extends JDialog {
     }
 
     /**
-     * Actualiza la lista de jugadores desde el controlador
+     * Actualiza la lista de las jornadas desde el controlador
      */
     private void actualizarListaJornadas() {
         try {
@@ -143,9 +146,11 @@ public class DJornada extends JDialog {
 
                     JOptionPane.showMessageDialog(
                             this,
-                            "Jornada eliminado con éxito",
+                            "Jornada eliminada con éxito",
                             "Eliminación Completada",
                             JOptionPane.INFORMATION_MESSAGE);
+
+                    actualizarListaJornadas();
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, ex.getMessage());

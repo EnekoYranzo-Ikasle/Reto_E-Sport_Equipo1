@@ -36,7 +36,7 @@ public class ModeloController {
     }
 
 //    Login
-    public Persona getPersona(String email) throws SQLException {
+    public Persona getPersona(String email) throws Exception {
         return personaController.getPersona(email);
     }
 

@@ -1,15 +1,11 @@
 package org.example.Controlador;
 
-import org.example.Excepcion.DatoNoValido;
 import org.example.Modelo.*;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class JugadorController {
     private final JugadorDAO jugadorDAO;
@@ -37,7 +33,7 @@ public class JugadorController {
     }
 
     public void editarJugador(Jugador jugador, int codigo) throws SQLException {
-        jugadorDAO.EditarJugador(codigo, jugador);
+        jugadorDAO.editarJugador(codigo, jugador);
     }
     public boolean jugadorExiste(int codJugador) throws SQLException {
         return jugadorDAO.jugadorExiste(codJugador);
@@ -47,7 +43,7 @@ public class JugadorController {
         return jugadorDAO.getListaJugadores();
     }
     public boolean EquipoDeJugador(int codJugador) throws SQLException {
-        return jugadorDAO.EquipoDeJugador(codJugador);
+        return jugadorDAO.equipoDeJugador(codJugador);
     }
 
     // Validaciones:

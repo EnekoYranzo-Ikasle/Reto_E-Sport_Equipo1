@@ -41,7 +41,6 @@ public class JornadaDAO {
                         Enfrentamiento enf = new Enfrentamiento( i + jornada.getListaEnfrentamientos().size(), e1, e2, horaInicial, jornada);
 
                         jornada.addEnfrentamiento(enf);
-//                        enfrentamientoDAO.guardarEnfrentamientos(enf);
                         guardarEnfrentamiento(enf);
 
                         enfrentados.add(e1.getNombreEquipo() + e2.getNombreEquipo());
@@ -58,30 +57,34 @@ public class JornadaDAO {
     }
 
     /**
-     * Guardar jornada y obtener el cod autogenerado por oracle.
+     * Guardar jornada y obtener el codJornada autogenerado de la secuencia.
      */
     private int nuevaJornada(LocalDate fechaJornada) throws Exception {
-        int generatedId;
+        int codGenerado;
 
-        String sql = "BEGIN " +
-                "INSERT INTO jornadas (fecha) VALUES (?) " +
-                "RETURNING codJornada INTO ?; " +
-                "END;";
+        ps = conn.prepareStatement("SELECT sec_codJornada.NEXTVAL FROM DUAL");
+        rs = ps.executeQuery();
 
-        CallableStatement cs = conn.prepareCall(sql);
-        cs.setDate(1, parsearFechaSQL(fechaJornada));
-        cs.registerOutParameter(2, Types.INTEGER);
+        if (rs.next()) {
+            codGenerado = rs.getInt(1);
+        } else {
+            throw new SQLException("No se pudo obtener el siguiente valor de la secuencia sec_codJornada");
+        }
+        rs.close();
 
-        cs.execute();
+        // Insertar la jornada usando el valor de la secuencia
+        ps = conn.prepareStatement("INSERT INTO jornadas (codJornada, fecha) VALUES (?, ?)");
+        ps.setInt(1, codGenerado);
+        ps.setDate(2, parsearFechaSQL(fechaJornada));
+        ps.executeUpdate();
 
-        generatedId = cs.getInt(2);
-
-        cs.close();
-        return generatedId;
+        return codGenerado;
     }
 
+
     private void guardarEnfrentamiento(Enfrentamiento enfrentamiento) throws SQLException {
-        ps = conn.prepareStatement("INSERT INTO enfrentamientos (hora, equipo1, equipo2, jornada) VALUES (?, ?, ?, ?)");
+        ps = conn.prepareStatement("INSERT INTO enfrentamientos (CodEnfrentamiento, hora, equipo1, equipo2, jornada)" +
+                " VALUES (sec_codEnfrentamientos.NEXTVAL, ?, ?, ?, ?)");
         ps.setTimestamp(1, parsearHoraSQL(enfrentamiento.getHora()));
         ps.setInt(2, enfrentamiento.getEquipo1().getCodEquipo());
         ps.setInt(3, enfrentamiento.getEquipo2().getCodEquipo());
@@ -111,7 +114,7 @@ public class JornadaDAO {
         while(rs.next()) {
             listaJornadas.add(new Jornada(
                     rs.getInt("codJornada"),
-                    rs.getDate("fechaJornada").toLocalDate()
+                    rs.getDate("fecha").toLocalDate()
             ));
         }
         return listaJornadas;

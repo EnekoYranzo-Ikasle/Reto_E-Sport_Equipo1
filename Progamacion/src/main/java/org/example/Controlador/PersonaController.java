@@ -12,7 +12,7 @@ public class PersonaController {
         this.personaDAO = personaDAO;
     }
 
-    public Persona getPersona(String email) throws SQLException {
+    public Persona getPersona(String email) throws Exception {
         return personaDAO.getPersona(email);
     }
 

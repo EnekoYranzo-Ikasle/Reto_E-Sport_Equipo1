@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JugadorDAO {
-    private Connection conn;
+    private final Connection conn;
     private static PreparedStatement ps;
     private static ResultSet rs;
 
@@ -15,13 +15,10 @@ public class JugadorDAO {
         this.conn = conn;
     }
 
-    EquipoDAO equipoDAO = new EquipoDAO(conn);
-
-
     // Funciones:
     public void altaJugador(Jugador jugador) throws SQLException {
-        ps = conn.prepareStatement("INSERT INTO jugadores(nombre, apellidos, nacionalidad, fechaNacimiento, " +
-                "nickname, rol, sueldo, codEquipo) values(?,?,?,?,?,?,?,?)");
+        ps = conn.prepareStatement("INSERT INTO jugadores(codJugador, nombre, apellidos, nacionalidad, fechaNacimiento, " +
+                "nickname, rol, sueldo, codEquipo) values( sec_codJugadores.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         ps.setString(1, jugador.getNombre());
         ps.setString(2, jugador.getApellidos());
@@ -66,27 +63,26 @@ public class JugadorDAO {
         }
         return jugador;
     }
+
     public boolean jugadorExiste(int codJugador) throws SQLException {
         ps = conn.prepareStatement("select * from jugadores where codJugador =?");
         ps.setInt(1, codJugador);
         rs = ps.executeQuery();
-        if (rs.next()) {
-            return true;
-        }else return false;
+
+        return rs.next();
     }
-    public boolean EquipoDeJugador(int codJug)throws SQLException {
+
+    public boolean equipoDeJugador(int codJug)throws SQLException {
         ps = conn.prepareStatement("select codEquipo from jugadores where codJugador =?");
         ps.setInt(1, codJug);
         rs = ps.executeQuery();
-        if (rs.next()) {
-            return true;
-        }else return false;
 
+        return rs.next();
     }
 
     // Verificaciones:
     private Jugador crearJugador(ResultSet rs) throws SQLException {
-        Jugador j = new Jugador(
+        return new Jugador(
                 rs.getInt("codJugador"),
                 rs.getString("nombre"),
                 rs.getString("apellidos"),
@@ -97,7 +93,6 @@ public class JugadorDAO {
                 rs.getDouble("sueldo"),
                 rs.getInt("codEquipo")
         );
-        return j;
     }
 
     public List<Jugador> jugadorPorEquipo(int codEquip) throws SQLException {
@@ -115,8 +110,10 @@ public class JugadorDAO {
     private Date parsearFecha(LocalDate fecha1){
         return Date.valueOf(fecha1);
     }
-    public void EditarJugador(int codJugador, Jugador jugador) throws SQLException {
-        ps=conn.prepareStatement("update jugadores set nombre=?, apellidos=?, nacionalidad=?, fechaNacimiento=?, nickname=?, rol=?, sueldo=?, codEquipo=? where codJugador = ?");
+
+    public void editarJugador(int codJugador, Jugador jugador) throws SQLException {
+        ps = conn.prepareStatement("update jugadores set nombre = ?, apellidos = ?, nacionalidad = ?, fechaNacimiento = ?, " +
+                "nickname = ?, rol = ?, sueldo = ?, codEquipo = ? where codJugador = ?");
         ps.setString(1, jugador.getNombre());
         ps.setString(2, jugador.getApellidos());
         ps.setString(3, jugador.getNacionalidad());
@@ -126,8 +123,7 @@ public class JugadorDAO {
         ps.setDouble(7, jugador.getSueldo());
         ps.setInt(8, jugador.getCodEquipo());
         ps.setInt(9, codJugador);
+
         ps.executeUpdate();
-
-
     }
 }
