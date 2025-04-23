@@ -1,13 +1,13 @@
 /*Script que contenga todos los procedimientos PL/SQL almacenados y
 funciones.*/
 
-/*Primer procedimiento:Se debe crear un procedimiento almacenado que, dado un código
-de competición, devuelva un informe con los equipos que participan, incluyendo el nombre,
-fecha de creación, cantidad de jugadores y los salarios (máximo, mínimo y medio)
-de los jugadores. Si la competición no existe, debe generar una excepción. El procedimiento
+/*Primer procedimiento:Se debe crear un procedimiento almacenado que, dado un cï¿½digo
+de competiciï¿½n, devuelva un informe con los equipos que participan, incluyendo el nombre,
+fecha de creaciï¿½n, cantidad de jugadores y los salarios (mï¿½ximo, mï¿½nimo y medio)
+de los jugadores. Si la competiciï¿½n no existe, debe generar una excepciï¿½n. El procedimiento
 debe manejar errores y ser accesible desde un programa en Java.*/
 
-CREATE OR REPLACE PROCEDURE informeEquiposCompeticion (
+CREATE PROCEDURE informeEquiposCompeticion (
     p_codCompe IN competiciones.codCompeticion%TYPE, 
     p_cursor_equipos OUT SYS_REFCURSOR)
     
@@ -18,41 +18,34 @@ AS
     
 BEGIN    
     SELECT COUNT(*) INTO v_existe
-    FROM competiciones
-    WHERE codCompeticion = p_codCompe;
+        FROM competiciones
+        WHERE codCompeticion = p_codCompe;
     
     IF v_existe = 0 THEN
         RAISE e_compeNoExiste;
     END IF;
     
 OPEN p_cursor_equipos FOR
-    SELECT 
-        e.nombre AS nombre_equipo,
-        e.fechaFundacion AS fecha_creacion,
-        COUNT(j.codJugador) AS cantidad_de_jugadores,
-        AVG(j.sueldo) AS sueldo_medio,
-        MAX(j.sueldo) AS sueldo_maximo,
-        MIN(j.sueldo) AS sueldo_minimo
+    SELECT e.nombre, e.fechaFundacion, COUNT(j.codJugador), 
+            AVG(j.sueldo) AS "Sueldo medio", MAX(j.sueldo) AS "Sueldo maximo", 
+            MIN(j.sueldo) AS "Sueldo minimo"       
+        FROM equipos e LEFT JOIN jugadores j ON e.codEquipo = j.codEquipo
+        WHERE e.codEquipo IN (
+                                SELECT DISTINCT enf.equipo1
+                                    FROM enfrentamientos enf
+                                        JOIN jornadas jor 
+                                        ON enf.jornada = jor.codJornada
+                                    WHERE jor.competicion = p_codCompe
         
-    FROM equipos e
-    LEFT JOIN jugadores j ON e.codEquipo = j.codEquipo
-    WHERE e.codEquipo IN (
-    
-        SELECT DISTINCT enf.equipo1
-        FROM enfrentamientos enf
-        JOIN jornadas jor ON enf.jornada = jor.codJornada
-        WHERE jor.competicion = p_codCompe
+                                UNION
         
-        UNION
-        
-        SELECT DISTINCT enf.equipo2
-        FROM enfrentamientos enf
-        JOIN jornadas jor ON enf.jornada = jor.codJornada
-        WHERE jor.competicion = p_codCompe
-        )
-        
-   GROUP BY e.nombre, e.fechaFundacion
-   ORDER BY e.nombre;
+                                SELECT DISTINCT enf.equipo2
+                                    FROM enfrentamientos enf
+                                        JOIN jornadas jor 
+                                        ON enf.jornada = jor.codJornada
+                                    WHERE jor.competicion = p_codCompe)
+       GROUP BY e.nombre, e.fechaFundacion
+       ORDER BY e.nombre;
    
 EXCEPTION  
     WHEN e_compeNoExiste THEN
@@ -70,7 +63,7 @@ despuï¿½s en Java, ver el informe con la relaciï¿½n de los jugadores de un equip
 De cada jugador se verï¿½ el nombre, apellido, rol y salario. El nombre del equipo
 le llegarï¿½ como parï¿½metro. Las excepciones serï¿½n visualizadas en el programa Java.*/
 
-CREATE OR REPLACE PROCEDURE ObtenerJugadoresEquipos (
+CREATE OR REPLACE PROCEDURE obtenerJugadoresEquipos (
     p_nombreEquipo IN equipos.nombre%TYPE,
     p_cursor_jugadores OUT SYS_REFCURSOR)
 AS
@@ -81,16 +74,16 @@ AS
     
 BEGIN
         SELECT COUNT(*) INTO v_existe
-        FROM equipos
-        WHERE UPPER(nombre) = UPPER(p_nombreEquipo);
+            FROM equipos
+            WHERE UPPER(nombre) = UPPER(p_nombreEquipo);
         
         IF v_existe = 0 THEN
             RAISE e_equipoNoExiste;
         END IF;    
     
         SELECT codEquipo INTO v_codEquipo
-        FROM equipos
-        WHERE UPPER(nombre) = UPPER(p_nombreEquipo);
+            FROM equipos
+            WHERE UPPER(nombre) = UPPER(p_nombreEquipo);
         
     OPEN p_cursor_jugadores FOR
         SELECT nombre, apellidos, rol, sueldo
@@ -105,4 +98,4 @@ EXCEPTION
         v_error := 'Error Oracle:' || TO_CHAR(SQLCODE) || ',' || SQLERRM;
         RAISE_APPLICATION_ERROR(-20000, v_error);
         
-END ObtenerJugadoresEquipos;  
+END obtenerJugadoresEquipos;  
