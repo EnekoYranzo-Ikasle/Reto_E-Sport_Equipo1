@@ -141,4 +141,7 @@ public class ModeloController {
     public void editarJornada(int codJornada, LocalDate fechaNueva) throws SQLException {
         jornadaController.editarJornada(codJornada, fechaNueva);
     }
+    public void eliminarJuegador(int codJugador) throws SQLException {
+        equipoController.eliminarJugador(codJugador);
+    }
 }
