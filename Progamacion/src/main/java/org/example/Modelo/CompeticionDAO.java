@@ -14,8 +14,8 @@ public class CompeticionDAO {
     }
 
     public void nuevaCompeticion(Competicion competicion) throws SQLException {
-        ps = conn.prepareStatement("INSERT INTO competiciones (codCompeticion, nombre, fechaInicio, fechaFin) " +
-                "VALUES(sec_codCompeticion.NEXTVAL,?,?,?)");
+        ps = conn.prepareStatement("INSERT INTO competiciones (codCompeticion, nombre, fechaInicio, fechaFin, estado) " +
+                "VALUES(sec_codCompeticion.NEXTVAL,?,?,?, 'activo')");
         ps.setString(1, competicion.getNombre());
         ps.setDate(2, parsearFecha(competicion.getFechaInicio()));
         ps.setDate(3, parsearFecha(competicion.getFecha_fin()));

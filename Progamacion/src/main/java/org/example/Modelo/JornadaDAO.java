@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class JornadaDAO {
@@ -73,7 +74,8 @@ public class JornadaDAO {
         rs.close();
 
         // Insertar la jornada usando el valor de la secuencia
-        ps = conn.prepareStatement("INSERT INTO jornadas (codJornada, fecha) VALUES (?, ?)");
+        ps = conn.prepareStatement("INSERT INTO jornadas (codJornada, fecha, competicion) " +
+                "VALUES (?, ?, sec_codcompeticion.CURRVAL)");
         ps.setInt(1, codGenerado);
         ps.setDate(2, parsearFechaSQL(fechaJornada));
         ps.executeUpdate();
@@ -85,7 +87,7 @@ public class JornadaDAO {
     private void guardarEnfrentamiento(Enfrentamiento enfrentamiento) throws SQLException {
         ps = conn.prepareStatement("INSERT INTO enfrentamientos (CodEnfrentamiento, hora, equipo1, equipo2, jornada)" +
                 " VALUES (sec_codEnfrentamientos.NEXTVAL, ?, ?, ?, ?)");
-        ps.setTimestamp(1, parsearHoraSQL(enfrentamiento.getHora()));
+        ps.setString(1, parsearHoraSQL(enfrentamiento.getHora()));
         ps.setInt(2, enfrentamiento.getEquipo1().getCodEquipo());
         ps.setInt(3, enfrentamiento.getEquipo2().getCodEquipo());
         ps.setInt(4, enfrentamiento.getJornada().getCodJornada());
@@ -127,11 +129,8 @@ public class JornadaDAO {
     }
 
 //    Funciones privadas:
-    private Timestamp parsearHoraSQL(LocalTime hora) {
-        LocalDate fechaFicticia = LocalDate.of(2000, 1, 1);
-        LocalDateTime fechaHora = LocalDateTime.of(fechaFicticia, hora);
-
-        return Timestamp.valueOf(fechaHora);
+    private String parsearHoraSQL(LocalTime hora) {
+        return hora.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     private Date parsearFechaSQL(LocalDate fecha) {

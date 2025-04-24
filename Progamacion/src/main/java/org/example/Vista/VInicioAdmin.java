@@ -37,8 +37,9 @@ public class VInicioAdmin extends JFrame {
 //        Cuando cambias de ventana para que se mantenga deshabilitado los botones.
         if (vistaController.isCompeticionCreada()) {
             bGenerarCalendario.setEnabled(true);
+        }
 
-        }else if (vistaController.isCalendarioGenerado()) {
+        if (vistaController.isCalendarioGenerado()) {
             bGenerarCalendario.setEnabled(false);
             vistaController.bloquearCrud();
         }

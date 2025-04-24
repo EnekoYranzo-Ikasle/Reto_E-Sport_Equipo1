@@ -35,6 +35,10 @@ public class VAdministrarAdmin extends JFrame {
             bEquipos.setEnabled(false);
         }
 
+        if (vistaController.isCompeticionCreada()){
+            bCompeticion.setEnabled(false);
+        }
+
         bVolver.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
