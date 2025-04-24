@@ -51,4 +51,7 @@ public class EquipoController {
     public void agregarJugador(String nombreEquipo, int codJugador) throws SQLException {
         equipoDAO.agregarJugador(codJugador,equipoDAO.buscarEquipoPorNombre(nombreEquipo).getCodEquipo());
     }
+    public void eliminarJugador(int codJugador) throws SQLException {
+        equipoDAO.eliminarJugador(codJugador);
+    }
 }

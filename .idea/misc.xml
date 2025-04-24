@@ -3,5 +3,5 @@
   <component name="PWA">
     <option name="wasEnabledAtLeastOnce" value="true" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK" />
 </project>

@@ -118,15 +118,15 @@ public class DEquipo extends JDialog {
                 try {
                     boolean errorEqip=vistaController.existeEquipo(CodigoEquip3.getText());
                     boolean errorJug= vistaController.jugadorExiste(Integer.parseInt(CodigoJuegador1.getText()));
-
-                    if (errorEqip && errorJug && !vistaController.equipoDeJugador(Integer.parseInt(CodigoJuegador1.getText()))) {
+                    boolean errorJugEquip= vistaController.equipoDeJugador(Integer.parseInt(CodigoJuegador1.getText()));
+                    if (errorEqip && errorJug && !errorJugEquip) {
 
                         vistaController.agregarJugador(CodigoEquip3.getText(),Integer.parseInt(CodigoJuegador1.getText()));
                     }else if (!errorEqip) {
                         JOptionPane.showMessageDialog(pPrincipal, "El Equipo no existe");
                     }else if (!errorJug) {
                         JOptionPane.showMessageDialog(pPrincipal, "El jugador no existe");
-                    }else if (!errorEqip) {
+                    }else if (errorJugEquip) {
                         JOptionPane.showMessageDialog(pPrincipal, "Jugador ya tiene un equipo asignado");
                     }
                 } catch (SQLException ex) {
@@ -144,6 +144,23 @@ public class DEquipo extends JDialog {
                 if (!CodigoJuegador1.getText().matches("[0-9]*")) {
                     JOptionPane.showMessageDialog(pPrincipal, "Ese codigo no ha sido insertado correctamente");
                 }
+            }
+        });
+        despedirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!textField1.getText().matches("[0-9]*")) {
+                    JOptionPane.showMessageDialog(pPrincipal,"Ese codigo de jugador no ha sido insertado correctamente");
+                }else{
+                    try {
+                        vistaController.eliminarJugador(Integer.parseInt(textField1.getText()));
+                        textField1.setText("");
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                }
+
             }
         });
     }
