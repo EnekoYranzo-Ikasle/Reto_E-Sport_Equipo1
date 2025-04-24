@@ -128,6 +128,13 @@ public class JornadaDAO {
         ps.executeUpdate();
     }
 
+    public void editarJornada(int codJornada, LocalDate fechaNueva) throws SQLException {
+        ps = conn.prepareStatement("UPDATE jornadas SET fecha = ? WHERE codJornada = ?");
+        ps.setDate(1, parsearFechaSQL(fechaNueva));
+        ps.setInt(2, codJornada);
+        ps.executeUpdate();
+    }
+
 //    Funciones privadas:
     private String parsearHoraSQL(LocalTime hora) {
         return hora.format(DateTimeFormatter.ofPattern("HH:mm"));

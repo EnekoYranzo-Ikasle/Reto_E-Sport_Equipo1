@@ -8,6 +8,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class DJornada extends JDialog {
@@ -17,6 +19,7 @@ public class DJornada extends JDialog {
     private JTable tablaJornada;
     private DefaultTableModel modeloTabla;
     private JButton btnEliminar;
+    private JButton btnEditar;
 
     private JPanel pPrincipal;
     private JPanel pBorrar;
@@ -50,9 +53,11 @@ public class DJornada extends JDialog {
      * @return Panel con los botones
      */
     private JPanel crearPanelBotones() {
-        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel panelBotones = new JPanel();
+        panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));
         panelBotones.setBackground(new Color(30, 42, 56));
         panelBotones.add(btnEliminar);
+        panelBotones.add(btnEditar);
         return panelBotones;
     }
 
@@ -72,6 +77,22 @@ public class DJornada extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 eliminarJornadaSeleccionada();
+            }
+        });
+
+        // Botón editar
+        btnEditar = new JButton("");
+        btnEditar.setIcon(new ImageIcon("src/main/resources/Images/edit.png"));
+        btnEditar.setPreferredSize(new Dimension(50, 50));
+        btnEditar.setBackground(Color.WHITE);
+        btnEditar.setForeground(Color.BLACK);
+        btnEditar.setBorderPainted(false);
+        btnEditar.setFocusPainted(false);
+
+        btnEditar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editarJornadaSeleccionada();
             }
         });
     }
@@ -162,6 +183,37 @@ public class DJornada extends JDialog {
                     "Por favor, selecciona una jornada para eliminar",
                     "Error",
                     JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    /**
+     * Actualizar la jornada seleccionada en la tabla
+     */
+    private void editarJornadaSeleccionada() {
+        int filaSeleccionada = tablaJornada.getSelectedRow();
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        if (filaSeleccionada >= 0) {
+            LocalDate fechaNueva = LocalDate.parse(JOptionPane.showInputDialog(pPrincipal,
+                    "Introduce la nueva fecha (dd/MM/yyyy):)"), formato);
+
+            try {
+                vistaController.editarJornada(listaJornadas.get(filaSeleccionada).getCodJornada(), fechaNueva);
+                listaJornadas.remove(filaSeleccionada);
+                actualizarTabla();
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Jornada actualizada con éxito",
+                        "Actualización Completada",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                actualizarListaJornadas();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
         }
     }
 }

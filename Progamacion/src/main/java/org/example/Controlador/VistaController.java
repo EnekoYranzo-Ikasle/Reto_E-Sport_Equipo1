@@ -165,6 +165,10 @@ public class VistaController {
         modeloController.eliminarJornada(codJornada);
     }
 
+    public void editarJornada(int codJornada, LocalDate fechaNueva) throws SQLException {
+        modeloController.editarJornada(codJornada, fechaNueva);
+    }
+
 //    Funciones para bloquear botones
     public void bloquearGenerarCalendario(){
         calendarioGenerado = true;

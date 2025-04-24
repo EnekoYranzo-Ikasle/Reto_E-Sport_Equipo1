@@ -2,7 +2,9 @@ package org.example.Controlador;
 
 import org.example.Modelo.*;
 
+import java.nio.file.LinkOption;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class JornadaController {
@@ -30,5 +32,9 @@ public class JornadaController {
 
     public void eliminarJornada(int codJornada) throws SQLException {
         jornadaDAO.eliminarJornada(codJornada);
+    }
+
+    public void editarJornada(int codJornada, LocalDate fechaNueva) throws SQLException {
+        jornadaDAO.editarJornada(codJornada, fechaNueva);
     }
 }
