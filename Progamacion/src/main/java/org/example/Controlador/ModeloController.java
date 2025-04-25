@@ -87,6 +87,7 @@ public class ModeloController {
     public Jugador mostrarJugador(int codJugador) throws SQLException {
         return jugadorController.mostrarJugador(codJugador);
     }
+
     public boolean jugadorExiste(int codJugador) throws SQLException {
         return jugadorController.jugadorExiste(codJugador);
     }
@@ -141,7 +142,8 @@ public class ModeloController {
     public void editarJornada(int codJornada, LocalDate fechaNueva) throws SQLException {
         jornadaController.editarJornada(codJornada, fechaNueva);
     }
-    public void eliminarJuegador(int codJugador) throws SQLException {
-        equipoController.eliminarJugador(codJugador);
+
+    public void despedirJugador(int codJugador) throws SQLException {
+        equipoController.despedirJugador(codJugador);
     }
 }

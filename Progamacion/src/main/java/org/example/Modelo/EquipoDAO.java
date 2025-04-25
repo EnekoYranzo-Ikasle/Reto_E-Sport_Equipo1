@@ -33,30 +33,13 @@ public class EquipoDAO {
         ps.setDate(2, parsearFecha(equipo.getFechaFund()));
         ps.executeUpdate();
     }
+
     public void eliminarEquipo(int codEquipo) throws SQLException {
         ps = conn.prepareStatement("delete from equipos where codEquipo = ?");
         ps.setInt(1, codEquipo);
         ps.executeUpdate();
     }
 
-    public void actualizarEquipo(Equipo equipo, String campo) throws SQLException {
-        switch (campo.toLowerCase()) {
-            case "nombre": {
-                ps = conn.prepareStatement("UPDATE equipos SET nombre = ? WHERE codEquipo = ?");
-                ps.setString(1, equipo.getNombreEquipo());
-                ps.setInt(2, equipo.getCodEquipo());
-            }break;
-            case "ciudad": {
-                ps = conn.prepareStatement("UPDATE equipos SET fechaFundacion = ? WHERE codEquipo = ?");
-                ps.setDate(1, parsearFecha(equipo.getFechaFund()));
-                ps.setInt(2, equipo.getCodEquipo());
-            }break;
-            // Agrega más campos si es necesario, como "entrenador", "fundacion", etc.
-            default:
-                throw new IllegalArgumentException("Campo no válido para actualizar: " + campo);
-        }
-        ps.executeUpdate();
-    }
     public void modificarequipo(String nombreEquipo, LocalDate fechaFundacion) throws SQLException {
         ps=conn.prepareStatement("update equipos set fechaFundacion = ? where nombre = ?");
         ps.setDate(1, parsearFecha(fechaFundacion));
@@ -89,6 +72,7 @@ public class EquipoDAO {
         }
         return equipo;
     }
+
     public boolean Existe(String Codequipo) throws SQLException {
         ps = conn.prepareStatement("select * from equipos where nombre = ?");
         ps.setString(1, Codequipo);
@@ -98,11 +82,12 @@ public class EquipoDAO {
         }else return false;
     }
 
-    public void eliminarJugador(int codJug) throws SQLException {
-        ps = conn.prepareStatement("update jugadores set codEquipo= null where codJugador = ?");
+    public void despedirJugador(int codJug) throws SQLException {
+        ps = conn.prepareStatement("update jugadores set codEquipo = null where codJugador = ?");
         ps.setInt(1, codJug);
         ps.executeUpdate();
     }
+
     public void agregarJugador(int jugador, int CodEquip) throws SQLException {
         ps = conn.prepareStatement("UPDATE jugadores SET codEquipo = ? WHERE codJugador = ?");
         ps.setInt(1, CodEquip);

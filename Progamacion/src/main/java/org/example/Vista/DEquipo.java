@@ -19,7 +19,7 @@ import java.util.List;
  * Diálogo para la gestión de equipos (alta y eliminación)
  */
 public class DEquipo extends JDialog {
-    private VistaController vistaController;
+    private final VistaController vistaController;
     private List<Equipo> listaEquipos;
 
     private JPanel pPrincipal;
@@ -38,15 +38,23 @@ public class DEquipo extends JDialog {
     private JTable tablaEquipos;
     private DefaultTableModel modeloTabla;
     private JButton btnEliminar;
-    private JTextField NombreEquipo;
-    private JTextField NuevoNombreEquipo;
-    private JTextField FechaFundacion;
-    private JButton ModificarButton;
-    private JButton añadirButton;
-    private JButton despedirButton;
-    private JTextField textField1;
-    private JTextField CodigoJuegador1;
-    private JTextField CodigoEquip3;
+    private JTextField tfNombreEquipo;
+    private JTextField tfNuevoNombreEquipo;
+    private JTextField tfFechaFundacionMod;
+    private JButton bModificar;
+    private JButton bContratar;
+    private JButton bDespedir;
+    private JTextField tfCodJugDespedir;
+    private JTextField tfCodJugContratar;
+    private JTextField tfNombreEquip;
+    private JPanel pTextoMod;
+    private JPanel pInputsMod;
+    private JPanel pTextoJugadoresContr;
+    private JPanel pInputsJugadoresContr;
+    private JPanel pBotonesContr;
+    private JPanel pInputsJugadoresDesp;
+    private JPanel pBotonesDesp;
+    private JPanel pTextoJugadorDesp;
 
 
     public DEquipo(VistaController vistaController) {
@@ -60,42 +68,37 @@ public class DEquipo extends JDialog {
         setLocationRelativeTo(null);
 
         try {
-            ModificarButton.addActionListener(new ActionListener() {
+            bModificar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     boolean error = false;
                     LocalDate fechaFundacion = null;
-                    if (NuevoNombreEquipo.getText().matches("^[a-zA-Z]*$")) {
+
+                    if (tfNuevoNombreEquipo.getText().matches("^[a-zA-Z]*$")) {
                         JOptionPane.showMessageDialog(pPrincipal, "Nombre incorrecto");
                         error = true;
                     }
+
                     try {
                         fechaFundacion = parsearFecha(tfFechaFundacion.getText());
+
                     }catch (Exception ex){
-                        JOptionPane.showMessageDialog(pPrincipal, "Fecha incorrecto");
+                        JOptionPane.showMessageDialog(pPrincipal, "Fecha incorrecta");
                         error = true;
-
                     }
+
                     try {
-                        boolean existe2 = vistaController.existeEquipo(NombreEquipo.getText());
+                        boolean existe2 = vistaController.existeEquipo(tfNombreEquipo.getText());
                         if (!error && existe2) {
-                            vistaController.actualizarEquipo(NombreEquipo.getText(),fechaFundacion);
-
-
+                            vistaController.actualizarEquipo(tfNombreEquipo.getText(), fechaFundacion);
                         }
 
                     } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
+                        JOptionPane.showMessageDialog(pPrincipal, ex.getMessage());
                     }
-
-
-
-
                 }
             });
-            /**
-             * Configura el panel de alta de equipos
-             */
+
             bCrearAlta.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -111,56 +114,70 @@ public class DEquipo extends JDialog {
         }
 
 
-        añadirButton.addActionListener(new ActionListener() {
+        bContratar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String nombreEquipo = tfNombreEquip.getText();
+                String codigoJugadorStr = tfCodJugContratar.getText();
 
                 try {
-                    boolean errorEqip=vistaController.existeEquipo(CodigoEquip3.getText());
-                    boolean errorJug= vistaController.jugadorExiste(Integer.parseInt(CodigoJuegador1.getText()));
-                    boolean errorJugEquip= vistaController.equipoDeJugador(Integer.parseInt(CodigoJuegador1.getText()));
-                    if (errorEqip && errorJug && !errorJugEquip) {
+                    int codigoJugador = Integer.parseInt(codigoJugadorStr);
 
-                        vistaController.agregarJugador(CodigoEquip3.getText(),Integer.parseInt(CodigoJuegador1.getText()));
-                    }else if (!errorEqip) {
-                        JOptionPane.showMessageDialog(pPrincipal, "El Equipo no existe");
-                    }else if (!errorJug) {
-                        JOptionPane.showMessageDialog(pPrincipal, "El jugador no existe");
-                    }else if (errorJugEquip) {
-                        JOptionPane.showMessageDialog(pPrincipal, "Jugador ya tiene un equipo asignado");
+                    boolean equipoExiste = vistaController.existeEquipo(nombreEquipo);
+                    boolean jugadorExiste = vistaController.jugadorExiste(codigoJugador);
+                    boolean jugadorYaTieneEquipo = vistaController.equipoDeJugador(codigoJugador);
+
+                    if (!equipoExiste) {
+                        throw new Exception("El equipo no existe.");
                     }
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+
+                    if (!jugadorExiste) {
+                        throw new Exception("El jugador no existe.");
+                    }
+
+                    if (jugadorYaTieneEquipo) {
+                        throw new Exception("El jugador ya tiene un equipo asignado.");
+                    }
+
+                    vistaController.agregarJugador(nombreEquipo, codigoJugador);
+
+                    JOptionPane.showMessageDialog(pPrincipal, "Jugador contratado correctamente");
+                    dispose();
+
+                } catch (NumberFormatException nfe) {
+                    JOptionPane.showMessageDialog(pPrincipal, "El código del jugador debe ser un número.");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(pPrincipal, ex.getMessage());
                 }
-
-
             }
         });
-        CodigoJuegador1.addFocusListener(new FocusAdapter() {
+
+
+        tfCodJugContratar.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                super.focusLost(e);
+            super.focusLost(e);
 
-                if (!CodigoJuegador1.getText().matches("[0-9]*")) {
-                    JOptionPane.showMessageDialog(pPrincipal, "Ese codigo no ha sido insertado correctamente");
-                }
+            if (!tfCodJugContratar.getText().matches("[0-9]*")) {
+                JOptionPane.showMessageDialog(pPrincipal, "Ese codigo no ha sido insertado correctamente");
+            }
             }
         });
-        despedirButton.addActionListener(new ActionListener() {
+
+        bDespedir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!textField1.getText().matches("[0-9]*")) {
+                if (!tfCodJugDespedir.getText().matches("[0-9]*")) {
                     JOptionPane.showMessageDialog(pPrincipal,"Ese codigo de jugador no ha sido insertado correctamente");
-                }else{
+                }else {
                     try {
-                        vistaController.eliminarJugador(Integer.parseInt(textField1.getText()));
-                        textField1.setText("");
+                        vistaController.despedirJugador(Integer.parseInt(tfCodJugDespedir.getText()));
+                        tfCodJugDespedir.setText("");
+
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
-
                 }
-
             }
         });
     }

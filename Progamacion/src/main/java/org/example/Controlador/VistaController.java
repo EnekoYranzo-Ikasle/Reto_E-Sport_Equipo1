@@ -118,6 +118,7 @@ public class VistaController {
 
         modeloController.modificarJugador(j,codigo);
     }
+
     public boolean jugadorExiste(int codJugador) throws SQLException {
         return modeloController.jugadorExiste(codJugador);
     }
@@ -168,8 +169,9 @@ public class VistaController {
     public void editarJornada(int codJornada, LocalDate fechaNueva) throws SQLException {
         modeloController.editarJornada(codJornada, fechaNueva);
     }
-    public void eliminarJuegador(int codJug) throws SQLException {
-        modeloController.eliminarJuegador(codJug);
+
+    public void despedirJugador(int codJug) throws SQLException {
+        modeloController.despedirJugador(codJug);
     }
 
 //    Funciones para bloquear botones

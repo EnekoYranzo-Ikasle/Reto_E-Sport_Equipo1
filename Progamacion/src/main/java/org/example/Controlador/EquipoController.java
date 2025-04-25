@@ -24,7 +24,6 @@ public class EquipoController {
         equipoDAO.eliminarEquipo(codEquipo);
     }
 
-
     public List<Equipo> getEquipos() throws SQLException {
         return  equipoDAO.obtenerEquipos();
     }
@@ -42,16 +41,20 @@ public class EquipoController {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(fecha, formato);
     }
+
     public boolean existeEquipo(String nombreEquipo) throws SQLException {
         return equipoDAO.Existe(nombreEquipo);
     }
+
     public void actualizarEquipo(String NombrEquipo, LocalDate fechaFundacion) throws SQLException {
         equipoDAO.modificarequipo(NombrEquipo, fechaFundacion);
     }
+
     public void agregarJugador(String nombreEquipo, int codJugador) throws SQLException {
         equipoDAO.agregarJugador(codJugador,equipoDAO.buscarEquipoPorNombre(nombreEquipo).getCodEquipo());
     }
-    public void eliminarJugador(int codJugador) throws SQLException {
-        equipoDAO.eliminarJugador(codJugador);
+
+    public void despedirJugador(int codJugador) throws SQLException {
+        equipoDAO.despedirJugador(codJugador);
     }
 }
