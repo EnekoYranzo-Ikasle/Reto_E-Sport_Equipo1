@@ -146,4 +146,8 @@ public class ModeloController {
     public void despedirJugador(int codJugador) throws SQLException {
         equipoController.despedirJugador(codJugador);
     }
+    public List<Integer> getEnfrentamientos() throws SQLException {
+        return enfrentamientoController.getEnfrentamientos();
+
+    }
 }

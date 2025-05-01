@@ -43,4 +43,13 @@ public class EnfrentamientoDAO {
         }
         return ganadores;
     }
+    public List<Integer>obtenerEnfrentamientos()throws SQLException{
+        List<Integer> lista = new ArrayList<>();
+        ps=conn.prepareStatement("select * from enfrentamientos where jornada = (SELECT MAX(jornada) FROM enfrentamientos)");
+        rs=ps.executeQuery();
+        while (rs.next()) {
+            lista.add(rs.getInt("codEnfrentamiento"));
+        }
+        return lista;
+    }
 }
