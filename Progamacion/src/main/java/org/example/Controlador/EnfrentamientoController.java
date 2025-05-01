@@ -22,4 +22,8 @@ public class EnfrentamientoController {
     public List<Integer> getganador(int codigoJorn) throws SQLException {
         return enfrentamientoDAO.obtenerGanadores(codigoJorn);
     }
+    public List<Integer> getEnfrentamientos() throws SQLException {
+        return enfrentamientoDAO.obtenerEnfrentamientos();
+
+    }
 }

@@ -92,5 +92,14 @@ public class VInicioAdmin extends JFrame {
                 }
             }
         });
+        bIntroducirResultados.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DResultado resultado = new DResultado(vistaController);
+                resultado.setVisible(true);
+                dispose();
+
+            }
+        });
     }
 }
