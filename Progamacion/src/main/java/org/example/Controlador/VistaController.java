@@ -175,9 +175,12 @@ public class VistaController {
     public void despedirJugador(int codJug) throws SQLException {
         modeloController.despedirJugador(codJug);
     }
-    public List<Integer> getEnfrentamientos() throws SQLException {
+    public List<Enfrentamiento> getEnfrentamientos() throws SQLException {
         return modeloController.getEnfrentamientos();
 
+    }
+    public void setGanador(int codgGanador, int CodEnfrentamiento) throws SQLException {
+        modeloController.setGanador(codgGanador, CodEnfrentamiento);
     }
 
 //    Funciones para bloquear botones

@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controlador.VistaController;
+import org.example.Modelo.Enfrentamiento;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -17,13 +18,23 @@ public class DResultado extends JDialog{
        setLocationRelativeTo(null);
        setVisible(true);
        try {
-           List<Integer> enfrentamienots=vistaController.getEnfrentamientos();
+           List<Enfrentamiento> enfrentamienots=vistaController.getEnfrentamientos();
 
            for (int i=0;i<enfrentamienots.size();i++){
-               JButton boton=new JButton(""+enfrentamienots.get(i));
+               JButton boton=new JButton();
+               boton.setText(enfrentamienots.get(i).getEquipo1().getNombreEquipo()+" vs "+enfrentamienots.get(i).getEquipo2().getNombreEquipo());
                General.add(boton);
+               int codEquip1=enfrentamienots.get(i).getEquipo1().getCodEquipo();
+               int codEquip2=enfrentamienots.get(i).getEquipo2().getCodEquipo();
+               int codenfre=enfrentamienots.get(i).getCodEnfrentamiento();
                boton.addActionListener(e -> {
-                   DInsertarResultado insertarResultado = new DInsertarResultado(vistaController, Integer.parseInt(boton.getText()));
+                   String NombrEquip1;
+                   String NombrEquip2;
+                   String [] partes= boton.getText().split(" vs ");
+                   NombrEquip1=partes[0];
+                   NombrEquip2=partes[1];
+
+                   DInsertarResultado insertarResultado = new DInsertarResultado(vistaController,NombrEquip1,NombrEquip2, codenfre,codEquip1,codEquip2);
                    insertarResultado.setVisible(true);
                    dispose();
 
