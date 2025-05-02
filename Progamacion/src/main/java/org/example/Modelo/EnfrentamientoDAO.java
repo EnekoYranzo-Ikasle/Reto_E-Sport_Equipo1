@@ -45,27 +45,30 @@ public class EnfrentamientoDAO {
     }
     public List<Enfrentamiento>obtenerEnfrentamientos()throws SQLException{
         List<Enfrentamiento> lista = new ArrayList<>();
-        ps=conn.prepareStatement("select * from enfrentamientos");
-        rs=ps.executeQuery();
+
+        ps = conn.prepareStatement("select * from enfrentamientos");
+        rs = ps.executeQuery();
+
         while (rs.next()) {
-
             Enfrentamiento enfrentamiento = new Enfrentamiento();
-            Equipo euipo1 = new Equipo();
-            Equipo euipo2 = new Equipo();
-            enfrentamiento.setCodEnfrentamiento(rs.getInt("codenfrentamiento"));
-            euipo1.setCodEquipo(rs.getInt("equipo1"));
-            euipo2.setCodEquipo(rs.getInt("equipo2"));
-            euipo1.setNombreEquipo(sacarNombrEquipo(euipo1.getCodEquipo()));
-            euipo2.setNombreEquipo(sacarNombrEquipo(euipo2.getCodEquipo()));
+            Equipo equipo1 = new Equipo();
+            Equipo equipo2 = new Equipo();
 
-            enfrentamiento.setEquipo1(euipo1);
-            enfrentamiento.setEquipo2(euipo2);
+            enfrentamiento.setCodEnfrentamiento(rs.getInt("codenfrentamiento"));
+            equipo1.setCodEquipo(rs.getInt("equipo1"));
+            equipo2.setCodEquipo(rs.getInt("equipo2"));
+            equipo1.setNombreEquipo(sacarNombrEquipo(equipo1.getCodEquipo()));
+            equipo2.setNombreEquipo(sacarNombrEquipo(equipo2.getCodEquipo()));
+
+            enfrentamiento.setEquipo1(equipo1);
+            enfrentamiento.setEquipo2(equipo2);
             lista.add(enfrentamiento);
         }
         return lista;
     }
     public String sacarNombrEquipo(int codequipo) throws SQLException {
         ps=conn.prepareStatement("select nombre from equipos where codEquipo=?");
+        ps.setInt(1, codequipo);
         rs=ps.executeQuery();
         if (rs.next()) {
             return rs.getString("nombre");

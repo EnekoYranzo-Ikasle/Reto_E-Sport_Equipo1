@@ -12,7 +12,7 @@ public class DInsertarResultado extends JDialog {
     private JButton Equipo1;
     private JButton Equipo2;
 
-    public DInsertarResultado(VistaController vistaController, String nombreEquip1, String nombreEquip2, int codJornada, int codEquip1, int codEquip2) {
+    public DInsertarResultado(VistaController vistaController, String nombreEquip1, String nombreEquip2, int codEnfrentamiento, int codEquip1, int codEquip2) {
 
         setContentPane(pPrincipal);
         setModal(true);
@@ -28,18 +28,19 @@ public class DInsertarResultado extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    vistaController.setGanador(codEquip1, codJornada);
+                    vistaController.setGanador(codEquip1, codEnfrentamiento);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
 
             }
         });
+
         Equipo2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    vistaController.setGanador(codEquip2, codJornada);
+                    vistaController.setGanador(codEquip2, codEnfrentamiento);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
