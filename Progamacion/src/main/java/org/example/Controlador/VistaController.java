@@ -183,7 +183,7 @@ public class VistaController {
         modeloController.setGanador(codgGanador, CodEnfrentamiento);
     }
 
-//    Funciones para bloquear botones
+//    Funciones para bloquear y activar botones
     public void bloquearGenerarCalendario(){
         calendarioGenerado = true;
     }

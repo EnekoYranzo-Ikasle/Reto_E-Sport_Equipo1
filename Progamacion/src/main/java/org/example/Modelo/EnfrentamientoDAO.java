@@ -53,8 +53,8 @@ public class EnfrentamientoDAO {
             Equipo euipo1 = new Equipo();
             Equipo euipo2 = new Equipo();
             enfrentamiento.setCodEnfrentamiento(rs.getInt("codenfrentamiento"));
-            euipo1.setCodEquipo(rs.getInt("codEquipo"));
-            euipo2.setCodEquipo(rs.getInt("codEquipo"));
+            euipo1.setCodEquipo(rs.getInt("equipo1"));
+            euipo2.setCodEquipo(rs.getInt("equipo2"));
             euipo1.setNombreEquipo(sacarNombrEquipo(euipo1.getCodEquipo()));
             euipo2.setNombreEquipo(sacarNombrEquipo(euipo2.getCodEquipo()));
 

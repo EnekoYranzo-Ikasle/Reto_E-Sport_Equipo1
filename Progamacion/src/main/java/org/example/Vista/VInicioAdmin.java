@@ -109,7 +109,6 @@ public class VInicioAdmin extends JFrame {
                 DResultado resultado = new DResultado(vistaController);
                 resultado.setVisible(true);
                 dispose();
-
             }
         });
 
