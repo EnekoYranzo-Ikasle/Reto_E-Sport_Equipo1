@@ -20,25 +20,24 @@ public class DResultado extends JDialog{
        try {
            List<Enfrentamiento> enfrentamienots=vistaController.getEnfrentamientos();
 
-           for (int i=0;i<enfrentamienots.size();i++){
-               JButton boton=new JButton();
-               boton.setText(enfrentamienots.get(i).getEquipo1().getNombreEquipo()+" vs "+enfrentamienots.get(i).getEquipo2().getNombreEquipo());
-               General.add(boton);
-               int codEquip1=enfrentamienots.get(i).getEquipo1().getCodEquipo();
-               int codEquip2=enfrentamienots.get(i).getEquipo2().getCodEquipo();
-               int codenfre=enfrentamienots.get(i).getCodEnfrentamiento();
-               boton.addActionListener(e -> {
-                   String NombrEquip1;
-                   String NombrEquip2;
-                   String [] partes= boton.getText().split(" vs ");
-                   NombrEquip1=partes[0];
-                   NombrEquip2=partes[1];
+           for (int i = 0; i < enfrentamienots.size(); i++) {
+               Enfrentamiento enf = enfrentamienots.get(i);
 
-                   DInsertarResultado insertarResultado = new DInsertarResultado(vistaController,NombrEquip1,NombrEquip2, codenfre,codEquip1,codEquip2);
+               JButton boton = new JButton(enf.getEquipo1().getNombreEquipo() + " vs " + enf.getEquipo2().getNombreEquipo());
+               General.add(boton);
+
+               final int codEquip1 = enf.getEquipo1().getCodEquipo();
+               final int codEquip2 = enf.getEquipo2().getCodEquipo();
+               final int codenfre = enf.getCodEnfrentamiento();
+
+               boton.addActionListener(e -> {
+                   String[] partes = boton.getText().split(" vs ");
+                   String nombreEquipo1 = partes[0];
+                   String nombreEquipo2 = partes[1];
+
+                   DInsertarResultado insertarResultado = new DInsertarResultado(vistaController, nombreEquipo1, nombreEquipo2, codenfre, codEquip1, codEquip2);
                    insertarResultado.setVisible(true);
                    dispose();
-
-
                });
            }
        } catch (SQLException e) {
