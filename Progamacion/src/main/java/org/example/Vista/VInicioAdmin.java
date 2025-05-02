@@ -37,11 +37,19 @@ public class VInicioAdmin extends JFrame {
 //        Cuando cambias de ventana para que se mantenga deshabilitado los botones.
         if (vistaController.isCompeticionCreada()) {
             bGenerarCalendario.setEnabled(true);
+            bIntroducirResultados.setEnabled(false);
         }
 
         if (vistaController.isCalendarioGenerado()) {
             bGenerarCalendario.setEnabled(false);
-            vistaController.bloquearCrud();
+            vistaController.bloquearCrudJugEquip();
+            bCerrarEtapa.setEnabled(true);
+        }
+
+        if (vistaController.isEtapaCerrada()) {
+            bCerrarEtapa.setEnabled(false);
+            bIntroducirResultados.setEnabled(true);
+            vistaController.resetBotones();
         }
 
         bLogOut.addActionListener(new ActionListener() {
@@ -72,7 +80,9 @@ public class VInicioAdmin extends JFrame {
 
                     vistaController.bloquearGenerarCalendario();
                     bGenerarCalendario.setEnabled(false);
-                    vistaController.bloquearCrud();
+                    vistaController.bloquearCrudJugEquip();
+                    vistaController.activarCrudEnfreJor();
+                    bCerrarEtapa.setEnabled(true);
 
                 }catch (Exception ex) {
                     JOptionPane.showMessageDialog(pPrincipal, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -92,6 +102,7 @@ public class VInicioAdmin extends JFrame {
                 }
             }
         });
+
         bIntroducirResultados.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -99,6 +110,16 @@ public class VInicioAdmin extends JFrame {
                 resultado.setVisible(true);
                 dispose();
 
+            }
+        });
+
+        bCerrarEtapa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vistaController.cerrarEtapa();
+                bIntroducirResultados.setEnabled(true);
+                vistaController.bloquearCrudEnfreJor();
+                bCerrarEtapa.setEnabled(false);
             }
         });
     }

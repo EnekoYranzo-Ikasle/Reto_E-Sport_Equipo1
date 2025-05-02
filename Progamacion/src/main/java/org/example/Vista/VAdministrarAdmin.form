@@ -115,6 +115,7 @@
                 <properties>
                   <background color="-14800328"/>
                   <borderPainted value="false"/>
+                  <enabled value="false"/>
                   <focusPainted value="false"/>
                   <foreground color="-1"/>
                   <horizontalTextPosition value="0"/>
@@ -128,6 +129,7 @@
                 <properties>
                   <background color="-14800328"/>
                   <borderPainted value="false"/>
+                  <enabled value="false"/>
                   <focusPainted value="false"/>
                   <foreground color="-1"/>
                   <horizontalTextPosition value="0"/>

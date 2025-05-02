@@ -22,6 +22,7 @@ CREATE SEQUENCE sec_codCompeticion
     START WITH 1
     INCREMENT BY 1
     NOCYCLE
+    NOCACHE
     MAXVALUE 9999;
 
 
@@ -38,6 +39,7 @@ CREATE SEQUENCE sec_codJornada
     START WITH 1
     INCREMENT BY 1
     NOCYCLE
+    NOCACHE
     MAXVALUE 9999;
 
 CREATE TABLE equipos (
@@ -51,6 +53,7 @@ CREATE SEQUENCE sec_codEquipo
     START WITH 1
     INCREMENT BY 1
     NOCYCLE
+    NOCACHE
     MAXVALUE 9999;
 
 CREATE TABLE jugadores (
@@ -73,6 +76,7 @@ CREATE SEQUENCE sec_codJugadores
     START WITH 1
     INCREMENT BY 1
     NOCYCLE
+    NOCACHE
     MAXVALUE 9999;
 
 CREATE TABLE enfrentamientos (
@@ -97,6 +101,7 @@ CREATE SEQUENCE sec_codEnfrentamientos
     START WITH 1
     INCREMENT BY 1
     NOCYCLE
+    NOCACHE
     MAXVALUE 9999;
 
 CREATE TABLE usuarios (
@@ -111,6 +116,7 @@ CREATE SEQUENCE sec_codUsuarios
     START WITH 1
     INCREMENT BY 1
     NOCYCLE
+    NOCACHE
     MAXVALUE 9999;
 
 COMMIT;

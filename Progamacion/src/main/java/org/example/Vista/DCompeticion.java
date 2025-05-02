@@ -30,6 +30,7 @@ public class DCompeticion extends JDialog {
     private JTextField NombrEquip;
     private JTextField codigoJugad;
     private JButton botonsico;
+    private JPanel pNuevaComp;
 
     public DCompeticion(VistaController vistaController) {
         this.vistaController = vistaController;
@@ -39,6 +40,16 @@ public class DCompeticion extends JDialog {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(600, 450);
         setLocationRelativeTo(null);
+
+        if (vistaController.isCompeticionCreada()){
+            tabbedPane1.setEnabledAt(0, false);
+            tabbedPane1.setSelectedIndex(1);
+        }
+
+        if (vistaController.isEtapaCerrada()){
+            tabbedPane1.setEnabledAt(0, true);
+            tabbedPane1.setSelectedIndex(0);
+        }
 
         aceptarButton.addActionListener(new ActionListener() {
             @Override
@@ -52,6 +63,8 @@ public class DCompeticion extends JDialog {
                     JOptionPane.showMessageDialog(DCompeticion.this, "Competición creada correctamente");
 
                     vistaController.competicionCreada();
+                    tabbedPane1.setEnabledAt(0, false); // Deshabilitar nueva competición temporalmente.
+                    tabbedPane1.setSelectedIndex(1);
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(DCompeticion.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

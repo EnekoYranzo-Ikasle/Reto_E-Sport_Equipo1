@@ -15,8 +15,10 @@ public class VistaController {
     private final Login login;
 
     private boolean calendarioGenerado;
-    private boolean crudBloqueado;
+    private boolean crudJugEquipBloqueado;
     private boolean competicionCreada;
+    private boolean etapaCerrada;
+    private boolean crudEnfreJorBloqueado = true;
 
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
@@ -187,12 +189,12 @@ public class VistaController {
         return calendarioGenerado;
     }
 
-    public void bloquearCrud(){
-        crudBloqueado = true;
+    public void bloquearCrudJugEquip(){
+        crudJugEquipBloqueado = true;
     }
 
-    public  boolean isCrudBloqueado(){
-        return crudBloqueado;
+    public  boolean isCrudJugEquipBloqueado(){
+        return crudJugEquipBloqueado;
     }
 
     public void competicionCreada(){
@@ -201,5 +203,33 @@ public class VistaController {
 
     public boolean isCompeticionCreada(){
         return competicionCreada;
+    }
+
+    public void cerrarEtapa(){
+        etapaCerrada = true;
+    }
+
+    public boolean isEtapaCerrada(){
+        return etapaCerrada;
+    }
+
+    public void bloquearCrudEnfreJor(){
+        crudEnfreJorBloqueado = true;
+    }
+
+    public boolean isCrudEnfreJorBloqueado(){
+        return crudEnfreJorBloqueado;
+    }
+
+    public void activarCrudEnfreJor(){
+        crudEnfreJorBloqueado = false;
+    }
+
+    public void resetBotones() {
+       calendarioGenerado = false;
+       crudJugEquipBloqueado = false;
+       competicionCreada = false;
+       etapaCerrada = false;
+       crudEnfreJorBloqueado = true;
     }
 }

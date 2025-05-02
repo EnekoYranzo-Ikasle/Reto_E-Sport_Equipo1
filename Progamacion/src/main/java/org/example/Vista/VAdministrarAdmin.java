@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VAdministrarAdmin extends JFrame {
-    private VistaController vistaController;
+    private final VistaController vistaController;
     private Login login;
 
     private JPanel pPrincipal;
@@ -30,13 +30,22 @@ public class VAdministrarAdmin extends JFrame {
         setSize(700, 300);
         setLocationRelativeTo(null);
 
-        if (vistaController.isCrudBloqueado()) {
+        // Bloquea los crud de jugadores y equipos
+        if (vistaController.isCrudJugEquipBloqueado()) {
             bJugador.setEnabled(false);
             bEquipos.setEnabled(false);
         }
 
-        if (vistaController.isCompeticionCreada()){
-            bCompeticion.setEnabled(false);
+        // Bloquea los crud de enfrentamientos y de jornadas
+        if (vistaController.isCrudEnfreJorBloqueado()) {
+            bEnfrentamiento.setEnabled(false);
+            bJornada.setEnabled(false);
+        }
+
+        // Activa los crud de enfrentamientos y de jornadas
+        if (!vistaController.isCrudEnfreJorBloqueado()) {
+            bEnfrentamiento.setEnabled(true);
+            bJornada.setEnabled(true);
         }
 
         bVolver.addActionListener(new ActionListener() {
