@@ -146,8 +146,11 @@ public class ModeloController {
     public void despedirJugador(int codJugador) throws SQLException {
         equipoController.despedirJugador(codJugador);
     }
-    public List<Integer> getEnfrentamientos() throws SQLException {
+    public List<Enfrentamiento> getEnfrentamientos() throws SQLException {
         return enfrentamientoController.getEnfrentamientos();
 
+    }
+    public void setGanador(int codgGanador, int CodEnfrentamiento) throws SQLException {
+        enfrentamientoController.setGanador(codgGanador, CodEnfrentamiento);
     }
 }

@@ -43,13 +43,41 @@ public class EnfrentamientoDAO {
         }
         return ganadores;
     }
-    public List<Integer>obtenerEnfrentamientos()throws SQLException{
-        List<Integer> lista = new ArrayList<>();
-        ps=conn.prepareStatement("select * from enfrentamientos where jornada = (SELECT MAX(jornada) FROM enfrentamientos)");
+    public List<Enfrentamiento>obtenerEnfrentamientos()throws SQLException{
+        List<Enfrentamiento> lista = new ArrayList<>();
+        ps=conn.prepareStatement("select * from enfrentamientos");
         rs=ps.executeQuery();
         while (rs.next()) {
-            lista.add(rs.getInt("codEnfrentamiento"));
+
+            Enfrentamiento enfrentamiento = new Enfrentamiento();
+            Equipo euipo1 = new Equipo();
+            Equipo euipo2 = new Equipo();
+            enfrentamiento.setCodEnfrentamiento(rs.getInt("codenfrentamiento"));
+            euipo1.setCodEquipo(rs.getInt("codEquipo"));
+            euipo2.setCodEquipo(rs.getInt("codEquipo"));
+            euipo1.setNombreEquipo(sacarNombrEquipo(euipo1.getCodEquipo()));
+            euipo2.setNombreEquipo(sacarNombrEquipo(euipo2.getCodEquipo()));
+
+            enfrentamiento.setEquipo1(euipo1);
+            enfrentamiento.setEquipo2(euipo2);
+            lista.add(enfrentamiento);
         }
         return lista;
+    }
+    public String sacarNombrEquipo(int codequipo) throws SQLException {
+        ps=conn.prepareStatement("select nombre from equipos where codEquipo=?");
+        rs=ps.executeQuery();
+        if (rs.next()) {
+            return rs.getString("nombre");
+        }else {
+            return null;
+        }
+
+    }
+    public void setGanador(int codGanador, int codEnfrentamiento) throws SQLException {
+        ps=conn.prepareStatement("UPDATE enfrentamientos SET ganador=? WHERE codenfrentamiento=?");
+        ps.setInt(1, codGanador);
+        ps.setInt(2, codEnfrentamiento);
+        ps.executeUpdate();
     }
 }
