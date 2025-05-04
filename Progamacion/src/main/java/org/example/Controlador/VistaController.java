@@ -186,6 +186,12 @@ public class VistaController {
     public void setGanador(int codgGanador, int CodEnfrentamiento) throws SQLException {
         modeloController.setGanador(codgGanador, CodEnfrentamiento);
     }
+    public boolean enfrentamientoExiste(int codEnfrentamiento) throws SQLException {
+        return modeloController.enfrentamientoExiste(codEnfrentamiento);
+    }
+    public void setHora(String hora, int codEnfrentamiento) throws SQLException {
+        modeloController.setHora(hora, codEnfrentamiento);
+    }
 
 //    Funciones para bloquear y activar botones
     public void bloquearGenerarCalendario(){
