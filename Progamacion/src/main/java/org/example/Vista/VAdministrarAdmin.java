@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class VAdministrarAdmin extends JFrame {
     private final VistaController vistaController;
-    private Login login;
+    private VLogin VLogin;
 
     private JPanel pPrincipal;
     private JPanel pHeader;
@@ -51,7 +51,7 @@ public class VAdministrarAdmin extends JFrame {
         bVolver.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VInicioAdmin vInicioAdmin = new VInicioAdmin(vistaController, login);
+                VInicioAdmin vInicioAdmin = new VInicioAdmin(vistaController, VLogin);
                 vInicioAdmin.setVisible(true);
                 dispose();
             }

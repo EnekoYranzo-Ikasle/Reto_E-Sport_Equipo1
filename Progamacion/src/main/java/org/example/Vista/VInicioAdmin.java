@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class VInicioAdmin extends JFrame {
     private VistaController vistaController;
-    private Login login;
+    private VLogin VLogin;
     private VInformes VInformes;
 
     private JPanel pPrincipal;
@@ -24,9 +24,9 @@ public class VInicioAdmin extends JFrame {
     private JPanel pAbajo;
     private JButton bLogOut;
 
-    public VInicioAdmin(VistaController vistaController, Login login) {
+    public VInicioAdmin(VistaController vistaController, VLogin VLogin) {
         this.vistaController = vistaController;
-        this.login = login;
+        this.VLogin = VLogin;
 
         setContentPane(pPrincipal);
         setTitle("Vista Admin");
@@ -55,8 +55,8 @@ public class VInicioAdmin extends JFrame {
         bLogOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Login login = new Login(vistaController);
-                login.setVisible(true);
+                VLogin VLogin = new VLogin(vistaController);
+                VLogin.setVisible(true);
                 dispose();
             }
         });

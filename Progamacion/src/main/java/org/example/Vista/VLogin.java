@@ -4,55 +4,44 @@ import org.example.Controlador.VistaController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SignUp extends JDialog {
+public class VLogin extends JFrame {
     private VistaController vistaController;
-    private Login login;
 
     private JPanel pPrincipal;
-    private JButton bCrear;
-    private JPanel bBotones;
-    private JPanel pBody;
     private JPanel pHeader;
-    private JPanel pText;
+    private JLabel lLogo;
+    private JPanel pBody;
+    private JPanel pTexto;
     private JPanel pInputs;
     private JTextField tfEmail;
-    private JPasswordField pfPassword;
+    private JLabel accountIcon;
+    private JLabel lockIcon;
+    private JPanel pBotones;
+    private JButton iniciarSesionButton;
     private JLabel linkCuenta;
+    private JPasswordField pfPasword;
 
-    public SignUp(VistaController vistaController) {
+    public VLogin(VistaController vistaController) {
         this.vistaController = vistaController;
 
         setContentPane(pPrincipal);
-        setModal(true);
         setTitle("Consultoria E-Sports");
-        setSize(500, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(500, 350);
         setLocationRelativeTo(null);
-        getRootPane().setDefaultButton(bCrear);
         setResizable(false);
 
-        linkCuenta.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        iniciarSesionButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        linkCuenta.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                dispose();
-            }
-        });
-
-        bCrear.addActionListener(new ActionListener() {
+        iniciarSesionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     String email = tfEmail.getText();
-                    String pass = String.valueOf(pfPassword.getPassword());
 
                     boolean emailValido = validarFormatoEmail(email);
 
@@ -60,19 +49,27 @@ public class SignUp extends JDialog {
                         throw new Exception("Formato de email incorrecto");
                     }
 
-                    vistaController.crearCuenta(email, pass);
+                    String pass = String.valueOf(pfPasword.getPassword());
 
-                    JOptionPane.showMessageDialog(pPrincipal, "Cuenta creada correctamente");
-                    dispose();
+                    vistaController.logIn(email, pass);
 
                 }catch (Exception ex){
                     JOptionPane.showMessageDialog(pPrincipal, ex.getMessage());
                 }
             }
         });
+
+        linkCuenta.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        linkCuenta.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                DSignUp DSignUp = new DSignUp(vistaController);
+                DSignUp.setVisible(true);
+            }
+        });
     }
-    private boolean
-    validarFormatoEmail(String email) {
+
+    private boolean validarFormatoEmail(String email) {
         Pattern patron = Pattern.compile("^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
         Matcher matcher = patron.matcher(email);
         return matcher.matches();

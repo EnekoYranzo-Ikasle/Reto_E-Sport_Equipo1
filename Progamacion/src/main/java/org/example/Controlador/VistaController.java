@@ -1,7 +1,7 @@
 package org.example.Controlador;
 
 import org.example.Modelo.*;
-import org.example.Vista.Login;
+import org.example.Vista.VLogin;
 import org.example.Vista.VInicioAdmin;
 import org.example.Vista.VInicioUser;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class VistaController {
     private ModeloController modeloController;
-    private final Login login;
+    private final VLogin VLogin;
 
     private boolean calendarioGenerado;
     private boolean crudJugEquipBloqueado;
@@ -23,8 +23,8 @@ public class VistaController {
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
 
-        login = new Login(this);
-        login.setVisible(true);
+        VLogin = new VLogin(this);
+        VLogin.setVisible(true);
     }
 
     public void logIn(String email, String pass) {
@@ -37,23 +37,23 @@ public class VistaController {
 
             switch (usuario.getTipo()) {
                 case "user":{
-                    VInicioUser vInicioUser = new VInicioUser(this, login);
+                    VInicioUser vInicioUser = new VInicioUser(this, VLogin);
                     vInicioUser.setVisible(true);
 
-                    login.dispose();
+                    VLogin.dispose();
                 }break;
                 case "admin": {
-                    VInicioAdmin vInicioAdmin = new VInicioAdmin(this, login);
+                    VInicioAdmin vInicioAdmin = new VInicioAdmin(this, VLogin);
                     vInicioAdmin.setVisible(true);
 
-                    login.dispose();
+                    VLogin.dispose();
                 }break;
                 default: {
                     throw new Exception("Tipo de usuario incorrecto");
                 }
             }
         }catch (Exception ex){
-            JOptionPane.showMessageDialog(login, ex.getMessage());
+            JOptionPane.showMessageDialog(VLogin, ex.getMessage());
         }
     }
 

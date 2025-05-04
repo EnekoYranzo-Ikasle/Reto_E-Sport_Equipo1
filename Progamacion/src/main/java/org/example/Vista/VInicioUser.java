@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class VInicioUser extends JFrame {
     private VistaController vistaController;
-    private Login login;
+    private VLogin VLogin;
 
     private JPanel pPrincipal;
     private JPanel pBody;
@@ -20,9 +20,9 @@ public class VInicioUser extends JFrame {
     private JPanel pHeader;
     private JButton bLogOut;
 
-    public VInicioUser(VistaController vistaController, Login login) throws HeadlessException {
+    public VInicioUser(VistaController vistaController, VLogin VLogin) throws HeadlessException {
         this.vistaController = vistaController;
-        this.login = login;
+        this.VLogin = VLogin;
 
         setContentPane(pPrincipal);
         setTitle("Vista Inicio");
@@ -33,8 +33,8 @@ public class VInicioUser extends JFrame {
         bLogOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Login login = new Login(vistaController);
-                login.setVisible(true);
+                VLogin VLogin = new VLogin(vistaController);
+                VLogin.setVisible(true);
                 dispose();
             }
         });
