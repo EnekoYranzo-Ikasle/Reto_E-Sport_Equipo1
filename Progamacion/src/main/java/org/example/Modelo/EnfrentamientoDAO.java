@@ -1,10 +1,7 @@
 package org.example.Modelo;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,5 +79,21 @@ public class EnfrentamientoDAO {
         ps.setInt(1, codGanador);
         ps.setInt(2, codEnfrentamiento);
         ps.executeUpdate();
+    }
+    public boolean enfrentamientoExiste(int codenfrentamiento) throws SQLException {
+        ps=conn.prepareStatement("select * from enfrentamientos where codEnfrentamiento=?");
+        ps.setInt(1, codenfrentamiento);
+        rs=ps.executeQuery();
+        if (rs.next()) {
+            return true;
+        }else return false;
+    }
+    public void setHora(String tiempo, int codEnfentamiento)throws SQLException{
+        ps=conn.prepareStatement("update enfrentamientos set hora=? where codenfrentamiento=?");
+        ps.setString(1, tiempo);
+        ps.setInt(2, codEnfentamiento);
+        ps.executeUpdate();
+
+
     }
 }

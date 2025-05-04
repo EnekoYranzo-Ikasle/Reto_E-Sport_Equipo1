@@ -95,5 +95,14 @@ public class VAdministrarAdmin extends JFrame {
                 dCompeticion.setVisible(true);
             }
         });
+        bEnfrentamiento.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DEditarHora dEditarHora = new DEditarHora(vistaController);
+                dEditarHora.setVisible(true);
+
+
+            }
+        });
     }
 }

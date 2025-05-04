@@ -153,4 +153,10 @@ public class ModeloController {
     public void setGanador(int codgGanador, int CodEnfrentamiento) throws SQLException {
         enfrentamientoController.setGanador(codgGanador, CodEnfrentamiento);
     }
+    public boolean enfrentamientoExiste(int codEnfrentamiento) throws SQLException {
+        return enfrentamientoController.enfrentamientoExiste(codEnfrentamiento);
+    }
+    public void setHora(String hora, int codEnfrentamiento) throws SQLException {
+        enfrentamientoController.setHora(hora, codEnfrentamiento);
+    }
 }
