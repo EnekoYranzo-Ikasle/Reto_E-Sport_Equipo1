@@ -30,4 +30,10 @@ public class EnfrentamientoController {
     public void setGanador(int codgGanador, int CodEnfrentamiento) throws SQLException {
         enfrentamientoDAO.setGanador(codgGanador, CodEnfrentamiento);
     }
+    public boolean enfrentamientoExiste(int codEnfrentamiento) throws SQLException {
+        return enfrentamientoDAO.enfrentamientoExiste(codEnfrentamiento);
+    }
+    public void setHora(String hora, int codEnfrentamiento) throws SQLException {
+        enfrentamientoDAO.setHora(hora, codEnfrentamiento);
+    }
 }
