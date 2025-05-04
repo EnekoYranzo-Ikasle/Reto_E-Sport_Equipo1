@@ -38,6 +38,13 @@ public class Jugador {
         this.codEquipo = codEquipo;
     }
 
+    public Jugador(String nombre, String apellidos, Roles rol, double sueldo) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.rol = rol;
+        this.sueldo = sueldo;
+    }
+
     public Jugador() {
 
     }

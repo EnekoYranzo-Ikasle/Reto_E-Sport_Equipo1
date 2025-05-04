@@ -79,7 +79,8 @@ public class Enfrentamiento {
         this.jornada = jornada;
     }
 
-    public String toString(){
+    @Override
+    public String toString() {
         return equipo1.getNombreEquipo() + " vs " + equipo2.getNombreEquipo() + " Hora: " + hora;
     }
 

@@ -55,10 +55,6 @@ public class ModeloController {
         return jugadorController.mostrarJugadores(codEquip);
     }
 
-    public List<Integer> mostrarCodJornada() throws SQLException {
-        return jornadaController.obtenerCodJornada();
-    }
-
     public List<Integer> getGanador(int codigoJorn) throws SQLException {
         return enfrentamientoController.getganador(codigoJorn);
     }
@@ -96,6 +92,10 @@ public class ModeloController {
         return jugadorController.getJugadores();
     }
 
+    public List<Jugador> getInformeJugadores(String nombreEquipo) throws SQLException{
+        return jugadorController.getInformeJugadores(nombreEquipo);
+    }
+
 //    Equipo
     public void nuevoEquipo(Equipo equipo) throws SQLException {
         equipoController.nuevoEquipo(equipo);
@@ -123,6 +123,10 @@ public class ModeloController {
 
     public boolean equipoDeJugador(int codJugador) throws SQLException {
         return jugadorController.EquipoDeJugador(codJugador);
+    }
+
+    public List<Object[]> getInformeEquipos(int codCompeticion) throws SQLException {
+        return equipoController.getInformeEquipos(codCompeticion);
     }
 
 //    Competiciones:

@@ -26,7 +26,7 @@ public class VAdministrarAdmin extends JFrame {
 
         setContentPane(pPrincipal);
         setTitle("Vista Admin - Administrar");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(700, 300);
         setLocationRelativeTo(null);
 

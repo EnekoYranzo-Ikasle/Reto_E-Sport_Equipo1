@@ -15,7 +15,6 @@ public class EquipoController {
         this.equipoDAO = equipoDAO;
     }
 
-    // Funciones:
     public void nuevoEquipo(Equipo equipo) throws SQLException {
         equipoDAO.altaEquipo(equipo);
     }
@@ -34,6 +33,10 @@ public class EquipoController {
 
     public Equipo getGanador(int codEquip) throws SQLException {
         return equipoDAO.buscarEquipoPorCod(codEquip);
+    }
+
+    public List<Object[]> getInformeEquipos(int codCompeticion) throws SQLException {
+        return equipoDAO.getInformeEquipos(codCompeticion);
     }
 
     // Validaciones:

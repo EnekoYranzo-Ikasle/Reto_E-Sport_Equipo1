@@ -35,6 +35,7 @@ public class JugadorController {
     public void editarJugador(Jugador jugador, int codigo) throws SQLException {
         jugadorDAO.editarJugador(codigo, jugador);
     }
+
     public boolean jugadorExiste(int codJugador) throws SQLException {
         return jugadorDAO.jugadorExiste(codJugador);
     }
@@ -42,8 +43,13 @@ public class JugadorController {
     public List<Jugador> getJugadores() throws SQLException {
         return jugadorDAO.getListaJugadores();
     }
+
     public boolean EquipoDeJugador(int codJugador) throws SQLException {
         return jugadorDAO.equipoDeJugador(codJugador);
+    }
+
+    public List<Jugador> getInformeJugadores(String nombreEquipo) throws SQLException {
+        return jugadorDAO.getInformeJugadores(nombreEquipo);
     }
 
     // Validaciones:

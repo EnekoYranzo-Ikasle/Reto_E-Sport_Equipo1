@@ -1,5 +1,7 @@
 package org.example.Modelo;
 
+import oracle.jdbc.OracleTypes;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ public class JugadorDAO {
     private final Connection conn;
     private static PreparedStatement ps;
     private static ResultSet rs;
+    private static CallableStatement cs;
 
     // Constructor:
     public JugadorDAO(Connection conn) {
@@ -82,6 +85,31 @@ public class JugadorDAO {
             return !rs.wasNull();
         }
         return false;
+    }
+
+    public List<Jugador> getInformeJugadores(String nombreEquipo) throws SQLException {
+        List<Jugador> lista = new ArrayList<>();
+
+        cs = conn.prepareCall("{ call obtenerJugadoresEquipos(?, ?) }");
+        cs.setString(1, nombreEquipo);
+        cs.registerOutParameter(2, OracleTypes.CURSOR);
+        cs.execute();
+
+        rs = (ResultSet) cs.getObject(2);
+
+        while (rs.next()) {
+            Jugador jugador = new Jugador(
+                    rs.getString("NOMBRE"),
+                    rs.getString("APELLIDOS"),
+                    Roles.valueOf(rs.getString("ROL").toUpperCase()),
+                    rs.getDouble("SUELDO")
+            );
+
+            lista.add(jugador);
+        }
+        rs.close();
+
+        return lista;
     }
 
 

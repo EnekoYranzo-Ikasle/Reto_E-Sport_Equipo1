@@ -43,6 +43,7 @@ public class EnfrentamientoDAO {
         }
         return ganadores;
     }
+
     public List<Enfrentamiento>obtenerEnfrentamientos()throws SQLException{
         List<Enfrentamiento> lista = new ArrayList<>();
 
@@ -66,8 +67,9 @@ public class EnfrentamientoDAO {
         }
         return lista;
     }
+
     public String sacarNombrEquipo(int codequipo) throws SQLException {
-        ps=conn.prepareStatement("select nombre from equipos where codEquipo=?");
+        ps=conn.prepareStatement("select nombre from equipos where codequipo=?");
         ps.setInt(1, codequipo);
         rs=ps.executeQuery();
         if (rs.next()) {

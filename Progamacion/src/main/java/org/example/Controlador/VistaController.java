@@ -92,10 +92,6 @@ public class VistaController {
         return modeloController.getEquipoPorNombre(nombrEquipo);
     }
 
-    public List<Integer> obtenerCodJornada() throws SQLException {
-        return modeloController.mostrarCodJornada();
-    }
-
     public List<Integer> getGanador(int codigoJorn) throws SQLException {
         return modeloController.getGanador(codigoJorn);
     }
@@ -125,6 +121,10 @@ public class VistaController {
         return modeloController.jugadorExiste(codJugador);
     }
 
+    public List<Jugador> getInformeJugadores(String nombreEquipo) throws SQLException{
+        return modeloController.getInformeJugadores(nombreEquipo);
+    }
+
     public void nuevoEquipo(String nombreEquipo, LocalDate fechaFundacion) throws SQLException {
         Equipo equipo = new Equipo(nombreEquipo, fechaFundacion);
 
@@ -137,6 +137,10 @@ public class VistaController {
 
     public List<Equipo> getEquipos() throws SQLException{
         return modeloController.getEquipos();
+    }
+
+    public List<Object[]> getInformeEquipos(int codCompeticion) throws SQLException{
+        return modeloController.getInformeEquipos(codCompeticion);
     }
 
     public boolean existeEquipo(String nombreEquipo) throws SQLException {

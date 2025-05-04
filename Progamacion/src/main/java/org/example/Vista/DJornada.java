@@ -5,6 +5,7 @@ import org.example.Modelo.Jornada;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +41,13 @@ public class DJornada extends JDialog {
             configurarTabla();
             configurarBotones();
 
-            pBorrar.add(new JScrollPane(tablaJornada), BorderLayout.CENTER);
+            // Crear y configurar el JScrollPane
+            JScrollPane scrollPane = new JScrollPane(tablaJornada);
+            scrollPane.getViewport().setBackground(new Color(30, 42, 56));
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.getViewport().setBorder(null);
+
+            pBorrar.add(scrollPane, BorderLayout.CENTER);
             pBorrar.add(crearPanelBotones(), BorderLayout.EAST);
 
         } catch (Exception e) {
@@ -114,6 +121,17 @@ public class DJornada extends JDialog {
         tablaJornada = new JTable(modeloTabla);
         tablaJornada.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaJornada.getTableHeader().setReorderingAllowed(false);
+
+        // Aplicar diseño personalizado a la tabla
+        tablaJornada.setBackground(new Color(30, 42, 56));
+        tablaJornada.setForeground(Color.white);
+        tablaJornada.setShowGrid(false);
+        tablaJornada.setBorder(null);
+
+        JTableHeader header = tablaJornada.getTableHeader();
+        header.setBackground(new Color(30, 42, 56).darker());
+        header.setForeground(Color.white);
+        header.setBorder(null);
 
         actualizarTabla();
     }

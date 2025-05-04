@@ -5,6 +5,7 @@ import org.example.Modelo.Equipo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -217,8 +218,14 @@ public class DEquipo extends JDialog {
             configurarTabla();
             configurarBotones();
 
+            // Crear y configurar el JScrollPane
+            JScrollPane scrollPane = new JScrollPane(tablaEquipos);
+            scrollPane.getViewport().setBackground(new Color(30, 42, 56));
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.getViewport().setBorder(null);
+
             // Agregar los componentes al panel
-            pBorrar.add(new JScrollPane(tablaEquipos), BorderLayout.CENTER);
+            pBorrar.add(scrollPane, BorderLayout.CENTER);
             pBorrar.add(crearPanelBotones(), BorderLayout.EAST);
 
         } catch (Exception e) {
@@ -274,6 +281,17 @@ public class DEquipo extends JDialog {
         tablaEquipos = new JTable(modeloTabla);
         tablaEquipos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaEquipos.getTableHeader().setReorderingAllowed(false);
+
+        // Aplicar diseño personalizado a la tabla
+        tablaEquipos.setBackground(new Color(30, 42, 56));
+        tablaEquipos.setForeground(Color.white);
+        tablaEquipos.setShowGrid(false);
+        tablaEquipos.setBorder(null);
+
+        JTableHeader header = tablaEquipos.getTableHeader();
+        header.setBackground(new Color(30, 42, 56).darker());
+        header.setForeground(Color.white);
+        header.setBorder(null);
 
         actualizarTabla();
     }

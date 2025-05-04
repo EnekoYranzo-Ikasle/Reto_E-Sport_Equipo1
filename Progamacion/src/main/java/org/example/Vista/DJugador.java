@@ -7,6 +7,7 @@ import org.example.Modelo.Roles;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -70,7 +71,7 @@ public class DJugador extends JDialog {
         setContentPane(pPrincipal);
         setModal(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(600, 450);
+        setSize(600, 500);
         setLocationRelativeTo(null);
 
         try {
@@ -103,7 +104,11 @@ public class DJugador extends JDialog {
             configurarTabla();
             configurarBotones();
 
-            pBorrar.add(new JScrollPane(tablaJugadores), BorderLayout.CENTER);
+            JScrollPane scrollPane = new JScrollPane(tablaJugadores);
+            scrollPane.getViewport().setBackground(new Color(30, 42, 56));
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.getViewport().setBorder(null);
+            pBorrar.add(scrollPane, BorderLayout.CENTER);
             pBorrar.add(crearPanelBotones(), BorderLayout.EAST);
 
         } catch (Exception e) {
@@ -337,6 +342,17 @@ public class DJugador extends JDialog {
         tablaJugadores = new JTable(modeloTabla);
         tablaJugadores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaJugadores.getTableHeader().setReorderingAllowed(false);
+
+        // Aplicar diseño personalizado a la tabla
+        tablaJugadores.setBackground(new Color(30, 42, 56));
+        tablaJugadores.setForeground(Color.white);
+        tablaJugadores.setShowGrid(false);
+        tablaJugadores.setBorder(null);
+
+        JTableHeader header = tablaJugadores.getTableHeader();
+        header.setBackground(new Color(30, 42, 56).darker());
+        header.setForeground(Color.white);
+        header.setBorder(null);
 
         actualizarTabla();
     }

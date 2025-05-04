@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class VInicioAdmin extends JFrame {
     private VistaController vistaController;
     private Login login;
-    private DVisualizarResultados dVisualizarResultados;
+    private VInformes VInformes;
 
     private JPanel pPrincipal;
     private JPanel pHeader;
@@ -94,8 +94,9 @@ public class VInicioAdmin extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    DVisualizarResultados dVisualizarResultados = new DVisualizarResultados(vistaController);
-                    dVisualizarResultados.setVisible(true);
+                    VInformes VInformes = new VInformes(vistaController, VInicioAdmin.this);
+                    VInformes.setVisible(true);
+                    dispose();
 
                 }catch (SQLException ex) {
                     throw new RuntimeException(ex);
