@@ -193,6 +193,10 @@ public class VistaController {
         modeloController.setHora(hora, codEnfrentamiento);
     }
 
+    public List<Competicion> getCompeticiones() throws SQLException{
+        return modeloController.getCompeticiones();
+    }
+
 //    Funciones para bloquear y activar botones
     public void bloquearGenerarCalendario(){
         calendarioGenerado = true;

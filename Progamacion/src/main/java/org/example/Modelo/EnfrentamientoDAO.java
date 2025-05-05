@@ -18,7 +18,7 @@ public class EnfrentamientoDAO {
         ps=conn.prepareStatement("select ganador from enfrentamientos where jornada=?");
         ps.setInt(1, codjornada);
         rs=ps.executeQuery();
-        
+
         List<Integer> ganadores = new ArrayList<>();
 
         while (rs.next()) {

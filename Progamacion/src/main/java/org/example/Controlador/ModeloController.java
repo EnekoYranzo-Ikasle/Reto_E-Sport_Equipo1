@@ -134,6 +134,10 @@ public class ModeloController {
         competicionController.nuevaCompeticion(competicion);
     }
 
+    public List<Competicion> getCompeticiones() throws SQLException {
+        return competicionController.getCompeticiones();
+    }
+
 //    Jornadas:
     public List<Jornada> getJornadas() throws SQLException {
         return jornadaController.getJornadas();
