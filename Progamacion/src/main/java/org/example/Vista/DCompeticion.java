@@ -5,6 +5,8 @@ import org.example.Controlador.VistaController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -20,17 +22,11 @@ public class DCompeticion extends JDialog {
     private JTextField tfFechaFin;
     private JButton aceptarButton;
     private JPanel pBorrar;
-    private JTextField Nombre;
-    private JTextField apellido;
-    private JTextField Nacionalidad;
-    private JTextField fechaNacimiento;
-    private JTextField Nickname;
-    private JTextField Sueldio;
-    private JComboBox Rolesss;
-    private JTextField NombrEquip;
-    private JTextField codigoJugad;
+    private JTextField NuevaIni;
+    private JTextField NuevaFin;
     private JButton botonsico;
     private JPanel pNuevaComp;
+    private JTextField NuevoNom;
 
     public DCompeticion(VistaController vistaController) {
         this.vistaController = vistaController;
@@ -69,6 +65,23 @@ public class DCompeticion extends JDialog {
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(DCompeticion.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+        botonsico.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!NuevoNom.getText().matches("^[a-zA-Z0-9 ]+$")){
+                    JOptionPane.showMessageDialog(null, "Formato del nombre mal insertado");
+                }else{
+                    try {
+                        vistaController.actualizarCompeticion(NuevaIni.getText(),NuevaFin.getText(),NuevoNom.getText());
+                    }catch (DateTimeException exception){
+                        JOptionPane.showMessageDialog(null,"Formato de fecha mal insertado");
+                    }catch (SQLException ex){
+                        JOptionPane.showMessageDialog(DCompeticion.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+
             }
         });
     }

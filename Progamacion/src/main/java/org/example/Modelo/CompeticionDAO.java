@@ -36,6 +36,14 @@ public class CompeticionDAO {
         ps.executeUpdate();
     }
 
+    public void editarCompeticion(LocalDate fechaIni, LocalDate fechaFin, String nombre) throws SQLException {
+        ps = conn.prepareStatement("update competiciones set nombre=?, fechaInicio=?, fechaFin=? where codCompeticion = sec_codCompeticion.curval");
+        ps.setString(1, nombre);
+        ps.setDate(2, parsearFecha(fechaIni));
+        ps.setDate(3, parsearFecha(fechaFin));
+        ps.executeUpdate();
+    }
+
     private Date parsearFecha(LocalDate fecha1){
         return Date.valueOf(fecha1);
     }
