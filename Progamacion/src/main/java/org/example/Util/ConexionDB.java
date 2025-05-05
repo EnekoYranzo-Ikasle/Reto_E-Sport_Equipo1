@@ -10,14 +10,14 @@ public class ConexionDB {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             // Para usar en clase
-//            String url = "jdbc:oracle:thin:@172.20.225.114:1521:orcl";
-//            String user = "eqdaw01";
-//            String password = "eqdaw01";
+            String url = "jdbc:oracle:thin:@172.20.225.114:1521:orcl";
+            String user = "eqdaw01";
+            String password = "eqdaw01";
 
             // Para usar la maquina virtual
-            String url = "jdbc:oracle:thin:@127.0.0.1:1521:orclcdb";
-            String user = "system";
-            String password = "oracle";
+//            String url = "jdbc:oracle:thin:@127.0.0.1:1521:orclcdb";
+//            String user = "system";
+//            String password = "oracle";
             conn = DriverManager.getConnection(url, user, password);
 
         }catch (ClassNotFoundException e) {
