@@ -21,7 +21,7 @@ public class JornadaDAO {
     }
 
     /**
-     * 
+     * Funcion que genera las jornadas
      * @param numJornadas
      * @param equipos
      * @throws Exception
@@ -66,6 +66,8 @@ public class JornadaDAO {
 
     /**
      * Guardar jornada y obtener el codJornada autogenerado de la secuencia.
+     * @param fechaJornada
+     * @throws Exception
      */
     private int nuevaJornada(LocalDate fechaJornada) throws Exception {
         int codGenerado;
@@ -142,12 +144,24 @@ public class JornadaDAO {
     }
 
 //    Funciones privadas:
+
+    /**
+     * Funición privada para parsear la hora a TimeStamp.
+     * Se coge la fecha actual solo para cumplir con el formato de TimeStamp
+     * @param hora
+     * @return
+     */
     private Timestamp parsearHoraSQL(LocalTime hora) {
         LocalDate fecha = LocalDate.now();
         LocalDateTime fechaHora = fecha.atTime(hora);
         return Timestamp.valueOf(fechaHora);
     }
 
+    /**
+     * Función privada para parsear la fecha a Date de SQL
+     * @param fecha
+     * @return
+     */
     private Date parsearFechaSQL(LocalDate fecha) {
         return Date.valueOf(fecha);
     }
