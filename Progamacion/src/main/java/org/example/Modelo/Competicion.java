@@ -16,6 +16,13 @@ public class Competicion {
         this.fechaFin = fechaFin;
     }
 
+    public Competicion(int codCompe, String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
+        this.codCompe = codCompe;
+        this.nombre = nombre;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
+
     public Competicion() {
 
     }

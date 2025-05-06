@@ -182,3 +182,24 @@ WHEN OTHERS THEN
     v_mensaje:= 'Error desconcido ' || to_char(SQLCODE) ||  SQLERRM;
     RAISE_APPLICATION_ERROR(-20099, v_mensaje);
 END trg_valida_ganador_Equipo01;
+
+/*Entre cada enfrentamiento pasen minimo 2 horas*/
+CREATE OR REPLACE TRIGGER horaEnfrentamientos
+    BEFORE UPDATE OF hora ON enfrentamientos
+    FOR EACH ROW
+    DECLARE
+        V_MENSAJE VARCHAR2(255);
+        E_MENOS_2_HORAS EXCEPTION;
+        
+    BEGIN
+        IF :new.hora < :old.hora + INTERVAL '2' HOUR THEN
+            RAISE E_MENOS_2_HORAS;
+        END IF;
+        
+    EXCEPTION
+        WHEN E_MENOS_2_HORAS THEN
+            RAISE_APPLICATION_ERROR(-20010, 'Deben pasar minimo 2 horas');
+        WHEN OTHERS THEN
+            V_MENSAJE := 'Error desconcido ' || to_char(SQLCODE) ||  SQLERRM;
+            RAISE_APPLICATION_ERROR(-20099, V_MENSAJE);    
+END horaEnfrentamientos;       
