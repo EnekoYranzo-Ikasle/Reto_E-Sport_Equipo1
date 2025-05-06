@@ -2,6 +2,8 @@ package org.example.Modelo;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CompeticionDAO {
     private final Connection conn;
@@ -36,12 +38,32 @@ public class CompeticionDAO {
         ps.executeUpdate();
     }
 
+
     public void editarCompeticion(LocalDate fechaIni, LocalDate fechaFin, String nombre) throws SQLException {
         ps = conn.prepareStatement("update competiciones set nombre=?, fechaInicio=?, fechaFin=? where codCompeticion = sec_codCompeticion.curval");
         ps.setString(1, nombre);
         ps.setDate(2, parsearFecha(fechaIni));
         ps.setDate(3, parsearFecha(fechaFin));
         ps.executeUpdate();
+    }
+    public List<Competicion> getCompeticiones() throws SQLException {
+        ps = conn.prepareStatement("SELECT * FROM competiciones");
+        rs = ps.executeQuery();
+
+        List<Competicion> competiciones = new ArrayList<>();
+        while (rs.next()) {
+            Competicion competicion = new Competicion(
+                    rs.getInt("CODCOMPETICION"),
+                    rs.getString("NOMBRE"),
+                    rs.getDate("FECHAINICIO").toLocalDate(),
+                    rs.getDate("FECHAFIN").toLocalDate()
+            );
+
+            competiciones.add(competicion);
+        }
+
+        return competiciones;
+
     }
 
     private Date parsearFecha(LocalDate fecha1){

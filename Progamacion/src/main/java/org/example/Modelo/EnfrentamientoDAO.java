@@ -14,34 +14,20 @@ public class EnfrentamientoDAO {
         this.conn = conn;
     }
 
-    public void agregarResultados(String seleccion, List<Enfrentamiento> lista, String resultado){
-        if (seleccion != null) {
-            int index = lista.indexOf(lista.stream().filter(e -> e.toString().equals(seleccion)).findFirst().orElse(null));
-
-            if (index != -1) {
-
-                if (resultado != null && !resultado.isEmpty()) {
-                    lista.get(index).setResultado(resultado);
-                    JOptionPane.showMessageDialog(null, "Resultado actualizado correctamente.");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Debe ingresar un resultado válido.");
-                }
-            }
-        }
-    }
-
     public List<Integer> obtenerGanadores(int codjornada) throws SQLException {
         ps=conn.prepareStatement("select ganador from enfrentamientos where jornada=?");
         ps.setInt(1, codjornada);
         rs=ps.executeQuery();
+
         List<Integer> ganadores = new ArrayList<>();
+
         while (rs.next()) {
             ganadores.add(rs.getInt("ganador"));
         }
         return ganadores;
     }
 
-    public List<Enfrentamiento>obtenerEnfrentamientos()throws SQLException{
+    public List<Enfrentamiento> obtenerEnfrentamientos()throws SQLException{
         List<Enfrentamiento> lista = new ArrayList<>();
 
         ps = conn.prepareStatement("select * from enfrentamientos");
@@ -68,6 +54,7 @@ public class EnfrentamientoDAO {
     public String sacarNombrEquipo(int codequipo) throws SQLException {
         ps=conn.prepareStatement("select nombre from equipos where codequipo=?");
         ps.setInt(1, codequipo);
+
         ResultSet rs1=ps.executeQuery();
         if (rs1.next()) {
             return rs1.getString("nombre");
@@ -82,20 +69,22 @@ public class EnfrentamientoDAO {
         ps.setInt(2, codEnfrentamiento);
         ps.executeUpdate();
     }
+
     public boolean enfrentamientoExiste(int codenfrentamiento) throws SQLException {
         ps=conn.prepareStatement("select * from enfrentamientos where codEnfrentamiento=?");
         ps.setInt(1, codenfrentamiento);
         rs=ps.executeQuery();
+
         if (rs.next()) {
             return true;
-        }else return false;
+        } else
+            return false;
     }
+
     public void setHora(String tiempo, int codEnfentamiento)throws SQLException{
         ps=conn.prepareStatement("update enfrentamientos set hora=? where codenfrentamiento=?");
         ps.setString(1, tiempo);
         ps.setInt(2, codEnfentamiento);
         ps.executeUpdate();
-
-
     }
 }
