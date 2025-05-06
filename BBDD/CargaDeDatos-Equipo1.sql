@@ -20,7 +20,7 @@ INSERT INTO jugadores (codJugador, nombre, apellidos, nacionalidad, fechaNacimie
     VALUES (sec_codJugadores.NEXTVAL, 'Carlos', 'Gomez', 'Española', TO_DATE('22-07-1997', 'DD-MM-YYYY'), 
         'carlitos', 'controlador', 1200, sec_codEquipo.CURRVAL);
 
--- Inserción de datos en la tabla EQUIPOS para el equipo 2
+-- Inserción de datos en la tabla EQUIPOS para el equipo 2 
 INSERT INTO equipos (codEquipo, nombre, fechaFundacion) 
     VALUES (sec_codEquipo.NEXTVAL, 'Equipo Beta', TO_DATE('15-08-2012', 'DD-MM-YYYY'));
 
