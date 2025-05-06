@@ -68,9 +68,9 @@ public class EnfrentamientoDAO {
     public String sacarNombrEquipo(int codequipo) throws SQLException {
         ps=conn.prepareStatement("select nombre from equipos where codequipo=?");
         ps.setInt(1, codequipo);
-        rs=ps.executeQuery();
-        if (rs.next()) {
-            return rs.getString("nombre");
+        ResultSet rs1=ps.executeQuery();
+        if (rs1.next()) {
+            return rs1.getString("nombre");
         }else {
             return null;
         }
