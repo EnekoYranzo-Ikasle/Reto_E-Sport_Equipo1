@@ -133,6 +133,9 @@ public class ModeloController {
     public void nuevaCompeticion(Competicion competicion) throws SQLException {
         competicionController.nuevaCompeticion(competicion);
     }
+    public void actualizarCompeticion(LocalDate fechaIni, LocalDate fechaFin, String nombre) throws SQLException {
+        competicionController.actualizarCompeticion(fechaIni, fechaFin, nombre);
+    }
 
     public List<Competicion> getCompeticiones() throws SQLException {
         return competicionController.getCompeticiones();
