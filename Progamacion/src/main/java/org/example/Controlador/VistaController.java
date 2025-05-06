@@ -28,6 +28,11 @@ public class VistaController {
         VLogin.setVisible(true);
     }
 
+    /**
+     * Verifica si el email que se ha insertado y su contraseña son validos y ademas si el usuario es admin o no
+     * @param email
+     * @param pass
+     */
     public void logIn(String email, String pass) {
         try {
             Persona usuario = modeloController.getPersona(email);

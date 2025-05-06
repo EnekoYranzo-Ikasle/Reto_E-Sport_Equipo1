@@ -14,22 +14,6 @@ public class EnfrentamientoDAO {
         this.conn = conn;
     }
 
-    public void agregarResultados(String seleccion, List<Enfrentamiento> lista, String resultado){
-        if (seleccion != null) {
-            int index = lista.indexOf(lista.stream().filter(e -> e.toString().equals(seleccion)).findFirst().orElse(null));
-
-            if (index != -1) {
-
-                if (resultado != null && !resultado.isEmpty()) {
-                    lista.get(index).setResultado(resultado);
-                    JOptionPane.showMessageDialog(null, "Resultado actualizado correctamente.");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Debe ingresar un resultado válido.");
-                }
-            }
-        }
-    }
-
     public List<Integer> obtenerGanadores(int codjornada) throws SQLException {
         ps=conn.prepareStatement("select ganador from enfrentamientos where jornada=?");
         ps.setInt(1, codjornada);
@@ -41,10 +25,15 @@ public class EnfrentamientoDAO {
         return ganadores;
     }
 
+    /**
+     * Una funcion que te devuelde una lista de enfrentamientos que no tienen ganador para posteriormente insertarles uno
+     * @return
+     * @throws SQLException
+     */
     public List<Enfrentamiento>obtenerEnfrentamientos()throws SQLException{
         List<Enfrentamiento> lista = new ArrayList<>();
 
-        ps = conn.prepareStatement("select * from enfrentamientos");
+        ps = conn.prepareStatement("select * from enfrentamientos where ganador = null");
         rs = ps.executeQuery();
 
         while (rs.next()) {
