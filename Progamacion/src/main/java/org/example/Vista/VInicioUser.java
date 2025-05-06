@@ -20,6 +20,12 @@ public class VInicioUser extends JFrame {
     private JPanel pHeader;
     private JButton bLogOut;
 
+    /**
+     * Es la ventanta principal que ve el usuario no administrador
+     * @param vistaController
+     * @param VLogin
+     * @throws HeadlessException
+     */
     public VInicioUser(VistaController vistaController, VLogin VLogin) throws HeadlessException {
         this.vistaController = vistaController;
         this.VLogin = VLogin;
