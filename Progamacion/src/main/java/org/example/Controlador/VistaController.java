@@ -207,6 +207,10 @@ public class VistaController {
         modeloController.actualizarCompeticion(fechaInicio,fechaFinn , nombre);
     }
 
+    public List<Competicion> getCompeticiones() throws SQLException{
+        return modeloController.getCompeticiones();
+    }
+
 //    Funciones para bloquear y activar botones
     public void bloquearGenerarCalendario(){
         calendarioGenerado = true;

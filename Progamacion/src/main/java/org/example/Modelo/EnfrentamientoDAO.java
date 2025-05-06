@@ -18,7 +18,9 @@ public class EnfrentamientoDAO {
         ps=conn.prepareStatement("select ganador from enfrentamientos where jornada=?");
         ps.setInt(1, codjornada);
         rs=ps.executeQuery();
+
         List<Integer> ganadores = new ArrayList<>();
+
         while (rs.next()) {
             ganadores.add(rs.getInt("ganador"));
         }
@@ -57,6 +59,7 @@ public class EnfrentamientoDAO {
     public String sacarNombrEquipo(int codequipo) throws SQLException {
         ps=conn.prepareStatement("select nombre from equipos where codequipo=?");
         ps.setInt(1, codequipo);
+
         ResultSet rs1=ps.executeQuery();
         if (rs1.next()) {
             return rs1.getString("nombre");
@@ -71,20 +74,22 @@ public class EnfrentamientoDAO {
         ps.setInt(2, codEnfrentamiento);
         ps.executeUpdate();
     }
+
     public boolean enfrentamientoExiste(int codenfrentamiento) throws SQLException {
         ps=conn.prepareStatement("select * from enfrentamientos where codEnfrentamiento=?");
         ps.setInt(1, codenfrentamiento);
         rs=ps.executeQuery();
+
         if (rs.next()) {
             return true;
-        }else return false;
+        } else
+            return false;
     }
+
     public void setHora(String tiempo, int codEnfentamiento)throws SQLException{
         ps=conn.prepareStatement("update enfrentamientos set hora=? where codenfrentamiento=?");
         ps.setString(1, tiempo);
         ps.setInt(2, codEnfentamiento);
         ps.executeUpdate();
-
-
     }
 }
