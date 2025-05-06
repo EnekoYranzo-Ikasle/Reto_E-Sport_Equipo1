@@ -20,6 +20,13 @@ public class JornadaDAO {
         this.listaJornadas = new ArrayList<>();
     }
 
+    /**
+     * 
+     * @param numJornadas
+     * @param equipos
+     * @throws Exception
+     */
+
     public void generarJornadas(int numJornadas, List<Equipo> equipos) throws Exception {
         if (equipos.size() % 2 == 0) {
             for (int i = 1; i <= numJornadas; i++) {
@@ -83,11 +90,10 @@ public class JornadaDAO {
         return codGenerado;
     }
 
-
     private void guardarEnfrentamiento(Enfrentamiento enfrentamiento) throws SQLException {
         ps = conn.prepareStatement("INSERT INTO enfrentamientos (CodEnfrentamiento, hora, equipo1, equipo2, jornada)" +
                 " VALUES (sec_codEnfrentamientos.NEXTVAL, ?, ?, ?, ?)");
-        ps.setString(1, parsearHoraSQL(enfrentamiento.getHora()));
+        ps.setTimestamp(1, parsearHoraSQL(enfrentamiento.getHora()));
         ps.setInt(2, enfrentamiento.getEquipo1().getCodEquipo());
         ps.setInt(3, enfrentamiento.getEquipo2().getCodEquipo());
         ps.setInt(4, enfrentamiento.getJornada().getCodJornada());
@@ -136,8 +142,10 @@ public class JornadaDAO {
     }
 
 //    Funciones privadas:
-    private String parsearHoraSQL(LocalTime hora) {
-        return hora.format(DateTimeFormatter.ofPattern("HH:mm"));
+    private Timestamp parsearHoraSQL(LocalTime hora) {
+        LocalDate fecha = LocalDate.now();
+        LocalDateTime fechaHora = fecha.atTime(hora);
+        return Timestamp.valueOf(fechaHora);
     }
 
     private Date parsearFechaSQL(LocalDate fecha) {
