@@ -40,9 +40,7 @@ class CompeticionTest {
     void setUp() {
         competicionDAO=new CompeticionDAO(conn);
     }
-    /*
-    int codCompe, String nombre, LocalDate fechaInicio, LocalDate fechaFin
-    * */
+
     @Test
     void nuevaCompeticion() throws SQLException {
         Competicion competicion = new Competicion(1234,"TestCompeticion",LocalDate.now(),LocalDate.now().plusDays(4));
