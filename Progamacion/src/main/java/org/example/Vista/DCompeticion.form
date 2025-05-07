@@ -305,7 +305,7 @@
                   </grid>
                 </constraints>
               </hspacer>
-              <component id="c6155" class="javax.swing.JButton" binding="botonsico">
+              <component id="c6155" class="javax.swing.JButton" binding="bModificar">
                 <constraints>
                   <grid row="4" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>

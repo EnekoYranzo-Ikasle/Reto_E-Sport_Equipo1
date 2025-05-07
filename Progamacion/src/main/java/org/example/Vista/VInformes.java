@@ -18,6 +18,13 @@ public class VInformes extends JFrame {
 
     private VistaController vistaController;
     private JFrame ventanaAnterior;
+    /**
+     * Constructor de la ventana de informes que es la ventanta que ve un usuario no administrador
+     *
+     * @param vistaController controlador de la vista
+     * @param ventanaAnterior  ventana anterior
+     * @throws SQLException si hay un error en la base de datos
+     */
 
     public VInformes(VistaController vistaController, JFrame ventanaAnterior) throws SQLException {
         this.vistaController = vistaController;

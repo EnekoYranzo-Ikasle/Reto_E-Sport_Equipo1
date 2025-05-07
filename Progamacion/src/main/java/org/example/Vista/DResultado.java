@@ -23,6 +23,9 @@ public class DResultado extends JDialog{
        setLocationRelativeTo(null);
 
        pBody.setLayout(new BoxLayout(pBody, BoxLayout.Y_AXIS));
+       /**
+        * Se van añadiendo los botones de los enfrentamientos mediante un for
+        */
 
        try {
            List<Enfrentamiento> enfrentamienots = vistaController.getEnfrentamientos();
