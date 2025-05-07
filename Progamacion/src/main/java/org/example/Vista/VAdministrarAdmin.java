@@ -21,6 +21,10 @@ public class VAdministrarAdmin extends JFrame {
     private JButton bJornada;
     private JButton bCompeticion;
 
+    /**
+     * Es la ventanta que ve el usuario administrador para administrar los crud
+     * @param vistaController
+     */
     public VAdministrarAdmin(VistaController vistaController) {
         this.vistaController = vistaController;
 

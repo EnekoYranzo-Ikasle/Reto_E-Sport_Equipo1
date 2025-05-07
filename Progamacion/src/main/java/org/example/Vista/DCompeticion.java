@@ -2,7 +2,6 @@ package org.example.Vista;
 
 import org.example.Controlador.VistaController;
 import org.example.Modelo.Competicion;
-import org.example.Modelo.Jornada;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -35,7 +34,7 @@ public class DCompeticion extends JDialog {
     private JPanel pBorrar;
     private JTextField NuevaIni;
     private JTextField NuevaFin;
-    private JButton botonsico;
+    private JButton bModificar;
     private JPanel pNuevaComp;
     private JTextField NuevoNom;
 
@@ -78,8 +77,10 @@ public class DCompeticion extends JDialog {
                 }
             }
         });
-
-        botonsico.addActionListener(new ActionListener() {
+        /**
+         * El boton para modificar la competicion, en su Listener verifica que todos los campos esten bien insertados
+         */
+        bModificar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!NuevoNom.getText().matches("^[a-zA-Z0-9 ]+$")){
@@ -97,7 +98,9 @@ public class DCompeticion extends JDialog {
             }
         });
 
-
+        /**
+         * Se configura el panel de borrado y su scroll, se genera una tabla con las competiciones existentes
+         */
         try {
             listaCompeticiones = vistaController.getCompeticiones();
 

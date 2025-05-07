@@ -27,7 +27,9 @@ public class DVisualizarEquipos extends JDialog {
 
 
         List<Equipo> equipos = vistaController.mostrar();
-
+        /**
+         * Recorremos la lista de equipos y mostramos los jugadores de cada equipo y sus nicknames
+         */
         for ( int i = 0; i < equipos.size(); i++ ) {
             taMostrar.append(equipos.get(i).getNombreEquipo());
 
