@@ -4,6 +4,7 @@ import org.example.Modelo.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class ModeloController {
@@ -133,12 +134,17 @@ public class ModeloController {
     public void nuevaCompeticion(Competicion competicion) throws SQLException {
         competicionController.nuevaCompeticion(competicion);
     }
-    public void actualizarCompeticion(LocalDate fechaIni, LocalDate fechaFin, String nombre) throws SQLException {
-        competicionController.actualizarCompeticion(fechaIni, fechaFin, nombre);
+
+    public void actualizarCompeticion(Competicion competicion) throws SQLException {
+        competicionController.actualizarCompeticion(competicion);
     }
 
     public List<Competicion> getCompeticiones() throws SQLException {
         return competicionController.getCompeticiones();
+    }
+
+    public void eliminarCompeticion(int codCompeticion) throws SQLException {
+        competicionController.eliminarCompeticion(codCompeticion);
     }
 
 //    Jornadas:
@@ -167,7 +173,9 @@ public class ModeloController {
     public boolean enfrentamientoExiste(int codEnfrentamiento) throws SQLException {
         return enfrentamientoController.enfrentamientoExiste(codEnfrentamiento);
     }
-    public void setHora(String hora, int codEnfrentamiento) throws SQLException {
+
+//    Enfrentamientos:
+    public void setHora(LocalTime hora, int codEnfrentamiento) throws SQLException {
         enfrentamientoController.setHora(hora, codEnfrentamiento);
     }
 }

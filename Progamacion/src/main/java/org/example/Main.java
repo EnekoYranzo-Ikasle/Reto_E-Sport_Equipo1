@@ -34,6 +34,10 @@ public class Main {
         }
     }
 
+    /**
+     * Función para crear los objetos y pasarle a los controllers los DAOs.
+     * Abrir conexion con la BD y obtener los datos de conexion para pasarselo a los DAOs.
+     */
     private static void crearObjetos() {
         ConexionDB.connect();
         Connection conn = ConexionDB.getConnection();

@@ -230,7 +230,7 @@ public class DCompeticion extends JDialog {
 
             if (confirmacion == JOptionPane.YES_OPTION) {
                 try {
-                    vistaController.eliminarJornada(listaCompeticiones.get(filaSeleccionada).getCodCompe());
+                    vistaController.eliminarCompeticion(listaCompeticiones.get(filaSeleccionada).getCodCompe());
                     listaCompeticiones.remove(filaSeleccionada);
                     actualizarTabla();
 

@@ -98,8 +98,8 @@ public class VAdministrarAdmin extends JFrame {
         bEnfrentamiento.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DEditarHora dEditarHora = new DEditarHora(vistaController);
-                dEditarHora.setVisible(true);
+                DEnfrentamiento dEnfrentamiento = new DEnfrentamiento(vistaController);
+                dEnfrentamiento.setVisible(true);
 
 
             }
