@@ -33,7 +33,7 @@
             <properties>
               <background color="-14800328"/>
               <enabled value="true"/>
-              <visible value="true"/>
+              <visible value="false"/>
             </properties>
             <border type="none"/>
             <children>

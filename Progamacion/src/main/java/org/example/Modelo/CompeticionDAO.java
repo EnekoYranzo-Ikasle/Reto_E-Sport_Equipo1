@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class CompeticionDAO {
     private final Connection conn;
     private PreparedStatement ps;
@@ -22,6 +23,7 @@ public class CompeticionDAO {
         ps.setDate(2, parsearFecha(competicion.getFechaInicio()));
         ps.setDate(3, parsearFecha(competicion.getFecha_fin()));
         ps.executeUpdate();
+
     }
 
     public void modificarCompeticion(Competicion c) throws SQLException {
@@ -55,6 +57,7 @@ public class CompeticionDAO {
         }
 
         return competiciones;
+
     }
 
     private Date parsearFecha(LocalDate fecha1){
