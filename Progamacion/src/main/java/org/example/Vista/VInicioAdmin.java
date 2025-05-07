@@ -24,6 +24,12 @@ public class VInicioAdmin extends JFrame {
     private JPanel pAbajo;
     private JButton bLogOut;
 
+    /**
+     * Es la ventanta principal que ve el usuario administrador
+     * @param vistaController
+     * @param VLogin
+     */
+
     public VInicioAdmin(VistaController vistaController, VLogin VLogin) {
         this.vistaController = vistaController;
         this.VLogin = VLogin;

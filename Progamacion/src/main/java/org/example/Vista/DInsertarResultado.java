@@ -29,6 +29,7 @@ public class DInsertarResultado extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 try {
                     vistaController.setGanador(codEquip1, codEnfrentamiento);
+                    dispose();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -41,6 +42,7 @@ public class DInsertarResultado extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 try {
                     vistaController.setGanador(codEquip2, codEnfrentamiento);
+                    dispose();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }

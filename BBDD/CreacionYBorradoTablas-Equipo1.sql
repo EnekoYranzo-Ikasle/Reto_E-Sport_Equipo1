@@ -82,7 +82,7 @@ CREATE SEQUENCE sec_codJugadores
 CREATE TABLE enfrentamientos (
     codEnfrentamiento NUMBER(4) NOT NULL
         CONSTRAINT enfre_cod_pk PRIMARY KEY,
-    hora VARCHAR2(5) NOT NULL,
+    hora TIMESTAMP NOT NULL,
     equipo1 NUMBER(4) NOT NULL,
     equipo2 NUMBER(4) NOT NULL,
     ganador NUMBER(4) NULL,

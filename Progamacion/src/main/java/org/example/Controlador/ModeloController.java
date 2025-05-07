@@ -4,6 +4,7 @@ import org.example.Modelo.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class ModeloController {
@@ -55,6 +56,7 @@ public class ModeloController {
         return jugadorController.mostrarJugadores(codEquip);
     }
 
+    /*
     public List<Integer> getGanador(int codigoJorn) throws SQLException {
         return enfrentamientoController.getganador(codigoJorn);
     }
@@ -62,6 +64,7 @@ public class ModeloController {
     public Equipo getGanadorEquipo(int codEquip) throws SQLException {
         return equipoController.getGanador(codEquip);
     }
+     */
 
     public Equipo getEquipoPorNombre(String nombre) throws SQLException {
         return equipoController.getEquipoPorNombre(nombre);
@@ -78,10 +81,6 @@ public class ModeloController {
 
     public void modificarJugador(Jugador jugador, int codigo) throws SQLException {
         jugadorController.editarJugador(jugador,codigo);
-    }
-
-    public Jugador mostrarJugador(int codJugador) throws SQLException {
-        return jugadorController.mostrarJugador(codJugador);
     }
 
     public boolean jugadorExiste(int codJugador) throws SQLException {
@@ -135,8 +134,16 @@ public class ModeloController {
 
     }
 
+    public void actualizarCompeticion(Competicion competicion) throws SQLException {
+        competicionController.actualizarCompeticion(competicion);
+    }
+
     public List<Competicion> getCompeticiones() throws SQLException {
         return competicionController.getCompeticiones();
+    }
+
+    public void eliminarCompeticion(int codCompeticion) throws SQLException {
+        competicionController.eliminarCompeticion(codCompeticion);
     }
 
 //    Jornadas:
@@ -165,7 +172,9 @@ public class ModeloController {
     public boolean enfrentamientoExiste(int codEnfrentamiento) throws SQLException {
         return enfrentamientoController.enfrentamientoExiste(codEnfrentamiento);
     }
-    public void setHora(String hora, int codEnfrentamiento) throws SQLException {
+
+//    Enfrentamientos:
+    public void setHora(LocalTime hora, int codEnfrentamiento) throws SQLException {
         enfrentamientoController.setHora(hora, codEnfrentamiento);
     }
 }

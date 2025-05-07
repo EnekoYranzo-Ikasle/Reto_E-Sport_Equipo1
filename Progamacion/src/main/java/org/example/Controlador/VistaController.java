@@ -8,10 +8,12 @@ import org.example.Vista.VInicioUser;
 import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class VistaController {
-    private ModeloController modeloController;
+    private final ModeloController modeloController;
     private final VLogin VLogin;
 
     private boolean calendarioGenerado;
@@ -27,6 +29,11 @@ public class VistaController {
         VLogin.setVisible(true);
     }
 
+    /**
+     * Función que recoje los usuarios de la BD y según si es tipo admin o user crea una ventana diferente.
+     * @param email como primer dato de entrada.
+     * @param pass como segundo dato de entrada.
+     */
     public void logIn(String email, String pass) {
         try {
             Persona usuario = modeloController.getPersona(email);
@@ -92,6 +99,7 @@ public class VistaController {
         return modeloController.getEquipoPorNombre(nombrEquipo);
     }
 
+    /*
     public List<Integer> getGanador(int codigoJorn) throws SQLException {
         return modeloController.getGanador(codigoJorn);
     }
@@ -99,13 +107,10 @@ public class VistaController {
     public Equipo getGanadorEquipo(int codEquip) throws SQLException {
         return modeloController.getGanadorEquipo(codEquip);
     }
+    */
 
     public void eliminarJugador(int CodJugador) throws SQLException {
         modeloController.eliminarJugador(CodJugador);
-    }
-
-    public Jugador mostrarJugador(int CodigoJugador) throws SQLException {
-        return modeloController.mostrarJugador(CodigoJugador);
     }
 
     public void editarJugador(int codigo, String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
@@ -179,18 +184,35 @@ public class VistaController {
     public void despedirJugador(int codJug) throws SQLException {
         modeloController.despedirJugador(codJug);
     }
+
     public List<Enfrentamiento> getEnfrentamientos() throws SQLException {
         return modeloController.getEnfrentamientos();
-
     }
+
     public void setGanador(int codgGanador, int CodEnfrentamiento) throws SQLException {
         modeloController.setGanador(codgGanador, CodEnfrentamiento);
     }
+
     public boolean enfrentamientoExiste(int codEnfrentamiento) throws SQLException {
         return modeloController.enfrentamientoExiste(codEnfrentamiento);
     }
-    public void setHora(String hora, int codEnfrentamiento) throws SQLException {
+
+    public void setHora(LocalTime hora, int codEnfrentamiento) throws SQLException {
         modeloController.setHora(hora, codEnfrentamiento);
+    }
+
+    public void actualizarCompeticion(String fechaIniStr, String fechaFinStr, String nombre) throws SQLException {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaInicio = LocalDate.parse(fechaIniStr, formato);
+        LocalDate fechaFin = LocalDate.parse(fechaFinStr, formato);
+
+        Competicion competicion = new Competicion(nombre, fechaInicio, fechaFin);
+
+        modeloController.actualizarCompeticion(competicion);
+    }
+
+    public void eliminarCompeticion(int codCompeticion) throws SQLException {
+        modeloController.eliminarCompeticion(codCompeticion);
     }
 
     public List<Competicion> getCompeticiones() throws SQLException{
