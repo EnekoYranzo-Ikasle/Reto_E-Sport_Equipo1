@@ -27,7 +27,6 @@ public class CompeticionDAO {
         ps.setDate(2, parsearFecha(competicion.getFechaInicio()));
         ps.setDate(3, parsearFecha(competicion.getFecha_fin()));
         ps.executeUpdate();
-
     }
 
     /**
@@ -37,7 +36,7 @@ public class CompeticionDAO {
      */
     public void editarCompeticion(Competicion competicion) throws SQLException {
         ps = conn.prepareStatement("update competiciones set nombre = ?, fechaInicio = ?, fechaFin = ? " +
-                "where codCompeticion = sec_codCompeticion.curval");
+                "where codCompeticion = sec_codCompeticion.CURVAL");
         ps.setString(1, competicion.getNombre());
         ps.setDate(2, parsearFecha(competicion.getFechaInicio()));
         ps.setDate(3, parsearFecha(competicion.getFecha_fin()));
@@ -76,7 +75,6 @@ public class CompeticionDAO {
             competiciones.add(competicion);
         }
         return competiciones;
-
     }
 
     /**
