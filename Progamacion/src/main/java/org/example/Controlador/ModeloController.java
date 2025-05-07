@@ -131,6 +131,7 @@ public class ModeloController {
 //    Competiciones:
     public void nuevaCompeticion(Competicion competicion) throws SQLException {
         competicionController.nuevaCompeticion(competicion);
+
     }
 
     public void actualizarCompeticion(Competicion competicion) throws SQLException {
