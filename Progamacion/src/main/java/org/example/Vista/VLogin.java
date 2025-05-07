@@ -25,6 +25,10 @@ public class VLogin extends JFrame {
     private JLabel linkCuenta;
     private JPasswordField pfPasword;
 
+    /**
+     * Primera ventana de el programa sirve para iniciar sesion y asi tener unas funcionalidades u otras
+     * @param vistaController
+     */
     public VLogin(VistaController vistaController) {
         this.vistaController = vistaController;
 
