@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class VistaController {
-    private ModeloController modeloController;
+    private final ModeloController modeloController;
     private final VLogin VLogin;
 
     private boolean calendarioGenerado;
@@ -30,9 +30,9 @@ public class VistaController {
     }
 
     /**
-     * Verifica si el email que se ha insertado y su contraseña son validos y ademas si el usuario es admin o no
-     * @param email
-     * @param pass
+     * Función que recoje los usuarios de la BD y según si es tipo admin o user crea una ventana diferente.
+     * @param email como primer dato de entrada.
+     * @param pass como segundo dato de entrada.
      */
     public void logIn(String email, String pass) {
         try {
@@ -99,6 +99,7 @@ public class VistaController {
         return modeloController.getEquipoPorNombre(nombrEquipo);
     }
 
+    /*
     public List<Integer> getGanador(int codigoJorn) throws SQLException {
         return modeloController.getGanador(codigoJorn);
     }
@@ -106,13 +107,10 @@ public class VistaController {
     public Equipo getGanadorEquipo(int codEquip) throws SQLException {
         return modeloController.getGanadorEquipo(codEquip);
     }
+    */
 
     public void eliminarJugador(int CodJugador) throws SQLException {
         modeloController.eliminarJugador(CodJugador);
-    }
-
-    public Jugador mostrarJugador(int CodigoJugador) throws SQLException {
-        return modeloController.mostrarJugador(CodigoJugador);
     }
 
     public void editarJugador(int codigo, String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento,
@@ -186,9 +184,9 @@ public class VistaController {
     public void despedirJugador(int codJug) throws SQLException {
         modeloController.despedirJugador(codJug);
     }
+
     public List<Enfrentamiento> getEnfrentamientos() throws SQLException {
         return modeloController.getEnfrentamientos();
-
     }
 
     public void setGanador(int codgGanador, int CodEnfrentamiento) throws SQLException {

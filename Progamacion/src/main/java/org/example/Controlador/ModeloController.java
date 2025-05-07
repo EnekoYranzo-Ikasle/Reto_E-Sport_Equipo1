@@ -56,6 +56,7 @@ public class ModeloController {
         return jugadorController.mostrarJugadores(codEquip);
     }
 
+    /*
     public List<Integer> getGanador(int codigoJorn) throws SQLException {
         return enfrentamientoController.getganador(codigoJorn);
     }
@@ -63,6 +64,7 @@ public class ModeloController {
     public Equipo getGanadorEquipo(int codEquip) throws SQLException {
         return equipoController.getGanador(codEquip);
     }
+     */
 
     public Equipo getEquipoPorNombre(String nombre) throws SQLException {
         return equipoController.getEquipoPorNombre(nombre);
@@ -79,10 +81,6 @@ public class ModeloController {
 
     public void modificarJugador(Jugador jugador, int codigo) throws SQLException {
         jugadorController.editarJugador(jugador,codigo);
-    }
-
-    public Jugador mostrarJugador(int codJugador) throws SQLException {
-        return jugadorController.mostrarJugador(codJugador);
     }
 
     public boolean jugadorExiste(int codJugador) throws SQLException {
