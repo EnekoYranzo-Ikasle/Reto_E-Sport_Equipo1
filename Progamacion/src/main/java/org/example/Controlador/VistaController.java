@@ -8,6 +8,7 @@ import org.example.Vista.VInicioUser;
 import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -184,22 +185,31 @@ public class VistaController {
         return modeloController.getEnfrentamientos();
 
     }
+
     public void setGanador(int codgGanador, int CodEnfrentamiento) throws SQLException {
         modeloController.setGanador(codgGanador, CodEnfrentamiento);
     }
+
     public boolean enfrentamientoExiste(int codEnfrentamiento) throws SQLException {
         return modeloController.enfrentamientoExiste(codEnfrentamiento);
     }
-    public void setHora(String hora, int codEnfrentamiento) throws SQLException {
+
+    public void setHora(LocalTime hora, int codEnfrentamiento) throws SQLException {
         modeloController.setHora(hora, codEnfrentamiento);
     }
-    public void actualizarCompeticion(String fechaIni, String fechaFin, String nombre) throws SQLException {
-        DateTimeFormatter formator = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fechaInicio = LocalDate.parse(fechaIni, formator);
-        LocalDate fechaFinn= LocalDate.parse(fechaFin, formator);
 
+    public void actualizarCompeticion(String fechaIniStr, String fechaFinStr, String nombre) throws SQLException {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaInicio = LocalDate.parse(fechaIniStr, formato);
+        LocalDate fechaFin = LocalDate.parse(fechaFinStr, formato);
 
-        modeloController.actualizarCompeticion(fechaInicio,fechaFinn , nombre);
+        Competicion competicion = new Competicion(nombre, fechaInicio, fechaFin);
+
+        modeloController.actualizarCompeticion(competicion);
+    }
+
+    public void eliminarCompeticion(int codCompeticion) throws SQLException {
+        modeloController.eliminarCompeticion(codCompeticion);
     }
 
     public List<Competicion> getCompeticiones() throws SQLException{

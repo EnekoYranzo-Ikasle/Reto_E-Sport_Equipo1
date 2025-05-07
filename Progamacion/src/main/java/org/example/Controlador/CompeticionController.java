@@ -3,7 +3,6 @@ package org.example.Controlador;
 import org.example.Modelo.Competicion;
 import org.example.Modelo.CompeticionDAO;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 
 
@@ -18,8 +17,12 @@ public class CompeticionController {
         competicionDAO.nuevaCompeticion(competicion);
     }
 
-    public void actualizarCompeticion(LocalDate fechaIni, LocalDate fechaFin, String nombre) throws SQLException {
-        competicionDAO.editarCompeticion(fechaIni, fechaFin, nombre);
+    public void actualizarCompeticion(Competicion competicion) throws SQLException {
+        competicionDAO.editarCompeticion(competicion);
+    }
+
+    public void eliminarCompeticion(int codCompeticion) throws SQLException {
+        competicionDAO.eliminarCompeticion(codCompeticion);
     }
 
     public List<Competicion> getCompeticiones() throws SQLException {

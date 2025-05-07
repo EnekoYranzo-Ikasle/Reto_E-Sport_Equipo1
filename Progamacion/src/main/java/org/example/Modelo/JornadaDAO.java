@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class JornadaDAO {
@@ -21,16 +20,16 @@ public class JornadaDAO {
     }
 
     /**
-     * Funcion que genera las jornadas
-     * @param numJornadas
-     * @param equipos
-     * @throws Exception
+     * Genera el calendario de jornadas basado en el número de jornadas y los equipos dados.
+     * Cada jornada incluye enfrentamientos generados automáticamente.
+     * @param numJornadas Número de jornadas a generar.
+     * @param equipos Lista de equipos participantes. Debe ser un número par.
+     * @throws Exception Si ocurre un error al generar las jornadas o si el número de equipos es impar.
      */
-
     public void generarJornadas(int numJornadas, List<Equipo> equipos) throws Exception {
         if (equipos.size() % 2 == 0) {
             for (int i = 1; i <= numJornadas; i++) {
-                LocalDate fechaJornada = LocalDate.now().plusDays(i); // Generará jornadas a partir del día siguiente que se genere la jornada
+                LocalDate fechaJornada = LocalDate.now().plusDays(i); // Generará jornadas a partir de mañana
                 int codJornada = nuevaJornada(fechaJornada);
 
                 Jornada jornada = new Jornada(codJornada, fechaJornada);
@@ -38,15 +37,12 @@ public class JornadaDAO {
                 LocalTime horaInicial = LocalTime.of(9, 0);
 
                 while (jornada.getListaEnfrentamientos().size() < equipos.size() / 2) {
-                    // Genera los enfrentamientos automáticamente.
                     Equipo e1 = equipos.get(rand.nextInt(equipos.size()));
                     Equipo e2 = equipos.get(rand.nextInt(equipos.size()));
 
-                    // Verificar que no se hayan enfrentado antes.
                     if (!e1.equals(e2) && !enfrentados.contains(e1.getNombreEquipo() + e2.getNombreEquipo()) &&
                             !enfrentados.contains(e2.getNombreEquipo() + e1.getNombreEquipo())) {
-                        // Creamos los objetos y los añadimos al ArrayList
-                        Enfrentamiento enf = new Enfrentamiento( i + jornada.getListaEnfrentamientos().size(), e1, e2, horaInicial, jornada);
+                        Enfrentamiento enf = new Enfrentamiento(i + jornada.getListaEnfrentamientos().size(), e1, e2, horaInicial, jornada);
 
                         jornada.addEnfrentamiento(enf);
                         guardarEnfrentamiento(enf);
@@ -54,7 +50,7 @@ public class JornadaDAO {
                         enfrentados.add(e1.getNombreEquipo() + e2.getNombreEquipo());
                         enfrentados.add(e2.getNombreEquipo() + e1.getNombreEquipo());
 
-                        horaInicial = horaInicial.plusHours(2); // Entre enfrentamientos pasarán 2 horas.
+                        horaInicial = horaInicial.plusHours(2); // 2 horas entre enfrentamientos
                     }
                 }
                 listaJornadas.add(jornada);
@@ -65,9 +61,10 @@ public class JornadaDAO {
     }
 
     /**
-     * Guardar jornada y obtener el codJornada autogenerado de la secuencia.
-     * @param fechaJornada
-     * @throws Exception
+     * Crea una nueva jornada en la base de datos y obtiene el código de jornada autogenerado.
+     * @param fechaJornada La fecha de la jornada.
+     * @return El código de la jornada generado.
+     * @throws Exception Si ocurre un error al insertar la jornada o al obtener el valor de la secuencia.
      */
     private int nuevaJornada(LocalDate fechaJornada) throws Exception {
         int codGenerado;
@@ -82,7 +79,6 @@ public class JornadaDAO {
         }
         rs.close();
 
-        // Insertar la jornada usando el valor de la secuencia
         ps = conn.prepareStatement("INSERT INTO jornadas (codJornada, fecha, competicion) " +
                 "VALUES (?, ?, sec_codcompeticion.CURRVAL)");
         ps.setInt(1, codGenerado);
@@ -92,6 +88,11 @@ public class JornadaDAO {
         return codGenerado;
     }
 
+    /**
+     * Guarda un enfrentamiento en la base de datos.
+     * @param enfrentamiento El enfrentamiento a guardar.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     private void guardarEnfrentamiento(Enfrentamiento enfrentamiento) throws SQLException {
         ps = conn.prepareStatement("INSERT INTO enfrentamientos (CodEnfrentamiento, hora, equipo1, equipo2, jornada)" +
                 " VALUES (sec_codEnfrentamientos.NEXTVAL, ?, ?, ?, ?)");
@@ -103,25 +104,35 @@ public class JornadaDAO {
         ps.executeUpdate();
     }
 
+    /**
+     * Obtiene todos los códigos de jornada existentes en la base de datos.
+     * @return Una lista de códigos de jornada.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     public List<Integer> obtenerCodJornada() throws SQLException {
         ps = conn.prepareStatement("select codJornada from jornadas");
         rs = ps.executeQuery();
 
         List<Integer> codJornada = new ArrayList<>();
 
-        while(rs.next()) {
+        while (rs.next()) {
             codJornada.add(rs.getInt("codJornada"));
         }
         return codJornada;
     }
 
+    /**
+     * Recupera todas las jornadas existentes en la base de datos.
+     * @return Una lista de jornadas.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     public List<Jornada> getJornadas() throws SQLException {
         ps = conn.prepareStatement("SELECT * FROM jornadas");
         rs = ps.executeQuery();
 
         List<Jornada> listaJornadas = new ArrayList<>();
 
-        while(rs.next()) {
+        while (rs.next()) {
             listaJornadas.add(new Jornada(
                     rs.getInt("codJornada"),
                     rs.getDate("fecha").toLocalDate()
@@ -130,12 +141,23 @@ public class JornadaDAO {
         return listaJornadas;
     }
 
+    /**
+     * Elimina una jornada específica de la base de datos.
+     * @param codJornada El código de la jornada a eliminar.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     public void eliminarJornada(int codJornada) throws SQLException {
         ps = conn.prepareStatement("DELETE FROM jornadas WHERE codJornada = ?");
         ps.setInt(1, codJornada);
         ps.executeUpdate();
     }
 
+    /**
+     * Edita la fecha de una jornada específica en la base de datos.
+     * @param codJornada El código de la jornada a editar.
+     * @param fechaNueva La nueva fecha para la jornada.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     public void editarJornada(int codJornada, LocalDate fechaNueva) throws SQLException {
         ps = conn.prepareStatement("UPDATE jornadas SET fecha = ? WHERE codJornada = ?");
         ps.setDate(1, parsearFechaSQL(fechaNueva));
@@ -143,13 +165,11 @@ public class JornadaDAO {
         ps.executeUpdate();
     }
 
-//    Funciones privadas:
-
     /**
-     * Funición privada para parsear la hora a TimeStamp.
-     * Se coge la fecha actual solo para cumplir con el formato de TimeStamp
-     * @param hora
-     * @return
+     * Convierte un objeto LocalTime a Timestamp para su uso en SQL.
+     * La fecha actual se usa para completar el formato de Timestamp.
+     * @param hora La hora a convertir.
+     * @return Un objeto Timestamp.
      */
     private Timestamp parsearHoraSQL(LocalTime hora) {
         LocalDate fecha = LocalDate.now();
@@ -158,9 +178,9 @@ public class JornadaDAO {
     }
 
     /**
-     * Función privada para parsear la fecha a Date de SQL
-     * @param fecha
-     * @return
+     * Convierte un objeto LocalDate a Date de SQL.
+     * @param fecha La fecha a convertir.
+     * @return Un objeto Date.
      */
     private Date parsearFechaSQL(LocalDate fecha) {
         return Date.valueOf(fecha);
