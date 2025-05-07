@@ -8,6 +8,7 @@ import org.example.Vista.VInicioUser;
 import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class VistaController {
@@ -191,6 +192,14 @@ public class VistaController {
     }
     public void setHora(String hora, int codEnfrentamiento) throws SQLException {
         modeloController.setHora(hora, codEnfrentamiento);
+    }
+    public void actualizarCompeticion(String fechaIni, String fechaFin, String nombre) throws SQLException {
+        DateTimeFormatter formator = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaInicio = LocalDate.parse(fechaIni, formator);
+        LocalDate fechaFinn= LocalDate.parse(fechaFin, formator);
+
+
+        modeloController.actualizarCompeticion(fechaInicio,fechaFinn , nombre);
     }
 
     public List<Competicion> getCompeticiones() throws SQLException{
