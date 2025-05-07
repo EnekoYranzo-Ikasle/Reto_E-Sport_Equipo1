@@ -28,6 +28,11 @@ public class DInformeEquipos extends JDialog {
 
     private VistaController vistaController;
 
+
+    /**
+     * Constructor de la ventana hecha para mostrar el informe de los equipos
+     * @param vistaController
+     */
     public DInformeEquipos(VistaController vistaController) {
         this.vistaController = vistaController;
 
