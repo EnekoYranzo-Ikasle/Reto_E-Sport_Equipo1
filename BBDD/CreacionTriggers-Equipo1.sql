@@ -27,30 +27,54 @@ END sueldoMinimo;
 
 /*No más de 6 jugadores por equipo*/
 CREATE OR REPLACE TRIGGER maximoJugadoresEquipo
-BEFORE INSERT ON jugadores
-FOR EACH ROW
+FOR INSERT ON jugadores
+COMPOUND TRIGGER
 
-DECLARE
-    total_jugadores NUMBER;
-    v_mensaje VARCHAR2(250);
-    v_exceso_jugadores EXCEPTION;
-    
-BEGIN
-    SELECT COUNT(*) INTO total_jugadores
-    FROM jugadores
-    WHERE codEquipo = :NEW.codEquipo;
-    
-    IF total_jugadores > 6 THEN
-        RAISE v_exceso_jugadores;
-    END IF;
-    
-EXCEPTION
-    WHEN v_exceso_jugadores THEN
-        RAISE_APPLICATION_ERROR(-20002, 'No se pueden registrar más de 6 jugadores por equipo.');
-    WHEN OTHERS THEN
-        v_mensaje := 'Error Oracle: ' || TO_CHAR(SQLCODE) || ', ' || SQLERRM;
-        RAISE_APPLICATION_ERROR(-20000, v_mensaje);
+    -- Variable para contar cuántos jugadores se intentan insertar por equipo
+    TYPE t_equipo_contador IS TABLE OF PLS_INTEGER INDEX BY PLS_INTEGER;
+    v_nuevos_por_equipo t_equipo_contador;
+
+    -- BEFORE EACH ROW: Contar cuántos jugadores se intentan insertar por cada equipo
+    BEFORE EACH ROW IS
+    BEGIN
+        IF :NEW.codEquipo IS NOT NULL THEN
+            -- Si ya existe un conteo para el equipo, incrementarlo
+            IF v_nuevos_por_equipo.EXISTS(:NEW.codEquipo) THEN
+                v_nuevos_por_equipo(:NEW.codEquipo) := v_nuevos_por_equipo(:NEW.codEquipo) + 1;
+            ELSE
+                -- Si no existe, inicializar el conteo en 1
+                v_nuevos_por_equipo(:NEW.codEquipo) := 1;
+            END IF;
+        END IF;
+    END BEFORE EACH ROW;
+
+    -- AFTER STATEMENT: Validar que la suma de actuales + nuevos no supere 6
+    AFTER STATEMENT IS
+        v_total_actual NUMBER;
+        v_mensaje VARCHAR2(250);
+        e_jugadores EXCEPTION;
+    BEGIN
+        -- Iterar sobre todos los equipos para los que se intentaron insertar jugadores
+        FOR idx IN v_nuevos_por_equipo.FIRST .. v_nuevos_por_equipo.LAST LOOP
+            -- Verificar cuántos jugadores tiene ya el equipo
+            SELECT COUNT(*) INTO v_total_actual
+            FROM jugadores
+            WHERE codEquipo = idx; -- Aquí usamos el índice (codEquipo)
+
+            -- Si el total de jugadores supera 6, lanzar una excepción
+            IF v_total_actual + v_nuevos_por_equipo(idx) > 6 THEN
+                RAISE e_jugadores;
+            END IF;
+        END LOOP;
+
+    EXCEPTION
+        WHEN e_jugadores THEN
+            v_mensaje := 'No se pueden registrar más de 6 jugadores por equipo.';
+            RAISE_APPLICATION_ERROR(-20002, v_mensaje); -- Muestra el error correspondiente
+    END AFTER STATEMENT;
+
 END maximoJugadoresEquipo;
+
 
 /*Validacion al crear calendario todos los equipo tienen mas de 2 jugadores*/
 CREATE OR REPLACE TRIGGER minJugadoresPorEquipo
@@ -83,7 +107,7 @@ CREATE OR REPLACE TRIGGER minJugadoresPorEquipo
             RAISE_APPLICATION_ERROR(-20099, v_mensaje);
 END minJugadoresPorEquipo;
 
-/* Trigger para controlar que una vez generado el calendario de la competici�n, no se pueden
+/* Trigger para controlar que una vez generado el calendario de la competici n, no se pueden
 modificar, ni los equipos, ni los jugadores de cada equipo*/
 CREATE OR REPLACE TRIGGER noModificarEquipos
 BEFORE INSERT OR UPDATE ON equipos

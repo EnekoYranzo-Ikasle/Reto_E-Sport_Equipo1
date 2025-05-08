@@ -5,6 +5,7 @@ import org.example.Modelo.CompeticionDAO;
 import java.sql.SQLException;
 import java.util.List;
 
+
 public class CompeticionController {
     private final CompeticionDAO competicionDAO;
 
@@ -14,6 +15,14 @@ public class CompeticionController {
 
     public void nuevaCompeticion(Competicion competicion) throws SQLException {
         competicionDAO.nuevaCompeticion(competicion);
+    }
+
+    public void actualizarCompeticion(Competicion competicion) throws SQLException {
+        competicionDAO.editarCompeticion(competicion);
+    }
+
+    public void eliminarCompeticion(int codCompeticion) throws SQLException {
+        competicionDAO.eliminarCompeticion(codCompeticion);
     }
 
     public List<Competicion> getCompeticiones() throws SQLException {

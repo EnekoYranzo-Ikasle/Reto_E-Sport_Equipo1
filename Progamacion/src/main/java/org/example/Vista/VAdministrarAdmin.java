@@ -21,6 +21,10 @@ public class VAdministrarAdmin extends JFrame {
     private JButton bJornada;
     private JButton bCompeticion;
 
+    /**
+     * Es la ventanta que ve el usuario administrador para administrar los crud
+     * @param vistaController
+     */
     public VAdministrarAdmin(VistaController vistaController) {
         this.vistaController = vistaController;
 
@@ -98,8 +102,8 @@ public class VAdministrarAdmin extends JFrame {
         bEnfrentamiento.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DEditarHora dEditarHora = new DEditarHora(vistaController);
-                dEditarHora.setVisible(true);
+                DEnfrentamiento dEnfrentamiento = new DEnfrentamiento(vistaController);
+                dEnfrentamiento.setVisible(true);
 
 
             }

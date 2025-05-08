@@ -46,7 +46,9 @@ public class DSignUp extends JDialog {
                 dispose();
             }
         });
-
+/**
+ * En el caso de que se quiera crear una cuenta esta funcion crea una la cual por defecto no sera administrador
+ */
         bCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

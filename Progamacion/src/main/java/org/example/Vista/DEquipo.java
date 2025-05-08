@@ -57,7 +57,10 @@ public class DEquipo extends JDialog {
     private JPanel pBotonesDesp;
     private JPanel pTextoJugadorDesp;
 
-
+    /**
+     * Ventana para gestionar equipos, tanto como para contratar o despedir jugadores o para editar el propio equipo
+     * @param vistaController
+     */
     public DEquipo(VistaController vistaController) {
         this.vistaController = vistaController;
 

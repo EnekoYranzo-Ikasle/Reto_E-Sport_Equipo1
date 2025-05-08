@@ -1,6 +1,9 @@
 package org.example.Modelo;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +29,15 @@ public class EnfrentamientoDAO {
         return ganadores;
     }
 
+    /**
+     * Función que consigue todos los enfrentamientos de la BD
+     * @return List
+     * @throws SQLException a las vistas.
+     */
     public List<Enfrentamiento> obtenerEnfrentamientos()throws SQLException{
         List<Enfrentamiento> lista = new ArrayList<>();
 
-        ps = conn.prepareStatement("select * from enfrentamientos");
+        ps = conn.prepareStatement("select * from enfrentamientos where ganador = null");
         rs = ps.executeQuery();
 
         while (rs.next()) {
@@ -50,18 +58,30 @@ public class EnfrentamientoDAO {
         return lista;
     }
 
-    public String sacarNombrEquipo(int codequipo) throws SQLException {
+    /**
+     * Obtenemos los nombres de los equipos que confrontan un enfrentamiento
+     * @param codEquipo como dato de entrada
+     * @return String
+     * @throws SQLException a vista
+     */
+    public String sacarNombrEquipo(int codEquipo) throws SQLException {
         ps=conn.prepareStatement("select nombre from equipos where codequipo=?");
-        ps.setInt(1, codequipo);
-        rs=ps.executeQuery();
+        ps.setInt(1, codEquipo);
 
-        if (rs.next()) {
-            return rs.getString("nombre");
+        ResultSet rs1=ps.executeQuery();
+        if (rs1.next()) {
+            return rs1.getString("nombre");
         }else {
             return null;
         }
-
     }
+
+    /**
+     * Agregamos el ganador de un enfrentamiento en la BD.
+     * @param codGanador como primer dato de entrada
+     * @param codEnfrentamiento como segundo dato de entrada
+     * @throws SQLException para manejar los errores de la BD.
+     */
     public void setGanador(int codGanador, int codEnfrentamiento) throws SQLException {
         ps=conn.prepareStatement("UPDATE enfrentamientos SET ganador=? WHERE codenfrentamiento=?");
         ps.setInt(1, codGanador);
@@ -69,21 +89,42 @@ public class EnfrentamientoDAO {
         ps.executeUpdate();
     }
 
+    /**
+     * Buscamos en la BD si el enfrentamiento existe.
+     * @param codenfrentamiento como dato de entrada
+     * @return boolean
+     * @throws SQLException para manejar los errores de la BD.
+     */
     public boolean enfrentamientoExiste(int codenfrentamiento) throws SQLException {
         ps=conn.prepareStatement("select * from enfrentamientos where codEnfrentamiento=?");
         ps.setInt(1, codenfrentamiento);
         rs=ps.executeQuery();
 
-        if (rs.next()) {
-            return true;
-        } else
-            return false;
+        return rs.next();
     }
 
-    public void setHora(String tiempo, int codEnfentamiento)throws SQLException{
-        ps=conn.prepareStatement("update enfrentamientos set hora=? where codenfrentamiento=?");
-        ps.setString(1, tiempo);
+    /**
+     * Cuando modificamos el enfrentamiento le ponemos la nueva hora
+     * @param tiempo como primer dato de entrada
+     * @param codEnfentamiento como segundo dato de entrada
+     * @throws SQLException para manejar los errores de la BD.
+     */
+    public void setHora(LocalTime tiempo, int codEnfentamiento)throws SQLException{
+        ps=conn.prepareStatement("update enfrentamientos set hora = ? where codenfrentamiento = ?");
+        ps.setTimestamp(1, parsearHoraSQL(tiempo));
         ps.setInt(2, codEnfentamiento);
         ps.executeUpdate();
+    }
+
+    /**
+     * Funición privada para parsear la hora a TimeStamp.
+     * Se coge la fecha actual solo para cumplir con el formato de TimeStamp
+     * @param hora como dato de entrada
+     * @return Timestamp
+     */
+    private Timestamp parsearHoraSQL(LocalTime hora) {
+        LocalDate fecha = LocalDate.now();
+        LocalDateTime fechaHora = fecha.atTime(hora);
+        return Timestamp.valueOf(fechaHora);
     }
 }
