@@ -127,7 +127,7 @@ public class JornadaDAO {
      * @throws SQLException Si ocurre un error SQL.
      */
     public List<Jornada> getJornadas() throws SQLException {
-        ps = conn.prepareStatement("SELECT * FROM jornadas");
+       ps= conn.prepareStatement("SELECT * FROM jornadas");
         rs = ps.executeQuery();
 
         List<Jornada> listaJornadas = new ArrayList<>();

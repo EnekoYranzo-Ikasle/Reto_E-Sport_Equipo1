@@ -24,7 +24,9 @@ public class DEnfrentamiento extends JDialog {
         setLocationRelativeTo(null);
 
 
-
+        /**
+         * Ventana para modificar la hora de un enfrentamiento
+         */
         Modificar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -10,48 +10,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JornadaTest {
 
-    private static Connection conn;
+    private Connection conn;
     private JornadaDAO jornadaDAO;
 
+    @BeforeAll
+    void setup() throws Exception {
+        String url = "jdbc:oracle:thin:@172.20.225.114:1521:orcl";
+        String user = "eqdaw01";
+        String password = "eqdaw01";
 
-    private static void abrirConexion() {
-
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            String url = "jdbc:oracle:thin:@172.20.225.114:1521:orcl";
-            String user = "eqdaw01";
-            String password = "eqdaw01";
-
-            conn = DriverManager.getConnection(url, user, password);
-
-        }catch (ClassNotFoundException e) {
-            System.out.println("Error en Class.forName " + e.getMessage());
-        }catch (Exception e) {
-            System.out.println("Error al abrir conexion " + e.getMessage());
-        }
-
-    }
-
-    @BeforeEach
-    void setUp() {
+        conn = DriverManager.getConnection(url, user, password);
+        conn.setAutoCommit(false); // Para evitar cambios reales en la base
         jornadaDAO = new JornadaDAO(conn);
     }
 
     @Test
     void generarJornadas() throws Exception {
         List<Equipo> equipos = new ArrayList<>();
-        equipos.add(new Equipo(1, "Equipo1"));
-        equipos.add(new Equipo(2, "Equipo2"));
+        equipos.add(new Equipo(4, "Equipo1"));
+        equipos.add(new Equipo(5, "Equipo2"));
 
         assertDoesNotThrow(() -> {
             jornadaDAO.generarJornadas(1, equipos);
         }, "Debería generar jornadas sin errores con equipos pares");
 
         // Prueba con número impar de equipos
-        equipos.add(new Equipo(3, "Equipo3"));
+        equipos.add(new Equipo(6, "Equipo3"));
         Exception exception = assertThrows(IllegalStateException.class, () -> {
             jornadaDAO.generarJornadas(1, equipos);
         });
@@ -63,6 +52,7 @@ class JornadaTest {
         List<Integer> codigos = jornadaDAO.obtenerCodJornada();
         assertNotNull(codigos, "La lista de códigos no debe ser nula");
         assertTrue(codigos.size() >= 0, "Debe haber cero o más códigos");
+        System.out.println(codigos);
     }
 
     @Test
@@ -70,22 +60,27 @@ class JornadaTest {
         List<Jornada> jornadas = jornadaDAO.getJornadas();
         assertNotNull(jornadas, "La lista de jornadas no debe ser nula");
         assertTrue(jornadas.size() >= 0, "Debe haber cero o más jornadas");
+        System.out.println(jornadas.size());
     }
 
     @Test
     void eliminarJornada() throws Exception {
-        // Primero creouna jornada
-        int codJornada = jornadaDAO.obtenerCodJornada().get(0);
+        List<Integer> codigos = jornadaDAO.obtenerCodJornada();
+        assumeFalse(codigos.isEmpty(), "No hay jornadas para eliminar");
+
+        int codJornada = codigos.get(0);
         jornadaDAO.eliminarJornada(codJornada);
 
-        List<Integer> codigos = jornadaDAO.obtenerCodJornada();
-        assertFalse(codigos.contains(codJornada), "El código eliminado no debería estar en la lista");
+        List<Integer> codigosActualizados = jornadaDAO.obtenerCodJornada();
+        assertFalse(codigosActualizados.contains(codJornada), "El código eliminado no debería estar en la lista");
     }
 
     @Test
     void editarJornada() throws Exception {
-        // Primero creo una jornada
-        int codJornada = jornadaDAO.obtenerCodJornada().get(0);
+        List<Integer> codigos = jornadaDAO.obtenerCodJornada();
+        assumeFalse(codigos.isEmpty(), "No hay jornadas para editar");
+
+        int codJornada = codigos.get(0);
         LocalDate nuevaFecha = LocalDate.now().plusDays(10);
 
         jornadaDAO.editarJornada(codJornada, nuevaFecha);
@@ -99,15 +94,17 @@ class JornadaTest {
         assertNotNull(editada, "La jornada editada debería existir");
         assertEquals(nuevaFecha, editada.getFechaJornada(), "La fecha debería haber sido actualizada");
     }
+
     @AfterEach
     void tearDown() {
-        System.out.printf("Cerrando la conexion");
+        System.out.println("Test completado.");
     }
 
     @AfterAll
-    static void cerraConexion() throws SQLException {
-        if(conn!=null) {
+    void cerrarConexion() throws SQLException {
+        if (conn != null && !conn.isClosed()) {
             conn.close();
+            System.out.println("Conexión cerrada.");
         }
     }
 }
