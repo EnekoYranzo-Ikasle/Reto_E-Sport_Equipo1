@@ -1,53 +1,39 @@
 package org.example.Modelo;
 
 import org.example.Util.ConexionDB;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PersonaDAOTest {
 
-    private static Connection con;
-    private PersonaDAO PersonaDAO;
+    private static Connection conn;
+    private static PersonaDAO PersonaDAO;
 
     @BeforeAll
-    static void setUpAll() {
-        ConexionDB.connect();
-        con = ConexionDB.getConnection();
-    }
+    public static void setup() throws Exception {
+        String url = "jdbc:oracle:thin:@172.20.225.114:1521:orcl";
+        String user = "eqdaw01";
+        String password = "eqdaw01";
 
-    @BeforeEach
-    void setUp() throws Exception {
-        con.setAutoCommit(false);
-        PersonaDAO = new PersonaDAO(con);
+        conn = DriverManager.getConnection(url, user, password);
+        conn.setAutoCommit(false);
+        PersonaDAO = new PersonaDAO(conn);
     }
-
-    @AfterEach
-    void tearDown() throws Exception {
-        if (con != null) {
-            con.rollback();
-        }
-    }
-
     @Test
     void getPersona() {
     }
 
+    /*Verifica si se puede crear un nuevo usuario correctamente */
     @Test
     void crearCuenta_InsertarNuevoUsuario() throws SQLException {
         String email = "usuario@gmail.com";
         String pass = "password123";
         PersonaDAO.crearCuenta(email, pass);
 
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM usuarios WHERE email = ?");
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM usuarios WHERE email = ?");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
 
@@ -57,19 +43,28 @@ class PersonaDAOTest {
         assertEquals("user", rs.getString("tipo"), "El tipo de usuario no coincide");
     }
 
+    /*Si el programa da un error al intentar usar un email demasido largo*/
     @Test
     void crearCuenta_EmailDemasiadoLargo() throws SQLException {
         String emailLargo = "a".repeat(256) + "@gmail.com";
         assertThrows(SQLException.class, () -> PersonaDAO.crearCuenta(emailLargo, "password123"), "excepcion por email demasiado largo");
     }
 
+    /*Si el programa da un error al intentar usar un email vacío.*/
     @Test
     void crearCuenta_EmailNulo () throws SQLException {
         assertThrows(SQLException.class, () -> PersonaDAO.crearCuenta(null, "password123"),"excepcion por email nulo");
     }
 
+    /*si el programa da un error al intentar usar una contraseña vacía.*/
     @Test
     void crearCuenta_PassNulo () throws SQLException {
         assertThrows(SQLException.class, () -> PersonaDAO.crearCuenta("usuario@gmail.com", null), "excepcion por pass nulo");
+    }
+
+    @AfterAll
+    public static void tearDown() throws Exception {
+        conn.rollback();
+        conn.close();
     }
 }
