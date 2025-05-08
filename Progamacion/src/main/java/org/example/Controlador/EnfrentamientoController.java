@@ -2,9 +2,7 @@ package org.example.Controlador;
 
 import org.example.Modelo.Enfrentamiento;
 import org.example.Modelo.EnfrentamientoDAO;
-import org.example.Modelo.Equipo;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.List;
@@ -16,14 +14,9 @@ public class EnfrentamientoController {
         this.enfrentamientoDAO = enfrentamientoDAO;
     }
 
-    public void modificar() {
-        
-    }
-
-
-    public List<Integer> getganador(int codigoJorn) throws SQLException {
-        return enfrentamientoDAO.obtenerGanadores(codigoJorn);
-    }
+//    public List<Integer> getGanador(int codigoJorn) throws SQLException {
+//        return enfrentamientoDAO.obtenerGanadores(codigoJorn);
+//    }
 
     public List<Enfrentamiento> getEnfrentamientos() throws SQLException {
         return enfrentamientoDAO.obtenerEnfrentamientos();
