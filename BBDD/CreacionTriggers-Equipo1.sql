@@ -1,14 +1,15 @@
 
-DROP TRIGGER sueldoMinimo;
+DROP TRIGGER sueldoMinimo_Equipo1;
 DROP TRIGGER maximoJugadoresEquipo;
 DROP TRIGGER minJugadoresPorEquipo;
 DROP TRIGGER noModificarJugadores;
 DROP TRIGGER noModificarEquipos;
 DROP TRIGGER fechaCompeticiones;
 DROP TRIGGER trg_valida_ganador_Equipo01;
+DROP TRIGGER horaEnfrentamientos;
   
 /*SALARIO MINIMO SMI*/
-CREATE OR REPLACE TRIGGER sueldoMinimo
+CREATE OR REPLACE TRIGGER sueldoMinimo_Equipo1
     BEFORE INSERT ON jugadores
     FOR EACH ROW
     DECLARE
@@ -23,10 +24,10 @@ CREATE OR REPLACE TRIGGER sueldoMinimo
             V_MENSAJE := 'Err. desconocido, ' || TO_CHAR(SQLCODE) || SQLERRM;
             RAISE_APPLICATION_ERROR(-20099, V_MENSAJE);
     
-END sueldoMinimo;
+END sueldoMinimo_Equipo1;
 
 /*No más de 6 jugadores por equipo*/
-CREATE OR REPLACE TRIGGER maximoJugadoresEquipo
+CREATE OR REPLACE TRIGGER maximoJugadoresEquipo_Equipo1
 FOR INSERT ON jugadores
 COMPOUND TRIGGER
 
@@ -73,11 +74,11 @@ COMPOUND TRIGGER
             RAISE_APPLICATION_ERROR(-20002, v_mensaje); -- Muestra el error correspondiente
     END AFTER STATEMENT;
 
-END maximoJugadoresEquipo;
+END maximoJugadoresEquipo_Equipo1;
 
 
 /*Validacion al crear calendario todos los equipo tienen mas de 2 jugadores*/
-CREATE OR REPLACE TRIGGER minJugadoresPorEquipo
+CREATE OR REPLACE TRIGGER minJugadoresPorEquipo_Equipo1
     BEFORE INSERT ON enfrentamientos
     FOR EACH ROW
     DECLARE
@@ -105,11 +106,11 @@ CREATE OR REPLACE TRIGGER minJugadoresPorEquipo
         WHEN OTHERS THEN
             v_mensaje := 'Err. desconocido, ' || TO_CHAR(SQLCODE) || SQLERRM;
             RAISE_APPLICATION_ERROR(-20099, v_mensaje);
-END minJugadoresPorEquipo;
+END minJugadoresPorEquipo_Equipo1;
 
 /* Trigger para controlar que una vez generado el calendario de la competici n, no se pueden
 modificar, ni los equipos, ni los jugadores de cada equipo*/
-CREATE OR REPLACE TRIGGER noModificarEquipos
+CREATE OR REPLACE TRIGGER noModificarEquipos_Equipo1
 BEFORE INSERT OR UPDATE ON equipos
 FOR EACH ROW
 
@@ -135,9 +136,9 @@ EXCEPTION
         v_mensaje := 'Error desconocido, ' || TO_CHAR(SQLCODE) || SQLERRM;
         RAISE_APPLICATION_ERROR(-20099, v_mensaje);
 
-END noModificarEquipos;
+END noModificarEquipos_Equipo1;
 
-CREATE OR REPLACE TRIGGER noModificarJugadores
+CREATE OR REPLACE TRIGGER noModificarJugadores_Equipo1
 BEFORE INSERT OR UPDATE ON jugadores
 FOR EACH ROW
 
@@ -163,13 +164,13 @@ EXCEPTION
         v_mensaje := 'Error desconocido, ' || TO_CHAR(SQLCODE) || SQLERRM;
         RAISE_APPLICATION_ERROR(-20099, v_mensaje);
 
-END noModificarJugadores;
+END noModificarJugadores_Equipo1;
 
 /* 
 Trigger para que la fecha fin de competiciones no sea anterior a la de inicio y 
 la de inicio no sea mayor a la de finalización.
 */
-CREATE OR REPLACE TRIGGER fechaCompeticiones
+CREATE OR REPLACE TRIGGER fechaCompeticiones_Equipo1
     BEFORE INSERT OR UPDATE ON competiciones
     FOR EACH ROW
     DECLARE 
@@ -185,19 +186,21 @@ CREATE OR REPLACE TRIGGER fechaCompeticiones
             RAISE_APPLICATION_ERROR(-20001, 'LA FECHA FIN NO PUEDE SER ANTERIOR A LA FECHA DE INICIO');
         WHEN OTHERS THEN
             RAISE_APPLICATION_ERROR(-20002, 'ERROR ORACLE: ' || SQLCODE || ' - ' || SQLERRM);
-END fechaCompeticiones;
+END fechaCompeticiones_Equipo1;
 
 /*Validar que el ganador sea uno de los 2 equipos pertenecientes de cada enfrentamiento.*/
-CREATE OR REPLACE TRIGGER trg_valida_ganador_Equipo01
+CREATE OR REPLACE TRIGGER trg_valida_ganador_Equipo1
 BEFORE INSERT OR UPDATE ON enfrentamientos
 FOR EACH ROW
-declare
+DECLARE
 v_mensaje varchar2(250);
 e_equipos exception;
+
 BEGIN
     IF :NEW.ganador != :NEW.equipo1 AND :NEW.ganador != :NEW.equipo2 THEN
       raise e_equipos;
     END IF;
+
 EXCEPTION
 WHEN e_equipos then
     v_mensaje:= 'El equipo ganador debe ser el equipo1 o el equipo2 del enfrentamiento.';
@@ -205,25 +208,31 @@ WHEN e_equipos then
 WHEN OTHERS THEN
     v_mensaje:= 'Error desconcido ' || to_char(SQLCODE) ||  SQLERRM;
     RAISE_APPLICATION_ERROR(-20099, v_mensaje);
-END trg_valida_ganador_Equipo01;
+END trg_valida_ganador_Equipo1;
 
 /*Entre cada enfrentamiento pasen minimo 2 horas*/
-CREATE OR REPLACE TRIGGER horaEnfrentamientos
-    BEFORE UPDATE OF hora ON enfrentamientos
-    FOR EACH ROW
-    DECLARE
-        V_MENSAJE VARCHAR2(255);
-        E_MENOS_2_HORAS EXCEPTION;
-        
-    BEGIN
-        IF :new.hora < :old.hora + INTERVAL '2' HOUR THEN
-            RAISE E_MENOS_2_HORAS;
-        END IF;
-        
-    EXCEPTION
-        WHEN E_MENOS_2_HORAS THEN
-            RAISE_APPLICATION_ERROR(-20010, 'Deben pasar minimo 2 horas');
-        WHEN OTHERS THEN
-            V_MENSAJE := 'Error desconcido ' || to_char(SQLCODE) ||  SQLERRM;
-            RAISE_APPLICATION_ERROR(-20099, V_MENSAJE);    
-END horaEnfrentamientos;       
+CREATE OR REPLACE TRIGGER horaEnfrentamientos_Equipo1
+BEFORE UPDATE OF hora ON enfrentamientos
+FOR EACH ROW
+DECLARE
+    V_EXISTE NUMBER;
+
+    V_MENSAJE VARCHAR2(255);
+    E_MENOS_2_HORAS EXCEPTION;
+BEGIN
+    SELECT COUNT(*) INTO V_EXISTE
+    FROM enfrentamientos
+    WHERE CodEnfrentamiento != :OLD.CodEnfrentamiento
+      AND ABS((CAST(:NEW.hora AS DATE) - CAST(hora AS DATE)) * 24) < 2;
+
+    IF V_EXISTE > 0 THEN
+        RAISE E_MENOS_2_HORAS;
+    END IF;
+
+EXCEPTION
+    WHEN E_MENOS_2_HORAS THEN
+        RAISE_APPLICATION_ERROR(-20010, 'Deben pasar mínimo 2 horas entre enfrentamientos');
+    WHEN OTHERS THEN
+        V_MENSAJE:= 'Error desconcido ' || to_char(SQLCODE) ||  SQLERRM;
+        RAISE_APPLICATION_ERROR(-20099, V_MENSAJE);
+END horaEnfrentamientos_Equipo1;
