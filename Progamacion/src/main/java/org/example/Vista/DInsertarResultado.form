@@ -51,7 +51,7 @@
               <background color="-1"/>
               <borderPainted value="false"/>
               <focusPainted value="false"/>
-              <foreground color="-1"/>
+              <foreground color="-16777216"/>
               <text value="Button"/>
             </properties>
           </component>
@@ -63,7 +63,7 @@
               <background color="-1"/>
               <borderPainted value="false"/>
               <focusPainted value="false"/>
-              <foreground color="-1"/>
+              <foreground color="-16777216"/>
               <text value="Button"/>
             </properties>
           </component>
