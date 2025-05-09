@@ -17,8 +17,9 @@ public class CompeticionDAOTest {
     private CompeticionDAO competicionDAO;
 
     /**
-     * Abrimos conexión con la BD
-     * @throws Exception
+     * Configuración de la conexión a la base de datos y el DAO.
+     * Se ejecuta una vez antes de todos los tests.
+     * @throws SQLException Si ocurre un error SQL.
      */
     @BeforeAll
     public void setup() throws Exception {

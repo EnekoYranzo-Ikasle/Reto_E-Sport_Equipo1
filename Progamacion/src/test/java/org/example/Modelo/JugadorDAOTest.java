@@ -21,6 +21,11 @@ class JugadorDAOTest {
     private Connection conn;
     private JugadorDAO dao;
 
+    /**
+     * Configuración de la conexión a la base de datos y el DAO.
+     * Se ejecuta una vez antes de todos los tests.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     @BeforeAll
     public void setup() throws Exception {
         // Ajusta según tu configuración
@@ -33,6 +38,11 @@ class JugadorDAOTest {
         dao = new JugadorDAO(conn);
     }
 
+    /**
+     * Test que prueba que la función devuelva un ArrayList de los jugadores existentes en la base de datos.
+     * @Return Lista de jugadores
+     * @throws SQLException Si ocurre un error SQL.
+     */
     @Test
     void getListaJugadores() {
         try {
@@ -44,6 +54,12 @@ class JugadorDAOTest {
         }
     }
 
+    /**
+     * Test que prueba que la función el jugador cuyo código se le pase como parámetro.
+     * @param "codJugador" El código del jugador.
+     * @return El jugador encontrado.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     @Test
     void mostrarJugador() {
         LocalDate fecha = LocalDate.of(1995, 3, 12);
@@ -57,6 +73,12 @@ class JugadorDAOTest {
         }
     }
 
+    /**
+     * Test que prueba que la función devuelva un jugador existente dentro de la base de datos.
+     * @param "codJugador" El código del jugador.
+     * @return true si el jugador existe, false en caso contrario.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     @Test
     void jugadorExiste() {
         try {
@@ -67,6 +89,12 @@ class JugadorDAOTest {
         }
     }
 
+    /**
+     * Test que prueba que la función verifique si un jugador pertenece a un equipo.
+     * @param "codJug" El código del jugador.
+     * @return true si el jugador pertenece a un equipo, false en caso contrario.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     @Test
     void equipoDeJugador() {
         try {
@@ -77,6 +105,12 @@ class JugadorDAOTest {
         }
     }
 
+    /**
+     * Test que prueba que la función devuelva un informe de jugadores pertenecientes a un equipo específico.
+     * @param "nombreEquipo" El nombre del equipo.
+     * @return Lista de jugadores del equipo.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     @Test
     void getInformeJugadores() {
 
@@ -87,6 +121,12 @@ class JugadorDAOTest {
         }
     }
 
+    /**
+     * Test que prueba que la función devuelva un ArrayList de jugadores que pertenecen a un equipo específico.
+     * @param "codEquip" El código del equipo.
+     * @return Lista de jugadores del equipo.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     @Test
     void jugadorPorEquipo() {
         try {
@@ -99,6 +139,11 @@ class JugadorDAOTest {
         }
     }
 
+    /**
+     * Configuración de la desconexión a la base de datos y el DAO.
+     * Se ejecuta una vez después de todos los tests.
+     * @throws SQLException si ocurre un error al cerrar la conexión
+     */
     @AfterAll
     public void tearDown() throws Exception {
         if (conn != null) {

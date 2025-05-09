@@ -18,6 +18,12 @@ class EquipoDAOTest {
 
     private static Connection conn;
     private static EquipoDAO dao;
+
+    /**
+     * Configuración de la conexión a la base de datos y el DAO.
+     * Se ejecuta una vez antes de todos los tests.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     @BeforeAll
     public static void setup() throws Exception {
         // Ajusta según tu configuración
@@ -102,6 +108,12 @@ class EquipoDAOTest {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Configuración de la desconexión a la base de datos y el DAO.
+     * Se ejecuta una vez después de todos los tests.
+     * @throws SQLException si ocurre un error al cerrar la conexión
+     */
     @AfterAll
     public void tearDown() throws Exception {
         if (conn != null) {
