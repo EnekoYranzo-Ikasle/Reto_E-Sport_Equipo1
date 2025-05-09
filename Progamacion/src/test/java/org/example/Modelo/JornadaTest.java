@@ -159,7 +159,7 @@ class JornadaTest {
      * Cierra la conexión a la base de datos al finalizar todas las pruebas.
      *
      * @throws SQLException si ocurre un error al cerrar la conexión
-     */
+     */ 
     @AfterAll
     void cerrarConexion() throws SQLException {
         if (conn != null && !conn.isClosed()) {
