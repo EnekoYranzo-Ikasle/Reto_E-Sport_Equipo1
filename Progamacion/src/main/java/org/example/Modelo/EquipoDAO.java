@@ -78,7 +78,7 @@ public class EquipoDAO {
      * @throws SQLException Si ocurre un error SQL.
      */
     public Equipo buscarEquipoPorCod(int idEquipo) throws SQLException {
-        Equipo equipo = new Equipo();
+        Equipo equipo;
 
         ps = conn.prepareStatement("select * from equipos where codEquipo = ?");
         ps.setInt(1, idEquipo);
