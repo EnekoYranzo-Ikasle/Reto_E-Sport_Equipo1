@@ -33,6 +33,10 @@ public class CompeticionDAOTest {
         competicionDAO = new CompeticionDAO(conn);
     }
 
+    /**
+     * Testeamos la funcionalidad de crear competiciones.
+     * @throws Exception
+     */
     @Order(1)
     @Test
     public void testNuevaCompeticion() throws Exception {
@@ -44,6 +48,10 @@ public class CompeticionDAOTest {
         assertTrue(existe, "La competición debería haberse insertado");
     }
 
+    /**
+     * Testeamos que se edita correctamente una competicion.
+     * @throws Exception
+     */
     @Order(2)
     @Test
     public void testEditarCompeticion() throws Exception {
@@ -56,6 +64,10 @@ public class CompeticionDAOTest {
         assertTrue(existe, "La competición debería haberse actualizado");
     }
 
+    /**
+     * Testeamos que una competicion se elimina correctamente
+     * @throws Exception
+     */
     @Order(3)
     @Test
     public void testEliminarCompeticion() throws Exception {
@@ -73,9 +85,8 @@ public class CompeticionDAOTest {
     }
 
     /**
-     * Configuración de la desconexión a la base de datos y el DAO.
-     * Se ejecuta una vez después de todos los tests.
-     * @throws SQLException si ocurre un error al cerrar la conexión
+     * Una vez todos los test completados se hace un rollback para no almacenar los datos en la BD.
+     * @throws Exception
      */
     @AfterAll
     public void tearDown() throws Exception {

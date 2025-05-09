@@ -7,6 +7,9 @@ fecha de creaci�n, cantidad de jugadores y los salarios (m�ximo, m�nimo y 
 de los jugadores. Si la competici�n no existe, debe generar una excepci�n. El procedimiento
 debe manejar errores y ser accesible desde un programa en Java.*/
 
+/*En el programa se usa para visualizar los informes de los equipos que 
+confrontan las competiciones, en la vista DInformeEquipo*/
+
 CREATE PROCEDURE informeEquiposCompeticion (
     p_codCompe IN competiciones.codCompeticion%TYPE, 
     p_cursor_equipos OUT SYS_REFCURSOR)
@@ -62,6 +65,9 @@ END informeEquiposCompeticion;
 despu�s en Java, ver el informe con la relaci�n de los jugadores de un equipo concreto.
 De cada jugador se ver� el nombre, apellido, rol y salario. El nombre del equipo
 le llegar� como par�metro. Las excepciones ser�n visualizadas en el programa Java.*/
+
+/*En el programa se usa para visualizar los informes de los jugadores de los 
+equipos que confrontan las competicione, en vista DInformeJugador*/
 
 CREATE OR REPLACE PROCEDURE obtenerJugadoresEquipos (
     p_nombreEquipo IN equipos.nombre%TYPE,

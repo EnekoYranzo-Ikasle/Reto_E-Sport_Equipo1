@@ -15,10 +15,6 @@ import java.sql.Connection;
  *     Crear instancias de los DAOs para acceder a los datos
  *     Crear e inyectar los controladores correspondientes para manejar la lógica de negocio.
  *     Inicializar los componentes del modelo y la vista de la aplicación.
- *
- * Si ocurre alguna excepción durante la inicialización, se muestra un mensaje emergente usando.
- *
- * Autor: Grupo 1
  */
 public class Main {
     private static JugadorController jugadorController;
