@@ -164,8 +164,8 @@ public class EquipoDAO {
 
         while (rs.next()) {
             Object[] equipo = new Object[6];
-            equipo[0] = rs.getString("NOMBRE");
-            equipo[1] = rs.getDate("FECHAFUNDACION").toLocalDate();
+            equipo[0] = rs.getString(1);
+            equipo[1] = rs.getDate(2).toLocalDate();
             equipo[2] = rs.getInt(3); // Num jugadores
             equipo[3] = rs.getDouble(4); // Salario medio
             equipo[4] = rs.getDouble(5); // Salario Máximo

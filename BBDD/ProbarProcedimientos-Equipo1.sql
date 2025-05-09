@@ -2,7 +2,6 @@
 destinados a probar la funcionalidad de los procedimientos almacenados y
 funciones.*/
 
-<<<<<<< Updated upstream
 /*Probar la procedura informeEquiposCompeticion*/
 DECLARE
     p_resultado SYS_REFCURSOR;
@@ -18,25 +17,24 @@ DECLARE
     e_error EXCEPTION;
 
 BEGIN
-    informeEquiposCompeticion(1, p_resultado);
+    informeEquiposCompeticion(89, p_resultado);
     
     FETCH p_resultado INTO v_nombre, v_fechaFundacion, v_numJugadores, 
         v_sueldoMedio, v_sueldoMaximo, v_sueldoMinimo;
 
     IF p_resultado%NOTFOUND THEN
         RAISE e_error;
+    ELSE
+        WHILE p_resultado%FOUND LOOP
+            DBMS_OUTPUT.PUT_LINE('Equipo ' || v_nombre || ', fundado el ' || TO_CHAR(v_fechaFundacion) ||
+                                 '. Este equipo tiene ' || v_numJugadores || ' jugadores, con sueldo mÃ­nimo: ' || 
+                                 v_sueldoMinimo || ', sueldo medio: ' || v_sueldoMedio || 
+                                 ', y sueldo mÃ¡ximo: ' || v_sueldoMaximo);
+    
+            FETCH p_resultado INTO v_nombre, v_fechaFundacion, v_numJugadores, 
+            v_sueldoMedio, v_sueldoMaximo, v_sueldoMinimo;
+        END LOOP;
     END IF;
-
-    WHILE p_resultado%FOUND LOOP
-        DBMS_OUTPUT.PUT_LINE('Equipo ' || v_nombre || ', fundado el ' || TO_CHAR(v_fechaFundacion) ||
-                             '. Este equipo tiene ' || v_numJugadores || ' jugadores, con sueldo mÃ­nimo: ' || 
-                             v_sueldoMinimo || ', sueldo medio: ' || v_sueldoMedio || 
-                             ', y sueldo mÃ¡ximo: ' || v_sueldoMaximo);
-
-        FETCH p_resultado INTO v_nombre, v_fechaFundacion, v_numJugadores, 
-        v_sueldoMedio, v_sueldoMaximo, v_sueldoMinimo;
-    END LOOP;
-
     CLOSE p_resultado;
 
 EXCEPTION
@@ -77,70 +75,6 @@ BEGIN
         
 EXCEPTION
     WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Ocurrió un error' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('Ocurriï¿½ un error' || SQLERRM);
         CLOSE v_cursor_jugadores;
 END;
-/
-
-=======
-/*Probar primer procedimiento*/
-DECLARE
-    v_cursor SYS_REFCURSOR;
-    v_nombre VARCHAR2(100);
-    v_fecha DATE;
-    v_jugadores NUMBER;
-    v_sueldo_medio NUMBER;
-    v_sueldo_max NUMBER;
-    v_sueldo_min NUMBER;
-    
-    v_codigo_comp NUMBER := 1;
-BEGIN 
-    informeEquiposCompeticion(v_codigo_comp, v_cursor);
-    
-    DBMS_OUTPUT.PUT_LINE('INFORME DE EQUIPOS');
-    
-    LOOP
-        FETCH v_cursor INTO v_nombre, v_fecha, v_jugadores, v_sueldo_medio, v_sueldo_max, v_sueldo_min;
-        EXIT WHEN v_cursor%NOTFOUND;
-        
-        DBMS_OUTPUT.PUT_LINE('Equipo: ' || v_nombre);
-        DBMS_OUTPUT.PUT_LINE('Fecha fundación: ' || TO_CHAR(v_fecha, 'DD/MM/YYYY'));
-        DBMS_OUTPUT.PUT_LINE('Número de jugadores: ' || v_jugadores);
-        DBMS_OUTPUT.PUT_LINE('Salario medio: ' || v_sueldo_medio);
-        DBMS_OUTPUT.PUT_LINE('Salario máximo: ' || v_sueldo_max);
-        DBMS_OUTPUT.PUT_LINE('Salario mínimo: ' || v_sueldo_min);
-    END LOOP;
-    
-    CLOSE v_cursor_jugadores;
-    
-EXCEPTION
-    WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
-        
-        IF v_cursor%ISOPEN THEN  
-            CLOSE v_cursor_jugadores; 
-        END IF;
-END;
-
-
-    
-    
-    
-    
-    
-    
-
-/
-
-
-
-
-     
-    
-    
-    
-    
-    
-    
-    
->>>>>>> Stashed changes
