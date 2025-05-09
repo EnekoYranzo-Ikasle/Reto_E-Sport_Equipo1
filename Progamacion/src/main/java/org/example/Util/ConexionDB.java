@@ -2,7 +2,24 @@ package org.example.Util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-
+/**
+ * Clase utilitaria para gestionar la conexión a la base de datos Oracle.
+ *
+ * Esta clase implementa un patrón singleton para mantener una única conexión
+ * activa a la base de datos durante la ejecución de la aplicación.
+ *
+ * Ofrece métodos estáticos para:
+ * - Establecer la conexión inicial con la base de datos .
+ * - Obtener la conexión activa para ser utilizada por otras clases .
+ *
+ * Configuración de conexión:
+ * - Actualmente configurada para conectarse a la base de datos Oracle en el servidor:
+ *   {@code jdbc:oracle:thin:@172.20.225.114:1521:orcl}
+ *   con el usuario {eqdaw01}.
+ * - Existe una configuración comentada para máquinas virtuales (localhost).
+ *
+ * Autor: Grupo 1
+ */
 public class ConexionDB {
     private static Connection conn;
 
@@ -27,7 +44,12 @@ public class ConexionDB {
         }
 
     }
-
+    /**
+     * Devuelve la conexión activa a la base de datos.
+     *
+     * @return objeto {@link Connection} si se estableció correctamente con {@link #connect()},
+     *         o {@code null} si no se ha inicializado.
+     */
     public static Connection getConnection() {
         return conn;
     }
