@@ -48,7 +48,14 @@ public class DInformeEquipos extends JDialog {
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
                 try {
-                    List<Object[]> listaInformeEquipos = vistaController.getInformeEquipos(Integer.parseInt(tfCodCompeticion.getText()));
+                    if (tfCodCompeticion.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(pPrincipal, "El codigo del competicion es obligatorio",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    int codCompeticion = Integer.parseInt(tfCodCompeticion.getText());
+
+                    List<Object[]> listaInformeEquipos = vistaController.getInformeEquipos(codCompeticion);
 
                     String[] columnas = {"Nombre", "Fecha fundación", "Número de jugadores", "Sueldo medio",
                             "Sueldo máximo", "Sueldo mínimo"};
@@ -86,6 +93,8 @@ public class DInformeEquipos extends JDialog {
 
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(pPrincipal, ex.getMessage());
+                }catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(pPrincipal, "Tiene que ser un valor numérico");
                 }
             }
         });
