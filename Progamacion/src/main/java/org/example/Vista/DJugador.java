@@ -71,7 +71,7 @@ public class DJugador extends JDialog {
         setContentPane(pPrincipal);
         setModal(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(600, 500);
+        setSize(600, 550);
         setLocationRelativeTo(null);
 
         try {

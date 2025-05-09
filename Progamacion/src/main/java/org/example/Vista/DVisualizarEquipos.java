@@ -5,6 +5,12 @@ import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -14,8 +20,14 @@ public class DVisualizarEquipos extends JDialog {
     private JPanel pBody;
     private JTextArea taMostrar;
     private JButton bVolver;
+    private JScrollPane spContent;
     private JButton buttonOK;
     private VistaController vistaController;
+
+    private JTable tablaEquipos;
+    private DefaultTableModel modeloTabla;
+    private List<Equipo> listaEquipos;
+
     public DVisualizarEquipos(VistaController vistaController) throws SQLException {
         this.vistaController = vistaController;
 
@@ -25,30 +37,68 @@ public class DVisualizarEquipos extends JDialog {
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(buttonOK);
 
+        listaEquipos = vistaController.mostrar();
 
-        List<Equipo> equipos = vistaController.mostrar();
-        /**
-         * Recorremos la lista de equipos y mostramos los jugadores de cada equipo y sus nicknames
-         */
-        for ( int i = 0; i < equipos.size(); i++ ) {
-            taMostrar.append(equipos.get(i).getNombreEquipo());
+        configurarTabla();
 
-            taMostrar.append("\n");
-            List <Jugador> jugadors = vistaController.mostrarJugadores(equipos.get(i).getCodEquipo());
-            for (int j = i + 1; j < equipos.size(); j++ ) {
-                taMostrar.append(jugadors.get(j).getNombre());
-                taMostrar.append(" Alias: ");
-                taMostrar.append(jugadors.get(j).getNickname());
-                taMostrar.append("\n");
-                taMostrar.append(jugadors.get(j).getRol().toString());
-                taMostrar.append("\n");
+        bVolver.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
             }
-            taMostrar.append("\n \n \n");
-            taMostrar.append("---------------------------------");
-            taMostrar.append("\n");
+        });
+    }
 
+    /**
+     * Configura la tabla de equipos
+     */
+    private void configurarTabla() {
+        modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hacer que la tabla no sea editable
+            }
+        };
+
+        modeloTabla.addColumn("ID");
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Fecha fundación");
+
+        tablaEquipos = new JTable(modeloTabla);
+        tablaEquipos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tablaEquipos.getTableHeader().setReorderingAllowed(false);
+
+        // Aplicar diseño personalizado a la tabla
+        tablaEquipos.setBackground(new Color(30, 42, 56));
+        tablaEquipos.setForeground(Color.white);
+        tablaEquipos.setShowGrid(false);
+        tablaEquipos.setBorder(null);
+
+        JTableHeader header = tablaEquipos.getTableHeader();
+        header.setBackground(new Color(30, 42, 56).darker());
+        header.setForeground(Color.white);
+        header.setBorder(null);
+
+        spContent.setBackground(new Color(30, 42, 56));
+
+        spContent.setViewportView(tablaEquipos);
+
+        actualizarTabla();
+    }
+
+    /**
+     * Actualiza los datos de la tabla
+     */
+    private void actualizarTabla() {
+        modeloTabla.setRowCount(0);
+
+        for (Equipo equipo : listaEquipos) {
+            Object[] fila = new Object[3];
+            fila[0] = equipo.getCodEquipo();
+            fila[1] = equipo.getNombreEquipo();
+            fila[2] = equipo.getFechaFund();
+
+            modeloTabla.addRow(fila);
         }
-
-
     }
 }
