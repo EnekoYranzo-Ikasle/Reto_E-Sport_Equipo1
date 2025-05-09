@@ -35,10 +35,9 @@ class JornadaTest {
     private JornadaDAO jornadaDAO;
 
     /**
-     * Tenemos que conectarnos la base de datos de Oracle para cada test
-     * Usamos esta base de datos para poder hacer las operaciones y consultas
-     *
-     * @throws Exception Si ocurre un error al conectarnos a la BD
+     * Configuración de la conexión a la base de datos y el DAO.
+     * Se ejecuta una vez antes de todos los tests.
+     * @throws SQLException Si ocurre un error SQL.
      */
     @BeforeAll
     void setup() throws Exception {
