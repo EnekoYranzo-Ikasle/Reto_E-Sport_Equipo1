@@ -32,7 +32,9 @@ class PersonaDAOTest {
     void getPersona() {
     }
 
-    /*Verifica si se puede crear un nuevo usuario correctamente */
+    /**
+     * Verifica si se puede crear un nuevo usuario correctamente
+     */
     @Test
     void crearCuenta_InsertarNuevoUsuario() throws SQLException {
         String email = "usuario@gmail.com";
@@ -49,20 +51,26 @@ class PersonaDAOTest {
         assertEquals("user", rs.getString("tipo"), "El tipo de usuario no coincide");
     }
 
-    /*Si el programa da un error al intentar usar un email demasido largo*/
+    /**
+     * Si el programa da un error al intentar usar un email demasido largo
+     */
     @Test
     void crearCuenta_EmailDemasiadoLargo() throws SQLException {
         String emailLargo = "a".repeat(256) + "@gmail.com";
         assertThrows(SQLException.class, () -> PersonaDAO.crearCuenta(emailLargo, "password123"), "excepcion por email demasiado largo");
     }
 
-    /*Si el programa da un error al intentar usar un email vacío.*/
+    /**
+     * Si el programa da un error al intentar usar un email vacío.
+     */
     @Test
     void crearCuenta_EmailNulo () throws SQLException {
         assertThrows(SQLException.class, () -> PersonaDAO.crearCuenta(null, "password123"),"excepcion por email nulo");
     }
 
-    /*si el programa da un error al intentar usar una contraseña vacía.*/
+    /**
+     * si el programa da un error al intentar usar una contraseña vacía.
+     */
     @Test
     void crearCuenta_PassNulo () throws SQLException {
         assertThrows(SQLException.class, () -> PersonaDAO.crearCuenta("usuario@gmail.com", null), "excepcion por pass nulo");
