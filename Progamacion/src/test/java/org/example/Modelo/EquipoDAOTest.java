@@ -18,6 +18,12 @@ class EquipoDAOTest {
 
     private static Connection conn;
     private static EquipoDAO dao;
+
+    /**
+     * Configuración de la conexión a la base de datos y el DAO.
+     * Se ejecuta una vez antes de todos los tests.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     @BeforeAll
     public static void setup() throws Exception {
         // Ajusta según tu configuración
@@ -30,6 +36,10 @@ class EquipoDAOTest {
         dao = new EquipoDAO(conn);
     }
 
+    /**
+     * Función para probar que la obtncion de equipos funciona correctamente.
+     * @throws SQLException
+     */
     @Test
     void obtenerEquipos() {
         try {
@@ -40,7 +50,10 @@ class EquipoDAOTest {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Función para probar que la funcion de obtener un equipo por su código funciona correctamente.
+     * @throws SQLException
+     */
     @Test
     void buscarEquipoPorCod() {
         try {
@@ -52,7 +65,10 @@ class EquipoDAOTest {
         }
 
     }
-
+    /**
+     * Función para probar que la funcion de obtener un equipo por su nombre funciona correctamente.
+     * @throws SQLException
+     */
     @Test
     void buscarEquipoPorNombre() {
         try {
@@ -62,7 +78,10 @@ class EquipoDAOTest {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Función para probar que la funcion que mediante el nombre del equipo indica si existe o no mediante un buleano funciona.
+     * @throws SQLException
+     */
     @Test
     void existe() {
         try {
@@ -74,6 +93,10 @@ class EquipoDAOTest {
         }
 
     }
+    /**
+     * Función para probar que la obtencion de un Arraylist con equipos mediante un procedimiento PL/SQL funciona correctamente.
+     * @throws SQLException
+     */
 
     @Test
     void getInformeEquipos() {
@@ -85,6 +108,12 @@ class EquipoDAOTest {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Configuración de la desconexión a la base de datos y el DAO.
+     * Se ejecuta una vez después de todos los tests.
+     * @throws SQLException si ocurre un error al cerrar la conexión
+     */
     @AfterAll
     public void tearDown() throws Exception {
         if (conn != null) {
