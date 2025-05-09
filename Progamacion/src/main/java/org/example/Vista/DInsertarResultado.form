@@ -1,31 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.example.Vista.DInsertarResultado">
-  <grid id="27dc6" binding="pPrincipal" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="30" left="30" bottom="30" right="30"/>
+  <grid id="27dc6" binding="pPrincipal" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
     <properties>
       <background color="-14800328"/>
+      <foreground color="-16777216"/>
     </properties>
     <border type="none"/>
     <children>
-      <component id="c3e70" class="javax.swing.JButton" binding="Equipo1">
+      <grid id="c4ba4" binding="pHeader" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <background color="-14800328"/>
         </properties>
-      </component>
-      <component id="909bc" class="javax.swing.JButton" binding="Equipo2">
+        <border type="none"/>
+        <children>
+          <component id="44234" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="24" style="1"/>
+              <foreground color="-1"/>
+              <text value="Seleciona Ganador"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="c410a" binding="pBody" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <background color="-14800328"/>
         </properties>
-      </component>
+        <border type="none"/>
+        <children>
+          <component id="c3e70" class="javax.swing.JButton" binding="Equipo1">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-1"/>
+              <borderPainted value="false"/>
+              <focusPainted value="false"/>
+              <foreground color="-16777216"/>
+              <text value="Button"/>
+            </properties>
+          </component>
+          <component id="909bc" class="javax.swing.JButton" binding="Equipo2">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-1"/>
+              <borderPainted value="false"/>
+              <focusPainted value="false"/>
+              <foreground color="-16777216"/>
+              <text value="Button"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>

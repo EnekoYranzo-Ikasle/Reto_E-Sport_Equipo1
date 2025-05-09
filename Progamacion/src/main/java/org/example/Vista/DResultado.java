@@ -18,6 +18,7 @@ public class DResultado extends JDialog{
 
        setContentPane(pPrincipal);
        setModal(true);
+       setTitle("Resultados");
        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
        setSize(600, 450);
        setLocationRelativeTo(null);

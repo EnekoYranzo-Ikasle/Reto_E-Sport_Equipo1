@@ -68,7 +68,7 @@ public class DEquipo extends JDialog {
         setTitle(super.getTitle());
         setModal(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(700, 450);
+        setSize(750, 480);
         setLocationRelativeTo(null);
 
         try {

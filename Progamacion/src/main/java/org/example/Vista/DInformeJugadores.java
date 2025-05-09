@@ -83,7 +83,7 @@ public class DInformeJugadores extends JDialog {
                     pContenido.repaint();
 
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    JOptionPane.showMessageDialog(pPrincipal, ex.getMessage());
                 }
             }
         });

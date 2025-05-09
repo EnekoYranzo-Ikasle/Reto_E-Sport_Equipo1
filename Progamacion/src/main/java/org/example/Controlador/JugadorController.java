@@ -51,10 +51,4 @@ public class JugadorController {
     public List<Jugador> getInformeJugadores(String nombreEquipo) throws SQLException {
         return jugadorDAO.getInformeJugadores(nombreEquipo);
     }
-
-    // Validaciones:
-    public LocalDate formatearFecha(String fecha) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return LocalDate.parse(fecha, formatter);
-    }
 }

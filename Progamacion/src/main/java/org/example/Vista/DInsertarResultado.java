@@ -11,6 +11,8 @@ public class DInsertarResultado extends JDialog {
     private JPanel pPrincipal;
     private JButton Equipo1;
     private JButton Equipo2;
+    private JPanel pBody;
+    private JPanel pHeader;
 
     public DInsertarResultado(VistaController vistaController, String nombreEquip1, String nombreEquip2, int codEnfrentamiento, int codEquip1, int codEquip2) {
 
