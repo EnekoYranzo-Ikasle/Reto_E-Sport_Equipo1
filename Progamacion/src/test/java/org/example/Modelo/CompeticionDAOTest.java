@@ -67,6 +67,11 @@ public class CompeticionDAOTest {
         assertFalse(existe, "La competición debería haberse eliminado");
     }
 
+    /**
+     * Configuración de la desconexión a la base de datos y el DAO.
+     * Se ejecuta una vez después de todos los tests.
+     * @throws SQLException si ocurre un error al cerrar la conexión
+     */
     @AfterAll
     public void tearDown() throws Exception {
         conn.rollback();

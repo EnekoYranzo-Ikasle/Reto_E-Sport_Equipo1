@@ -167,9 +167,10 @@ class EnfrentamientoTest {
     void tearDown() {
         System.out.println("Test completado.");
     }
+
     /**
-     * Cierra la conexión a la base de datos al finalizar todos los tests.
-     *
+     * Configuración de la desconexión a la base de datos y el DAO.
+     * Se ejecuta una vez después de todos los tests.
      * @throws SQLException si ocurre un error al cerrar la conexión
      */
     @AfterAll
