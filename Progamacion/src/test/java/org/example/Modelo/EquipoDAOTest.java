@@ -30,6 +30,10 @@ class EquipoDAOTest {
         dao = new EquipoDAO(conn);
     }
 
+    /**
+     * Función para probar que la obtncion de equipos funciona correctamente.
+     * @throws SQLException
+     */
     @Test
     void obtenerEquipos() {
         try {
@@ -40,7 +44,10 @@ class EquipoDAOTest {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Función para probar que la funcion de obtener un equipo por su código funciona correctamente.
+     * @throws SQLException
+     */
     @Test
     void buscarEquipoPorCod() {
         try {
@@ -52,7 +59,10 @@ class EquipoDAOTest {
         }
 
     }
-
+    /**
+     * Función para probar que la funcion de obtener un equipo por su nombre funciona correctamente.
+     * @throws SQLException
+     */
     @Test
     void buscarEquipoPorNombre() {
         try {
@@ -62,7 +72,10 @@ class EquipoDAOTest {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Función para probar que la funcion que mediante el nombre del equipo indica si existe o no mediante un buleano funciona.
+     * @throws SQLException
+     */
     @Test
     void existe() {
         try {
@@ -74,6 +87,10 @@ class EquipoDAOTest {
         }
 
     }
+    /**
+     * Función para probar que la obtencion de un Arraylist con equipos mediante un procedimiento PL/SQL funciona correctamente.
+     * @throws SQLException
+     */
 
     @Test
     void getInformeEquipos() {
