@@ -49,6 +49,24 @@ La empresa E-Sport ha encargado el desarrollo de una aplicación para gestionar 
 - Ver el informe de los equipos participantes.
 
 - Consultar los resultados de la última jornada.
+
+## Como Usar
+1. Ejecutar el Main
+2. En la pantalla login, segun que tipo de usuario hay una cuenta o otra. ADMIN: admin@email.com / 12345 //USER: user@email.com / 12345
+
+ADMIN:
+1. Crea Competion.
+2. Jugadores / Eqipos
+3. Generar Calendario
+4. Enfrentamientos / Jornadas
+5. Cerrar etapa
+6. Agregar Resultados
+7. Volver al 1. de admin para volver a otra competición.
+
+USER:
+Elegir ver equipos o Informes
+
+
 ## Autores
 
 Eneko Yranzo
