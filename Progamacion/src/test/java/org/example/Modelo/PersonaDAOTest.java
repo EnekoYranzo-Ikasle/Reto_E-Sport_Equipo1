@@ -22,8 +22,11 @@ class PersonaDAOTest {
         conn.setAutoCommit(false);
         PersonaDAO = new PersonaDAO(conn);
     }
+
     @Test
-    void getPersona() {
+    void getPersona_PersonaNoExistentePorEmail() throws SQLException {
+        Persona persona = PersonaDAO.getPersona("nonexistent@example.com");
+        assertNull(persona, "La persona no debería existir.");
     }
 
     /*Verifica si se puede crear un nuevo usuario correctamente */
