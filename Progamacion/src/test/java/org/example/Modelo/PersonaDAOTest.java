@@ -12,6 +12,12 @@ class PersonaDAOTest {
     private static Connection conn;
     private static PersonaDAO PersonaDAO;
 
+
+    /**
+     * Configuración de la conexión a la base de datos y el DAO.
+     * Se ejecuta una vez antes de todos los tests.
+     * @throws SQLException Si ocurre un error SQL.
+     */
     @BeforeAll
     public static void setup() throws Exception {
         String url = "jdbc:oracle:thin:@172.20.225.114:1521:orcl";
@@ -83,6 +89,11 @@ class PersonaDAOTest {
         assertThrows(SQLException.class, () -> PersonaDAO.crearCuenta("usuario@gmail.com", null), "excepcion por pass nulo");
     }
 
+    /**
+     * Configuración de la desconexión a la base de datos y el DAO.
+     * Se ejecuta una vez después de todos los tests.
+     * @throws SQLException si ocurre un error al cerrar la conexión
+     */
     @AfterAll
     public static void tearDown() throws Exception {
         conn.rollback();
