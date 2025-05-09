@@ -23,10 +23,28 @@ class PersonaDAOTest {
         PersonaDAO = new PersonaDAO(conn);
     }
 
+    /*Obtener una persona existente por su email*/
     @Test
-    void getPersona_PersonaNoExistentePorEmail() throws SQLException {
-        Persona persona = PersonaDAO.getPersona("nonexistent@example.com");
-        assertNull(persona, "La persona no debería existir.");
+    void getPersona_UsuarioExistente () throws Exception {
+        String email = "usuario@gmail.com";
+        String pass = "password123";
+        PersonaDAO.crearCuenta(email, pass);
+
+        Persona persona = PersonaDAO.getPersona(email);
+
+        assertNotNull(persona, "La persona no debe ser nula");
+        assertEquals(email, persona.getEmail(), "El email no coincide");
+        assertEquals(pass, persona.getPassword(), "La contraseña no coincide");
+        assertEquals("user", persona.getTipo(), "El tipo de usuario no coincide");
+    }
+
+    /*Verifica si se lanza una excepción al buscar una persona con un email inexistente*/
+    @Test
+    void getPersona_UsuarioNoExistente () {
+        String emailInexistente = "noexistente@gmail.com";
+
+        Exception exception = assertThrows(Exception.class, () -> PersonaDAO.getPersona(emailInexistente), "Debería lanzar una excepción");
+        assertEquals("Email / Contraseña incorrecta", exception.getMessage(), "El mensaje de error no coincide");
     }
 
     /*Verifica si se puede crear un nuevo usuario correctamente */
