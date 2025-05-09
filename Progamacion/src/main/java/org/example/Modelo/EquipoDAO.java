@@ -86,7 +86,7 @@ public class EquipoDAO {
 
         if (rs.next()) {
             equipo = crearEquipo(rs);
-        }
+        }else return null;
         return equipo;
     }
 

@@ -37,7 +37,7 @@ public class EnfrentamientoDAO {
     public List<Enfrentamiento> obtenerEnfrentamientos()throws SQLException{
         List<Enfrentamiento> lista = new ArrayList<>();
 
-        ps = conn.prepareStatement("select * from enfrentamientos where ganador = null");
+        ps = conn.prepareStatement("select * from enfrentamientos where ganador is null");
         rs = ps.executeQuery();
 
         while (rs.next()) {
